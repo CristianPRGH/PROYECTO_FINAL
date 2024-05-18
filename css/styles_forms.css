@@ -1,0 +1,130 @@
+/* INSERT FORM */
+.data-form{
+    width: 50%;
+    border: 2px solid #497285;
+    border-bottom: 10px double #497285;
+    border-radius: 10px 10px 20px 20px;
+    padding: 20px 50px;
+}
+
+.data-form fieldset{
+    padding: 0 20px;
+    border: 0;
+}
+
+.data-form h3{
+    margin: 5px auto;
+}
+
+.data-form input, .data-form textarea{
+    width: calc(100% - 40px);
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: 0;
+    margin: 5px auto;
+    font-size: 0.9em;
+}
+
+.data-form textarea{
+    resize: none;
+}
+
+.data-form label{
+    width: 100%;
+    margin: 5px auto;
+}
+
+input:focus, textarea:focus{
+    outline: none;
+    box-shadow: 0 0 2px 0.1em #f78536;
+}
+
+.formBttn{
+    width: 100%;
+    height: 60px;
+    font-size: 1.2em;
+    transition: 0.3s;
+    margin-top: 10px;
+    padding: 0;
+    border-radius: 10px;
+    border: 0.5px solid #2b4450;
+    border-bottom: 5px solid #2b4450;
+}
+
+.formBttn:hover{
+    background-color: #497285b4;
+    color: #dfebed;
+}
+
+.tooltip {
+    position: relative;
+    opacity: 1;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    position: absolute;
+    width: fit-content;
+    background-color: #497285;
+    color: #dfebed;
+    text-align: center;
+    text-wrap: nowrap;
+    border-left: 0;
+    border-radius: 6px;
+    padding: 5px 10px;
+    z-index: 1;
+    top: 5px;
+    left: 105%;
+
+    box-shadow: 3px 3px 5px crimson;
+}
+  
+.tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 100%;
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent #497285 transparent transparent;
+}
+
+.asterisk{
+    color: crimson;
+}
+
+
+
+/* FILTERS FORM */
+
+#form-filters{
+    width: 100%;
+    align-items: center;
+    padding: 0;
+    margin-bottom: 10px;
+}
+
+#form-filters input{
+    width: 200px;
+}
+
+#form-filters input, #form-filters label{
+    margin: auto 5px;
+    font-size: 0.9em;
+    padding: 5px 5px;
+}
+
+#form-filters label{
+    margin-left: 20px;
+    width: fit-content;
+}
+
+#form-filters .formBttn{
+    /* width: 100px; */
+    width: fit-content;
+    height: 40px;
+    margin: 0 20px;
+    font-size: 0.9em;
+    padding: 0 10px;
+}

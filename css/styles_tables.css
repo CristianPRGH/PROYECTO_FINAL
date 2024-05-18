@@ -1,0 +1,32 @@
+/* TABLE */
+.data-view{
+    border: 1px solid #497285;
+    border-bottom: 5px solid #2b4450;
+    border-spacing: 0;
+    width: 100%;
+    overflow-x: scroll;
+}
+
+.data-view tr:nth-child(even){
+    background-color: #49728548;
+}
+
+.data-view th, .data-view td{
+    font-size: 0.8em;
+    padding: 5px 10px;
+}
+
+.data-view th{
+    border: 0;
+    border-bottom: 1px solid #497285;
+}
+
+.data-view .material-symbols-rounded{
+    font-size: 1.6em;
+}
+
+.material-symbols-rounded:hover{
+    transform: scale(1.2);
+    text-shadow: 1px 1px #2b4450;
+    color:#f78536;
+}
