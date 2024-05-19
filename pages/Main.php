@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="../css/styles_forms.css">
     <link rel="stylesheet" href="../css/styles_tables.css">
     <link rel="stylesheet" href="../css/styles_modals.css">
+    <link rel="stylesheet" href="../css/styles_filters.css">
     <title>Document</title>
 </head>
 
@@ -25,12 +26,12 @@
 
         <aside class="body-leftmenu">
             <ul>
-                <li class="pointer">Empleados</li>
-                <li class="pointer">Empresas</li>
+                <li class="pointer">Usuarios</li>
+                <!-- <li class="pointer">Empresas</li> -->
             </ul>
         </aside>
 
-        <?php include "Employees.html" ?>
+        <?php include "Users.html" ?>
 
     </section>
 </body>

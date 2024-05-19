@@ -1,59 +1,71 @@
 /* INSERT FORM */
-.data-form{
-    width: 50%;
-    border: 2px solid #497285;
-    border-bottom: 10px double #497285;
-    border-radius: 10px 10px 20px 20px;
+.workwith-form{
+    width: 30%;
+    /* border: 2px solid #497285; */
+    /* border-bottom: 10px double #497285; */
+    border-radius: 20px;
     padding: 20px 50px;
+    /* box-shadow: inset 1px 1px 5px #497285,
+                inset -1px -1px 5px #497285; */
+
+    /* background: linear-gradient(to right, var(--secondary-color),var(--background-color)); */
 }
 
-.data-form fieldset{
-    padding: 0 20px;
+.workwith-form fieldset{
+    padding: 10px 20px;
     border: 0;
 }
 
-.data-form h3{
+.workwith-form h3{
     margin: 5px auto;
 }
 
-.data-form input, .data-form textarea{
+.workwith-form input, .workwith-form textarea{
     width: calc(100% - 40px);
     padding: 10px 20px;
     border-radius: 5px;
     border: 0;
     margin: 5px auto;
     font-size: 0.9em;
+    position: relative;
+
+    box-shadow: inset 2px 2px 5px var(--primary-color);
 }
 
-.data-form textarea{
+.workwith-form textarea{
     resize: none;
 }
 
-.data-form label{
+/* .workwith-form label{
     width: 100%;
-    margin: 5px auto;
-}
+    background: linear-gradient(to right, #2b4450,#dfebed);
+    color: #dfebed;
+} */
 
 input:focus, textarea:focus{
     outline: none;
-    box-shadow: 0 0 2px 0.1em #f78536;
+    /* box-shadow: 0 0 2px 0.1em #f78536; */
+    box-shadow: inset 2px 2px 5px var(--accent-color);
 }
 
 .formBttn{
     width: 100%;
     height: 60px;
     font-size: 1.2em;
-    transition: 0.3s;
     margin-top: 10px;
     padding: 0;
     border-radius: 10px;
-    border: 0.5px solid #2b4450;
-    border-bottom: 5px solid #2b4450;
+    border: 0.5px solid var(--primary-color);
+    border-bottom: 5px solid var(--primary-color);
+    transition: 0.3s;
 }
 
 .formBttn:hover{
-    background-color: #497285b4;
-    color: #dfebed;
+    /* background-color: var(--secondary-color); */
+    background-color: var(--background-color);
+    box-shadow: inset 2px 2px 5px var(--accent-color),
+                inset -2px -2px 5px var(--accent-color);
+    /* color: #dfebed; */
 }
 
 .tooltip {
@@ -61,15 +73,14 @@ input:focus, textarea:focus{
     opacity: 1;
 }
 
-.tooltip .tooltiptext {
+.tooltip .errortext {
     visibility: hidden;
     position: absolute;
     width: fit-content;
-    background-color: #497285;
+    background-color: var(--secondary-color);
     color: #dfebed;
-    text-align: center;
+    text-align: left;
     text-wrap: nowrap;
-    border-left: 0;
     border-radius: 6px;
     padding: 5px 10px;
     z-index: 1;
@@ -79,7 +90,7 @@ input:focus, textarea:focus{
     box-shadow: 3px 3px 5px crimson;
 }
   
-.tooltip .tooltiptext::after {
+.tooltip .errortext::after {
     content: "";
     position: absolute;
     top: 50%;
@@ -87,7 +98,7 @@ input:focus, textarea:focus{
     margin-top: -5px;
     border-width: 5px;
     border-style: solid;
-    border-color: transparent #497285 transparent transparent;
+    border-color: transparent var(--secondary-color) transparent transparent;
 }
 
 .asterisk{
@@ -96,35 +107,51 @@ input:focus, textarea:focus{
 
 
 
-/* FILTERS FORM */
 
-#form-filters{
-    width: 100%;
-    align-items: center;
-    padding: 0;
-    margin-bottom: 10px;
+
+.help{
+    height: fit-content;
+    position: absolute;
+    left: 97%;
+    background-color: var(--background-color);
+    border-radius: 100%;
 }
 
-#form-filters input{
-    width: 200px;
+.help:hover{
+    cursor: help;
 }
 
-#form-filters input, #form-filters label{
-    margin: auto 5px;
-    font-size: 0.9em;
-    padding: 5px 5px;
-}
-
-#form-filters label{
-    margin-left: 20px;
+.help .helptext{
+    visibility: hidden;
+    position: absolute;
     width: fit-content;
+    background-color: var(--secondary-color);
+    color: #dfebed;
+    text-align: left;
+    text-wrap: nowrap;
+    border-radius: 6px;
+    padding: 5px 10px;
+    z-index: 1;
+    /* top: 5px;*/
+    left: 130%; 
+
+    box-shadow: 3px 3px 5px var(--accent-color);
+
+    /* transition: visibility 0.1s; */
 }
 
-#form-filters .formBttn{
-    /* width: 100px; */
-    width: fit-content;
-    height: 40px;
-    margin: 0 20px;
-    font-size: 0.9em;
-    padding: 0 10px;
+
+.help:hover .helptext{
+    visibility: visible;
+}
+
+.help .helptext::after {
+    content: "";
+    position: absolute;
+    top: 10%;
+    right: 100%;
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent var(--secondary-color) transparent transparent;
 }

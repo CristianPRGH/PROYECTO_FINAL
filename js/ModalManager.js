@@ -24,6 +24,6 @@ window.onclick = function(event) {
 function Confirm()
 {
     let id = document.getElementById("confirm-id").innerHTML;
-    DeleteEmployee(id);
+    DeleteUser(id);
     CloseModal();
 }

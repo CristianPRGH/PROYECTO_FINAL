@@ -1,0 +1,35 @@
+/* FILTERS FORM */
+
+.filters-form{
+    /* width: 100%; */
+    /* align-items: center; */
+    /* padding: 0; */
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    border-bottom: 3px solid var(--secondary-color);
+    border-radius: 20px;
+}
+
+.filters-form input{
+    width: 200px;
+}
+
+.filters-form input, .filters-form label{
+    margin: auto 5px;
+    font-size: 0.9em;
+    padding: 5px 5px;
+}
+
+.filters-form label{
+    margin-left: 20px;
+    width: fit-content;
+}
+
+.filters-form .formBttn{
+    width: 100px;
+    width: fit-content;
+    height: 40px;
+    margin: 0 20px;
+    font-size: 0.9em;
+    padding: 0 10px;
+}

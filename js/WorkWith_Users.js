@@ -1,21 +1,21 @@
 
 let bbddData = null;
-let urlAlter = "../php_logic/AddEmployee.php";
-let urlGet   = "../php_logic/GetEmployees.php";
+let urlAlter = "../php_logic/AddUser.php";
+let urlGet   = "../php_logic/GetUsers.php";
 
-const GetEmployees = async (url) => {
+const GetUsers = async (url) => {
     try {
         const res = await fetch(url);
         if (!res.ok) throw {ok:false, msg:"Error al retornar los empleados"};
         bbddData = await res.json();
-        CreateEmployeesTable(bbddData);
+        CreateUsersTable(bbddData);
     } catch (error) {
         console.error(error);
     }
 }
 
 // AGREGA / MODIFICA / ELIMINA UNA ENTRADA EN LA TABLA DE EMPLEADOS
-const AlterEmployeeTable = async(formData) => {
+const AlterUsersTable = async(formData) => {
     try {
         const res = await fetch(urlAlter, {
             method:"POST",
@@ -24,22 +24,22 @@ const AlterEmployeeTable = async(formData) => {
         if(!res.ok) throw {ok:false, msg: "No hay datos"};
         // let data = await res.json();
         ResetForm();
-        GetEmployees(urlGet);
+        GetUsers(urlGet);
     } catch (error) {
         console.log(error);
     }
 }
 
-GetEmployees("../php_logic/GetEmployees.php");
+GetUsers(urlGet);
 
 // CREA LA TABLA DE EMPLEADOS
-function CreateEmployeesTable(data)
+function CreateUsersTable(data)
 {
 
     let namesFilterList = document.getElementById("name-filter-list");
     namesFilterList.innerHTML = "";
 
-    let tableData = document.getElementById("employeesTableBody");
+    let tableData = document.getElementById("users-tablebody");
     tableData.innerHTML = "";
 
     if (data.code === 0)
@@ -51,7 +51,7 @@ function CreateEmployeesTable(data)
 
             let i = 0;
             let col = null;
-            for (const item in element) {
+            for (const item in element) {   // element = usuario - item = campo
                 if (!isNaN(parseInt(item)))
                 {
                     col = row.insertCell(i);
@@ -63,7 +63,7 @@ function CreateEmployeesTable(data)
 
             col = row.insertCell(row.cells.length);
             col.setAttribute("class", "material-symbols-rounded pointer");
-            col.setAttribute("onclick", "UpdateEmployee("+element.id+")");
+            col.setAttribute("onclick", "UpdateUser("+element.id+")");
             let text = document.createTextNode("person_edit");
             col.appendChild(text);
 
@@ -93,7 +93,7 @@ function CreateEmployeesTable(data)
 
 
 
-let insertForm = document.getElementById("workwith-employee");
+let insertForm = document.getElementById("workwith-users");
 
 insertForm.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -109,6 +109,8 @@ insertForm.addEventListener("submit", (e) => {
         document.getElementById("input-telefono"),
         document.getElementById("input-direccion"),
         document.getElementById("input-email"),
+        document.getElementById("input-usuario"),
+        document.getElementById("input-password")
     ];
 
     // ERRORES DE LOS CAMPOS
@@ -120,35 +122,35 @@ insertForm.addEventListener("submit", (e) => {
         document.getElementById("error-telefono"),
         document.getElementById("error-direccion"),
         document.getElementById("error-email"),
+        document.getElementById("error-usuario"),
+        document.getElementById("error-password")
     ];
 
     let formData = ValidaCampos(campos, errores);
-    formData.append("mode", formMode);
-    if (inputID.value !== -1) formData.append("id", inputID); // SOLO PARA MODIFICAR
-
-    console.log(formData);
-
-    if (formData.get("formErrors") === "false")
+    if (formData.get("formValid") === "true")
     {
+        formData.append("mode", formMode);
+        if (inputID.value !== -1) formData.append("id", inputID); // SOLO PARA MODIFICAR
+
         campos.forEach(campo => {
             formData.append(campo.name, campo.value);
         });
-        AlterEmployeeTable(formData);
+        AlterUsersTable(formData);
     }
 });
 
 // RELLENA EL FORMULARIO CON LOS DATOS DEL EMPLEADO A MODIFICAR
-function UpdateEmployee(id)
+function UpdateUser(id)
 {
     if (id !== -1)
     {
-        let data = bbddData.filter((item) => item.id == id);
+        let data = bbddData.datos.filter((item) => item.id == id);
 
         // console.log(data);
         
         if (data.length > 0)
         {
-            document.getElementById("submitForm").value         = "Modificar";
+            document.getElementById("submitForm").innerHTML     = "MODIFICAR";
             document.getElementById("form-mode").value          = "UPD";
             document.getElementById("input-id").value           = data[0].id || -1;
             document.getElementById("input-dni").value          = data[0].dni || "";
@@ -158,8 +160,10 @@ function UpdateEmployee(id)
             document.getElementById("input-telefono").value     = data[0].telefono || "";
             document.getElementById("input-direccion").value    = data[0].direccion || "";
             document.getElementById("input-email").value        = data[0].email || "";
+            document.getElementById("input-usuario").value      = data[0].usuario || "";
+            // document.getElementById("input-password").value     = data[0].password || "";
 
-            document.getElementById("workwith-employee").focus();
+            window.location.href = "#"+document.getElementById("workwith-users").id;
         }
         else
         {
@@ -169,12 +173,12 @@ function UpdateEmployee(id)
 }
 
 // ELIMINA EL EMPLEADO SELECCIONADO
-function DeleteEmployee(id)
+function DeleteUser(id)
 {
     if (id !== -1)
     {
         window.location.href = urlAlter+"?mode=DLT&id="+id;
-        GetEmployees(urlGet);
+        GetUsers(urlGet);
     }
 }
 
@@ -186,6 +190,8 @@ let filtersForm = document.getElementById("form-filters");
 filtersForm.addEventListener("submit", (e) => {
     e.preventDefault();
 
+
+
     let filters = url = "";
 
     let formInputs = filtersForm.querySelectorAll("input");
@@ -196,15 +202,27 @@ filtersForm.addEventListener("submit", (e) => {
     if (filters.length > 0)
     {
         url = urlGet+'?'+filters;
-        GetEmployees(url);
+        GetUsers(url);
+    }
+    else{
+        GetUsers(urlGet);
     }
 })
 
 
 function ResetForm()
 {
-    document.getElementById("workwith-employee").reset();
+    document.getElementById("workwith-users").reset();
+    let inputs = document.getElementById("workwith-users").querySelectorAll("input");
+    inputs.forEach((input) =>{
+        input.style = null;
+    });
+    let errors = document.getElementById("workwith-users").querySelectorAll("span");
+    errors.forEach((error) =>{
+        error.style.visibility = "hidden";
+    });
+    document.getElementById("workwith-users").querySelector("textarea").style = null;
     document.getElementById("form-mode").value  = "INS";
     document.getElementById("input-id").value   = -1;
-    document.getElementById("submitForm").value = "AGREGAR";
+    document.getElementById("submitForm").innerHTML = "AGREGAR";
 }

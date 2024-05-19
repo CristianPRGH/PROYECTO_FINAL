@@ -1,0 +1,141 @@
+<main>
+    <section>
+        <form action method="post" class="workwith-form" id="workwith-users">
+            <!--action="../php_logic/AddEmployee.php"-->
+            <h3>USUARIO</h3>
+
+            <fieldset>
+                <input type="hidden" name="form-mode" id="form-mode" value="INS">
+                <input type="hidden" name="input-id" id="input-id" value="-1">
+
+                <label for="input-dni">DNI / NIE: <span class="asterisk">*</span></label>
+                <div class="tooltip">
+                    <input type="text" name="dni" id="input-dni" class="required" maxlength="11" placeholder="12345678A / A12345678B" value=""/>
+                    <span class="errortext" id="error-dni"></span>
+                </div>
+
+                <label for="input-nombre">Nombre: <span class="asterisk">*</span></label>
+                <div class="tooltip">
+                    <input type="text" name="nombre" id="input-nombre" class="required" maxlength="50" value=""/>
+                    <span class="errortext" id="error-nombre"></span>
+                </div>
+
+                <label for="input-apellidos">Apellidos:</label>
+                <div class="tooltip">
+                    <input type="text" name="apellidos" id="input-apellidos" maxlength="50" value=""/>
+                    <span class="errortext" id="error-apellidos"></span>
+                </div>
+
+                <label for="input-fechanac">Fecha de nacimiento:</label>
+                <div class="tooltip">
+                    <input type="date" name="fechanacimiento" id="input-fechanac" value=""/>
+                    <span class="errortext" id="error-fechanac"></span>
+                </div>
+
+                <label for="input-telefono">Telefono:</label>
+                <div class="tooltip">
+                    <input type="tel" name="telefono" id="input-telefono" maxlength="24" value=""/>
+                    <span class="errortext" id="error-telefono"></span>
+                </div>
+
+                <label for="input-direccion">Dirección:</label>
+                <div class="tooltip">
+                    <textarea name="direccion" maxlength="100" columns="30" rows="2" id="input-direccion" value=""></textarea>
+                    <span class="errortext" id="error-direccion"></span>
+                </div>
+
+                <label for="input-email">Email:</label>
+                <div class="tooltip">
+                    <input type="email" name="email" id="input-email" maxlength="60" value="" />
+                    <span class="errortext" id="error-email"></span>
+                </div>
+
+                <hr/>
+
+                <label for="input-usuario">Usuario:</label>
+                <div class="tooltip">
+                    <input type="text" name="usuario" id="input-usuario" maxlength="30" value="" autocomplete="off"/>
+                    <span class="errortext" id="error-usuario"></span>
+                </div>
+
+                <label for="input-password">Contraseña:</label>
+                <div class="tooltip flexRow">
+                    <input type="password" name="password" id="input-password" minlength="6" maxlength="12" value="" onkeyup="ValidaPassword(this, null)"/>
+                    
+                    <div class="flexRow help">
+                        <i class="material-symbols-rounded">help</i>
+                        <div class="helptext">
+                            <p>Requisitos de la contraseña:</p>
+                            <p>- Longitud entre 6 y 12</p>
+                            <p>- Mínimo una letra minúscula</p>
+                            <p>- Mínimo una letra mayúscula</p>
+                            <p>- Mínimo un numero</p>
+                            <p>- Mínimo un caracter especial</p>
+                        </div>
+                    </div>
+                    <span class="errortext" id="error-password"></span>
+                </div>
+
+                <!-- <label>Empresa:</label>
+                <input type="text" name="empresa" id="input-empresa" value="" /> -->
+                
+                <hr/>
+
+                <button type="submit" name="addUser" class="formBttn pointer" id="submitForm">AGREGAR</button>
+                <button type="button" class="formBttn pointer" onclick="ResetForm()">LIMPIAR</button>
+            </fieldset>
+
+        </form>
+    </section>
+
+    <hr />
+
+    <section>
+        <article>
+            <h4>Filtros</h4>
+            <form method="get" action class="filters-form flexRow" id="form-filters">
+                <label>Nombre</label>
+                <input list="name-filter-list" id="filter-name" name="filter-name" />
+                <datalist id="name-filter-list"></datalist>
+
+                <label>Fecha Nacimiento</label>
+                <input type="date" name="filter-date" id="filter-date" />
+
+                <button name="applyFilters" class="formBttn pointer">Aplicar</button>
+            </form>
+        </article>
+        <!-- <hr /> -->
+        <table class="users-table data-view">
+            <thead id="columnsTitles">
+                <th>ID</th>
+                <th>DNI</th>
+                <th>Nombre</th>
+                <th>Apellidos</th>
+                <th>Fecha Nac.</th>
+                <th>Telefono</th>
+                <th>Direccion</th>
+                <th>Email</th>
+                <th colspan="3"></th>
+                <!-- <th>Empresa</th> -->
+            </thead>
+            <tbody id="users-tablebody"></tbody>
+        </table>
+    </section>
+
+    
+    <section class="modal" id="confirm-modal">
+        <article class="modal-container flexColumn">
+            <span class="close-modal pointer">&times;</span>
+            <hr />
+            <p id="confirm-msg">Confirma la eliminación?</p>
+            <p id="confirm-id"></p>
+            <article class="modal-buttons-container flexRow">
+                <button class="formBttn pointer" onclick="Confirm()">CONFIRMAR</button>
+                <button class="formBttn pointer" onclick="CloseModal()">CANCELAR</button>
+            </article>
+        </article>
+    </section>
+
+</main>
+
+<script src="../js/WorkWith_Users.js"></script>
