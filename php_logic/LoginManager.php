@@ -1,15 +1,22 @@
 <?php
 
+function getDbConnection() {
+    $conn = new mysqli("localhost", "root", "", "cristianperez_erp");
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+    return $conn;
+}
+
 try {
-    $conn = mysqli_connect("localhost", "root", "", "cristianperez_erp");
+    $conn = getDbConnection();
     
-    if (isset($_POST["submitForm"]))
+    if (isset($_POST["username"]) && isset($_POST["password"]))
     {
         $username = $_POST["username"];
         $password = sha1(md5($_POST["password"]));
 
         $query = 'SELECT * FROM usuarios WHERE usuario = ? AND password = ?';
-
 
         $params[] = $username;
         $params[] = $password;
@@ -24,12 +31,27 @@ try {
         $stmt->execute();
         $result = $stmt->get_result();
 
-        print_r($result);
+        // print_r($result);
+
+        $data = [];
+        while ($row = mysqli_fetch_array($result)) $data[] = $row;
+
+        if (count($data) > 0) { $code = 0; $msg = "OK"; }
+        else { $code = 1; $description = "El usuario o la contraseña no son correctos"; }
     }
 
 
 } catch (\Throwable $th) {
-    //throw $th;
+    $code = 2;
+    $description = "Error en la conexion a la base de datos";
 }finally{
     $conn->close();
 }
+
+$resultado = array(
+    "code"=>$code,
+    "description"=>$description
+);
+
+header("Content-Type: application/json");
+echo json_encode($resultado);

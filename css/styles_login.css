@@ -5,10 +5,10 @@
 
 
 .main-login section{
-    width: fit-content;
+    width: 20%;
     height: 100%;
     background-color: var(--primary-color);
-    padding: 0;
+    /* padding: 0; */
     justify-content: center;
     align-items: center;
 }
@@ -18,10 +18,19 @@
 }
 
 #login-form{
-    width: 300px;
+    width: 100%;
     border: 5px solid var(--accent-color);
     background-color: var(--background-color);
     border-left: 0;
     border-right: 0;
     border-radius: 0;
+}
+
+#err-login{
+    color: crimson;
+    padding-top: 10px;
+    text-wrap: wrap;
+    /* background-color: var(--background-color); */
+    /* text-shadow:    1px 1px 0 var(--background-color),
+                    -1px -1px 0 var(--background-color); */
 }

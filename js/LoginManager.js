@@ -8,8 +8,8 @@ loginForm.addEventListener("submit", async(e) => {
     let loginUrl = "../php_logic/LoginManager.php";
 
     let formData = new FormData();
-    formData.append("username", $username);
-    formData.append("password", $password);
+    formData.append("username", username);
+    formData.append("password", password);
 
     try {
         const res = await fetch(loginUrl,{
@@ -18,6 +18,13 @@ loginForm.addEventListener("submit", async(e) => {
         });
         if (!res.ok) throw {ok:false, msg:"error"};
         let data = await res.json();
+
+        console.log(data);
+        if (data.code == 1)
+        {
+            document.getElementById("err-login").innerHTML = data.description;
+        }
+            
     } catch (error) {
         console.error(error);
     }
