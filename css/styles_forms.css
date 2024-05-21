@@ -1,6 +1,6 @@
 /* INSERT FORM */
 .workwith-form{
-    width: 30%;
+    width: 50%;
     /* border: 2px solid #497285; */
     /* border-bottom: 10px double #497285; */
     border-radius: 20px;
@@ -57,15 +57,13 @@ input:focus, textarea:focus{
     border-radius: 10px;
     border: 0.5px solid var(--primary-color);
     border-bottom: 5px solid var(--primary-color);
-    transition: 0.3s;
+    transition: 0.1s;
 }
 
 .formBttn:hover{
-    /* background-color: var(--secondary-color); */
-    background-color: var(--background-color);
-    box-shadow: inset 2px 2px 5px var(--accent-color),
-                inset -2px -2px 5px var(--accent-color);
-    /* color: #dfebed; */
+    background-color: var(--secondary-color);
+    color: var(--background-color);
+    border-color: var(--accent-color);
 }
 
 .tooltip {
@@ -154,4 +152,16 @@ input:focus, textarea:focus{
     border-width: 5px;
     border-style: solid;
     border-color: transparent var(--secondary-color) transparent transparent;
+}
+
+.form-action{
+    padding: 5px 0;
+}
+.form-action label{
+    width: 30%;
+}
+.form-action input{
+    width: fit-content;
+    margin: 0;
+    padding: 0;
 }

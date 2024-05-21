@@ -1,0 +1,92 @@
+<main>
+    <section>
+        <form action method="post" class="workwith-form" id="workwith-roles">
+            <h3>ROLES</h3>
+
+            <fieldset>
+                <input type="hidden" name="form-mode" id="form-mode" value="INS">
+                <input type="hidden" name="input-id" id="input-id" value="-1">
+
+                <label for="input-nombre">Nombre: <span class="asterisk">*</span></label>
+                <div class="tooltip">
+                    <input type="text" name="nombre" id="input-nombre" class="required" maxlength="50" value=""/>
+                    <span class="errortext" id="error-nombre"></span>
+                </div>
+
+                <article class="flexColumn">
+                    <div class="form-action flexRow">
+                        <label for="action-read" >Leer</label>
+                        <input type="checkbox" id="action-read" name="action-read" class="form-checkbox">
+                    </div>
+                    
+                    <div class="form-action flexRow">
+                        <label for="action-edit" class="flexRow">Editar</label>
+                        <input type="checkbox" id="action-edit" name="action-edit" class="form-checkbox">
+                    </div>
+
+                    <div class="form-action flexRow">
+                        <label for="action-delete" class="flexRow">Eliminar</label>
+                        <input type="checkbox" id="action-delete" name="action-delete" class="form-checkbox">
+                    </div>
+                </article>
+
+                <button type="submit" name="addUser" class="formBttn pointer" id="submitForm">AGREGAR</button>
+                <button type="button" class="formBttn pointer" id="reset-form">LIMPIAR</button>
+            </fieldset>
+
+        </form>
+    </section>
+
+    <hr />
+
+    <!-- <section> -->
+        <!-- <article>
+            <h4>Filtros</h4>
+            <form method="get" action class="filters-form flexRow" id="form-filters">
+                <label>Nombre</label>
+                <input list="name-filter-list" id="filter-name" name="filter-name" />
+                <datalist id="name-filter-list"></datalist>
+
+                <label>Fecha Nacimiento</label>
+                <input type="date" name="filter-date" id="filter-date" />
+
+                <button name="applyFilters" class="formBttn pointer">Aplicar</button>
+            </form>
+        </article> -->
+        <!-- <hr /> -->
+        <!-- <article class="table-container">
+            <table class="users-table data-view">
+                <thead id="columnsTitles">
+                    <th>ID</th>
+                    <th>DNI</th>
+                    <th>Nombre</th>
+                    <th>Apellidos</th>
+                    <th>Fecha Nac.</th>
+                    <th>Telefono</th>
+                    <th>Direccion</th>
+                    <th>Email</th>
+                    <th>Usuario</th>
+                    <th colspan="2"></th>
+                </thead>
+                <tbody id="users-tablebody"></tbody>
+            </table>
+        </article>
+    </section> -->
+
+    
+    <!-- <section class="modal" id="confirm-modal">
+        <article class="modal-container flexColumn">
+            <span class="close-modal pointer">&times;</span>
+            <hr />
+            <p id="confirm-msg">Confirma la eliminación?</p>
+            <p id="confirm-id"></p>
+            <article class="modal-buttons-container flexRow">
+                <button class="formBttn pointer" onclick="Confirm()">CONFIRMAR</button>
+                <button class="formBttn pointer" onclick="CloseModal()">CANCELAR</button>
+            </article>
+        </article>
+    </section> -->
+
+</main>
+
+<script src="../js/WorkWith_Users.js"></script>

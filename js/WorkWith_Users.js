@@ -51,41 +51,44 @@ function CreateUsersTable(data)
 
             let i = 0;
             let col = null;
-            for (const item in element) {   // element = usuario - item = campo
-                if (!isNaN(parseInt(item)))
+            for (const item in element) // element = usuario - item = campo
+            {
+                if (item != "password")
                 {
                     col = row.insertCell(i);
-                    // if (i === 0) col.setAttribute("class", "hidden");
                     col.innerHTML = element[item];
                     i++;
                 }
             }
 
+            // CREA EL ICONO PARA MODIFICAR EL USUARIO
             col = row.insertCell(row.cells.length);
             col.setAttribute("class", "material-symbols-rounded pointer");
             col.setAttribute("onclick", "UpdateUser("+element.id+")");
             let text = document.createTextNode("person_edit");
             col.appendChild(text);
 
+            // CREA EL ICONO DE ELIMINAR USUARIO
             col = row.insertCell(row.cells.length);
             col.setAttribute("class", "material-symbols-rounded pointer");
-            // col.setAttribute("onclick", "RemoveEmployee("+element.id+")");
             col.setAttribute("onclick", "OpenModal('DLT',"+element.id+")");
             text = document.createTextNode("person_remove");
             col.appendChild(text);
 
+
+            // RELLENA EL DATALIST DEL FILTRO "NOMBRE"
             let nameOption = document.createElement("option");
             nameOption.innerHTML = element.nombre + " " + element.apellidos;
             namesFilterList.appendChild(nameOption);
 
         });
     }
-    else
+    else    // Si no hay datos muestra un mensaje en la tabla
     {
-        let cols = document.getElementById("columnsTitles").rows[0].cells.length;
+        let cols = document.getElementById("columnsTitles").rows[0].cells.length;   // retorna el numero de columnas (contando los th)
         let row = tableData.insertRow(0);
         let col = row.insertCell(0);
-        col.setAttribute("colspan", cols);
+        col.setAttribute("colspan", cols);  // hace que la fila ocupe todo el ancho de la tabla
         col.style.textAlign = "center";
         col.innerHTML = data.descripcion;
     }
@@ -210,19 +213,19 @@ filtersForm.addEventListener("submit", (e) => {
 })
 
 
-function ResetForm()
-{
-    document.getElementById("workwith-users").reset();
-    let inputs = document.getElementById("workwith-users").querySelectorAll("input");
-    inputs.forEach((input) =>{
-        input.style = null;
-    });
-    let errors = document.getElementById("workwith-users").querySelectorAll("span");
-    errors.forEach((error) =>{
-        error.style.visibility = "hidden";
-    });
-    document.getElementById("workwith-users").querySelector("textarea").style = null;
-    document.getElementById("form-mode").value  = "INS";
-    document.getElementById("input-id").value   = -1;
-    document.getElementById("submitForm").innerHTML = "AGREGAR";
-}
+// function ResetForm()
+// {
+//     document.getElementById("workwith-users").reset();
+//     let inputs = document.getElementById("workwith-users").querySelectorAll("input");
+//     inputs.forEach((input) =>{
+//         input.style = null;
+//     });
+//     let errors = document.getElementById("workwith-users").querySelectorAll("span");
+//     errors.forEach((error) =>{
+//         error.style.visibility = "hidden";
+//     });
+//     document.getElementById("workwith-users").querySelector("textarea").style = null;
+//     document.getElementById("form-mode").value  = "INS";
+//     document.getElementById("input-id").value   = -1;
+//     document.getElementById("submitForm").innerHTML = "AGREGAR";
+// }

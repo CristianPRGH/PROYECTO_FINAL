@@ -67,7 +67,8 @@ try {
     $result = $stmt->get_result();
 
     $data = [];
-    while ($row = mysqli_fetch_array($result)) {
+    while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+    {
         $data[] = $row;
     }
 

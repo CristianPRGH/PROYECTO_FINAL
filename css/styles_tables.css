@@ -1,11 +1,16 @@
 /* TABLE */
+
+.table-container{
+    width: 100%;
+    overflow-x: scroll;
+}
+
 .data-view{
     border-top: 2px solid var(--secondary-color);
     border-bottom: 5px solid var(--primary-color);
     /* border-radius: 10px 10px 0 0; */
     border-spacing: 0;
     width: 100%;
-    overflow-x: scroll;
 }
 
 /* .data-view tr:nth-child(even){

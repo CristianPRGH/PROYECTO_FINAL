@@ -3,8 +3,8 @@ const loginForm = document.getElementById("login-form");
 loginForm.addEventListener("submit", async(e) => {
     e.preventDefault();
 
-    let username = document.getElementById("username");
-    let password = document.getElementById("password");
+    let username = document.getElementById("username").value;
+    let password = document.getElementById("password").value;
     let loginUrl = "../php_logic/LoginManager.php";
 
     let formData = new FormData();
@@ -20,10 +20,8 @@ loginForm.addEventListener("submit", async(e) => {
         let data = await res.json();
 
         console.log(data);
-        if (data.code == 1)
-        {
-            document.getElementById("err-login").innerHTML = data.description;
-        }
+        if (data.code == 1) document.getElementById("err-login").innerHTML = data.description;
+        else if (data.code == 0) window.location.href = "../pages/Main.php";
             
     } catch (error) {
         console.error(error);

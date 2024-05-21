@@ -82,7 +82,7 @@
                 <hr/>
 
                 <button type="submit" name="addUser" class="formBttn pointer" id="submitForm">AGREGAR</button>
-                <button type="button" class="formBttn pointer" onclick="ResetForm()">LIMPIAR</button>
+                <button type="button" class="formBttn pointer" id="reset-form">LIMPIAR</button>
             </fieldset>
 
         </form>
@@ -105,21 +105,23 @@
             </form>
         </article>
         <!-- <hr /> -->
-        <table class="users-table data-view">
-            <thead id="columnsTitles">
-                <th>ID</th>
-                <th>DNI</th>
-                <th>Nombre</th>
-                <th>Apellidos</th>
-                <th>Fecha Nac.</th>
-                <th>Telefono</th>
-                <th>Direccion</th>
-                <th>Email</th>
-                <th colspan="3"></th>
-                <!-- <th>Empresa</th> -->
-            </thead>
-            <tbody id="users-tablebody"></tbody>
-        </table>
+        <article class="table-container">
+            <table class="users-table data-view">
+                <thead id="columnsTitles">
+                    <th>ID</th>
+                    <th>DNI</th>
+                    <th>Nombre</th>
+                    <th>Apellidos</th>
+                    <th>Fecha Nac.</th>
+                    <th>Telefono</th>
+                    <th>Direccion</th>
+                    <th>Email</th>
+                    <th>Usuario</th>
+                    <th colspan="2"></th>
+                </thead>
+                <tbody id="users-tablebody"></tbody>
+            </table>
+        </article>
     </section>
 
     

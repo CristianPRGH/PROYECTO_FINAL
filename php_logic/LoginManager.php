@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 function getDbConnection() {
     $conn = new mysqli("localhost", "root", "", "cristianperez_erp");
     if ($conn->connect_error) {
@@ -34,9 +36,14 @@ try {
         // print_r($result);
 
         $data = [];
-        while ($row = mysqli_fetch_array($result)) $data[] = $row;
+        while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) $data[] = $row;
 
-        if (count($data) > 0) { $code = 0; $msg = "OK"; }
+        if (count($data) > 0) 
+        { 
+            $code = 0;
+            $description = "OK"; 
+            CreaSesion($data[0]["id"], $username);
+        }
         else { $code = 1; $description = "El usuario o la contraseña no son correctos"; }
     }
 
@@ -55,3 +62,10 @@ $resultado = array(
 
 header("Content-Type: application/json");
 echo json_encode($resultado);
+
+
+function CreaSesion($id, $user)
+{
+    $_SESSION["id"] = $id;
+    $_SESSION["user"] = $user;
+}

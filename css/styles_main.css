@@ -55,6 +55,20 @@ header{
     height: 70px;
     box-shadow: 5px 0 5px var(--primary-color);
     border-bottom: 2px solid var(--accent-color);
+    color: var(--background-color);
+    justify-content: space-between;
+    padding: 0 40px;
+}
+
+.user-box{
+    align-items: center;
+}
+.user-box p{
+    margin: 0 20px;
+}
+.user-box button{
+    height: 44px;
+    padding: 0 20px;
 }
 
 main{

@@ -20,9 +20,7 @@
 <body>
 
     <section class="main-container">
-        <header>
-
-        </header>
+        <?php include_once "Header.php" ?>
 
         <aside class="body-leftmenu">
             <ul>
@@ -31,12 +29,14 @@
             </ul>
         </aside>
 
-        <?php include "Users.html" ?>
+        <?php //include "Users.html" ?>
+        <?php include "Roles.html" ?>
 
     </section>
 </body>
 
 <script src="../js/FormValidations.js"></script>
 <script src="../js/ModalManager.js"></script>
+<script src="../js/ResetForm.js"></script>
 
 </html>

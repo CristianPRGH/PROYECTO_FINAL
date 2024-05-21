@@ -23,7 +23,7 @@ function ValidaCampos(campos, errores) {
         if (campo.type == "tel")            if (!ValidaTelefono(campo, error))   { formValid = false; continue; }
         if (campo.type == "password")       if (!ValidaPassword(campo, error))   { formValid = false; continue; }
 
-        campo.style.border = "2px solid green";
+        campo.style.border = "2px solid lightgreen";
         error.style.visibility = "hidden";
     }
 
