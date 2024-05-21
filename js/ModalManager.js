@@ -6,7 +6,7 @@ function OpenModal(context, data)
     {
         modal = document.getElementById("confirm-modal");
         document.getElementById("confirm-id").innerHTML = data;
-        document.getElementById("confirm-msg").innerHTML = "Confirma la eliminación del empleado "+data+"?";
+        document.getElementById("confirm-msg").innerHTML = "Confirma la eliminación del id "+data+"?";
     }
 
     modal.style.display = "block";

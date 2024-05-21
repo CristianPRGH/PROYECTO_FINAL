@@ -22,37 +22,19 @@ function buildConditionsAndParams() {
         if ($filterName) {
             $fullName = explode(" ", $filterName);
             foreach ($fullName as $value) {
-                $conditions[] = "nombre LIKE ? OR apellidos LIKE ?";
+                $conditions[] = "nombre LIKE ?";
                 $params[] = "%" . $value . "%";
-                $params[] = "%" . $value . "%";
-                $types .= "ss";
+                $types .= "s";
             }
         }
     }
-
-    if (isset($_GET["filter-date"]))
-    {
-        $filterDate = $_GET["filter-date"];
-        if ($filterDate) {
-            $conditions[] = "fechanacimiento LIKE ?";
-            $params[] = "%" . $filterDate . "%";
-            $types .= "s";
-        }
-    }
-
-    // $filterID = filter_input(INPUT_GET, 'filter-id', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    // if ($filterID) {
-    //     $conditions[] = "id LIKE ?";
-    //     $params[] = "%" . $filterID . "%";
-    //     $types .= "s";
-    // }
-
+    
     return [$conditions, $params, $types];
 }
 
 try {
     $conn = getDbConnection();
-    $query = "SELECT * FROM usuarios";
+    $query = "SELECT * FROM roles";
     
     list($conditions, $params, $types) = buildConditionsAndParams();
 

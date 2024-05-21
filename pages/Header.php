@@ -23,5 +23,3 @@ if (isset($_POST["bttn-logout"]))
         </form>
     </article>
 </header>
-
-<script src="../js/Logout.js"></script>

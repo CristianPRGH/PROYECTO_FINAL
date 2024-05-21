@@ -1,9 +1,12 @@
 <?php
 
+include "../DB_Connection/DB_Connection.php";
+
 session_start();
 
 function getDbConnection() {
-    $conn = new mysqli("localhost", "root", "", "cristianperez_erp");
+    global $host, $user, $pass, $db;
+    $conn = new mysqli($host, $user, $pass, $db);
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }

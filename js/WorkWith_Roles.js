@@ -1,21 +1,24 @@
 
 let allData = null;
-let urlAlter = "../php_logic/AddUser.php";
-let urlGet   = "../php_logic/GetUsers.php";
+let urlAlter = "../php_logic/AddRole.php";
+let urlGet   = "../php_logic/GetRoles.php";
 
-const GetUsers = async (url) => {
+
+const GetRoles = async (url) => {
+    console.log("hola");
     try {
         const res = await fetch(url);
-        if (!res.ok) throw {ok:false, msg:"Error al retornar los usuarios"};
+        if (!res.ok) throw {ok:false, msg:"Error al retornar los roles"};
         allData = await res.json();
-        CreateUsersTable(allData);
+        console.log(allData);
+        CreateRolesTable(allData);
     } catch (error) {
         console.error(error);
     }
 }
 
 // AGREGA / MODIFICA / ELIMINA UNA ENTRADA EN LA TABLA DE EMPLEADOS
-const AlterUsersTable = async(formData) => {
+const AlterRolesTable = async(formData) => {
     try {
         const res = await fetch(urlAlter, {
             method:"POST",
@@ -24,16 +27,14 @@ const AlterUsersTable = async(formData) => {
         if(!res.ok) throw {ok:false, msg: "No hay datos"};
         // let data = await res.json();
         ResetForm();
-        GetUsers(urlGet);
+        GetRoles(urlGet);
     } catch (error) {
         console.log(error);
     }
 }
 
-GetUsers(urlGet);
-
 // CREA LA TABLA DE EMPLEADOS
-function CreateUsersTable(data)
+function CreateRolesTable(data)
 {
 
     let namesFilterList = document.getElementById("name-filter-list");
@@ -53,26 +54,23 @@ function CreateUsersTable(data)
             let col = null;
             for (const item in element) // element = usuario - item = campo
             {
-                if (item != "password")
-                {
-                    col = row.insertCell(i);
-                    col.innerHTML = element[item];
-                    i++;
-                }
+                col = row.insertCell(i);
+                col.innerHTML = element[item];
+                i++;
             }
 
             // CREA EL ICONO PARA MODIFICAR EL USUARIO
             col = row.insertCell(row.cells.length);
             col.setAttribute("class", "material-symbols-rounded pointer");
-            col.setAttribute("onclick", "UpdateUser("+element.id+")");
-            let text = document.createTextNode("edit_square");
+            col.setAttribute("onclick", "UpdateRole("+element.id+")");
+            let text = document.createTextNode("person_edit");
             col.appendChild(text);
 
             // CREA EL ICONO DE ELIMINAR USUARIO
             col = row.insertCell(row.cells.length);
             col.setAttribute("class", "material-symbols-rounded pointer");
             col.setAttribute("onclick", "OpenModal('DLT',"+element.id+")");
-            text = document.createTextNode("delete");
+            text = document.createTextNode("person_remove");
             col.appendChild(text);
 
 
@@ -94,9 +92,7 @@ function CreateUsersTable(data)
     }
 }
 
-
-
-let insertForm = document.getElementById("workwith-users");
+let insertForm = document.getElementById("workwith-roles");
 
 insertForm.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -105,28 +101,12 @@ insertForm.addEventListener("submit", (e) => {
     let formMode = document.getElementById("form-mode").value;
     let inputID  = document.getElementById("input-id").value;
     let campos = [
-        document.getElementById("input-dni"),
         document.getElementById("input-nombre"),
-        document.getElementById("input-apellidos"),
-        document.getElementById("input-fechanac"),
-        document.getElementById("input-telefono"),
-        document.getElementById("input-direccion"),
-        document.getElementById("input-email"),
-        document.getElementById("input-usuario"),
-        document.getElementById("input-password")
     ];
 
     // ERRORES DE LOS CAMPOS
     let errores = [
-        document.getElementById("error-dni"),
-        document.getElementById("error-nombre"),
-        document.getElementById("error-apellidos"),
-        document.getElementById("error-fechanac"),
-        document.getElementById("error-telefono"),
-        document.getElementById("error-direccion"),
-        document.getElementById("error-email"),
-        document.getElementById("error-usuario"),
-        document.getElementById("error-password")
+        document.getElementById("error-nombre")
     ];
 
     let formData = ValidaCampos(campos, errores);
@@ -138,12 +118,13 @@ insertForm.addEventListener("submit", (e) => {
         campos.forEach(campo => {
             formData.append(campo.name, campo.value);
         });
-        AlterUsersTable(formData);
+        AlterRolesTable(formData);
     }
 });
 
+
 // RELLENA EL FORMULARIO CON LOS DATOS DEL EMPLEADO A MODIFICAR
-function UpdateUser(id)
+function UpdateRole(id)
 {
     if (id !== -1)
     {
@@ -156,17 +137,12 @@ function UpdateUser(id)
             document.getElementById("submitForm").innerHTML     = "MODIFICAR";
             document.getElementById("form-mode").value          = "UPD";
             document.getElementById("input-id").value           = data[0].id || -1;
-            document.getElementById("input-dni").value          = data[0].dni || "";
             document.getElementById("input-nombre").value       = data[0].nombre || "";
-            document.getElementById("input-apellidos").value    = data[0].apellidos || "";
-            document.getElementById("input-fechanac").value     = data[0].fechanacimiento || "";
-            document.getElementById("input-telefono").value     = data[0].telefono || "";
-            document.getElementById("input-direccion").value    = data[0].direccion || "";
-            document.getElementById("input-email").value        = data[0].email || "";
-            document.getElementById("input-usuario").value      = data[0].usuario || "";
-            // document.getElementById("input-password").value     = data[0].password || "";
+            document.getElementById("action-leer").value         = data[0].leer || "";
+            document.getElementById("action-editar").value       = data[0].editar || "";
+            document.getElementById("action-eliminar").value     = data[0].eliminar|| "";
 
-            window.location.href = "#"+document.getElementById("workwith-users").id;
+            window.location.href = "#"+document.getElementById("workwith-roles").id;
         }
         else
         {
@@ -176,24 +152,20 @@ function UpdateUser(id)
 }
 
 // ELIMINA EL EMPLEADO SELECCIONADO
-function DeleteUser(id)
+function DeleteRole(id)
 {
     if (id !== -1)
     {
         window.location.href = urlAlter+"?mode=DLT&id="+id;
-        GetUsers(urlGet);
+        GetRoles(urlGet);
     }
 }
-
-
 
 
 // FORMULARIO DE FILTROS
 let filtersForm = document.getElementById("form-filters");
 filtersForm.addEventListener("submit", (e) => {
     e.preventDefault();
-
-
 
     let filters = url = "";
 
@@ -205,9 +177,9 @@ filtersForm.addEventListener("submit", (e) => {
     if (filters.length > 0)
     {
         url = urlGet+'?'+filters;
-        GetUsers(url);
+        GetRoles(url);
     }
     else{
-        GetUsers(urlGet);
+        GetRoles(urlGet);
     }
 })

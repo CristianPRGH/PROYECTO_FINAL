@@ -11,6 +11,7 @@ function getDbConnection() {
     return $conn;
 }
 
+
 function executeQuery($query, $params, $types) {
     $conn = getDbConnection();
     $stmt = $conn->prepare($query);
@@ -29,39 +30,35 @@ function executeQuery($query, $params, $types) {
     return $msg;
 }
 
+
 $msg = "";
 $mode = $_POST["mode"];
 
 $id         = $_POST["id"];
-$dni        = $_POST["dni"];
 $nombre     = $_POST["nombre"];
-$apellidos  = $_POST["apellidos"];
-$fechanac   = date("Y-m-d", strtotime($_POST["'fechanacimiento"]));
-$telefono   = $_POST["telefono"];
-$direccion  = $_POST["direccion"];
-$email      = $_POST["email"];
-$usuario    = $_POST["usuario"];
-$password   = sha1(md5($_POST["password"]));
+$leer       = $_POST["leer"];
+$editar     = $_POST["editar"];
+$eliminar   = $_POST["eliminar"];
+
 
 
 switch ($mode) {
     case 'INS':
-        $query  = 'INSERT INTO usuarios (dni, nombre, apellidos, fechanacimiento, telefono, direccion, email, usuario, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';
-        $params = [$dni, $nombre, $apellidos, $fechanac, $telefono, $direccion, $email, $usuario, $password];
-        $msg    = executeQuery($query, $params, 'sssssssss');
+        $query  = 'INSERT INTO roles (nombre, leer, editar, eliminar) VALUES (?, ?, ?, ?)';
+        $params = [$nombre,$leer,$editar,$eliminar];
+        $msg    = executeQuery($query, $params, 'siii');
         break;
 
     case 'UPD':
-        echo "hola";
-        $query  = 'UPDATE usuarios SET dni = ?, nombre = ?, apellidos = ?, fechanacimiento = ?, telefono = ?, direccion = ?, email = ?, usuario = ?, password = ? WHERE id = ?';
-        $params = [$dni, $nombre, $apellidos, $fechanac, $telefono, $direccion, $email, $usuario, $password, $id];
-        $msg    = executeQuery($query, $params, 'sssssssssi');
+        $query  = 'UPDATE roles SET nombre = ?, leer = ?, editar = ?, eliminar = ? WHERE id = ?';
+        $params = [$nombre,$leer,$editar,$eliminar, $id];
+        $msg    = executeQuery($query, $params, 'siiii');
         break;
 
     case 'DLT':
         $id = $_GET["id"];
         if ($id && $id != -1) {
-            $query  = 'DELETE FROM empleados WHERE id = ?';
+            $query  = 'DELETE FROM roles WHERE id = ?';
             $params = [$id];
             $msg    = executeQuery($query, $params, 'i');
         }
