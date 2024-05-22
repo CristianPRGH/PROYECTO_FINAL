@@ -8,7 +8,7 @@
     <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script> -->
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,1,0" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" href="../css/styles_main.css">
     <link rel="stylesheet" href="../css/styles_forms.css">
     <link rel="stylesheet" href="../css/styles_tables.css">
@@ -25,7 +25,7 @@
         <aside class="body-leftmenu">
             <ul>
                 <li class="pointer">Usuarios</li>
-                <!-- <li class="pointer">Empresas</li> -->
+                <li class="pointer">Roles</li>
             </ul>
         </aside>
 

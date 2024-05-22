@@ -3,11 +3,13 @@
 .table-container{
     width: 100%;
     overflow-x: scroll;
+    box-shadow: 2px 2px 5px var(--primary-color);
 }
 
 .data-view{
-    border-top: 2px solid var(--secondary-color);
-    border-bottom: 5px solid var(--primary-color);
+    background-color: var(--background-color);
+    border-top: 5px solid var(--accent-color);
+    border-bottom: 5px solid var(--accent-color);
     /* border-radius: 10px 10px 0 0; */
     border-spacing: 0;
     width: 100%;
@@ -31,6 +33,12 @@
 .data-view th{
     border: 0;
     border-bottom: 1px solid var(--secondary-color);
+    font-size: 1em;
+}
+
+.data-view tr:hover th{
+    background-color: var(--background-color);
+    color: black;
 }
 
 .data-view .material-symbols-rounded{

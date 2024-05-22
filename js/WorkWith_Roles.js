@@ -5,7 +5,7 @@ let urlGet   = "../php_logic/GetRoles.php";
 
 
 const GetRoles = async (url) => {
-    console.log("hola");
+    // console.log("hola");
     try {
         const res = await fetch(url);
         if (!res.ok) throw {ok:false, msg:"Error al retornar los roles"};
@@ -32,6 +32,8 @@ const AlterRolesTable = async(formData) => {
         console.log(error);
     }
 }
+
+GetRoles(urlGet);
 
 // CREA LA TABLA DE EMPLEADOS
 function CreateRolesTable(data)
@@ -63,14 +65,14 @@ function CreateRolesTable(data)
             col = row.insertCell(row.cells.length);
             col.setAttribute("class", "material-symbols-rounded pointer");
             col.setAttribute("onclick", "UpdateRole("+element.id+")");
-            let text = document.createTextNode("person_edit");
+            let text = document.createTextNode("edit");
             col.appendChild(text);
 
             // CREA EL ICONO DE ELIMINAR USUARIO
             col = row.insertCell(row.cells.length);
             col.setAttribute("class", "material-symbols-rounded pointer");
             col.setAttribute("onclick", "OpenModal('DLT',"+element.id+")");
-            text = document.createTextNode("person_remove");
+            text = document.createTextNode("close");
             col.appendChild(text);
 
 
@@ -102,11 +104,17 @@ insertForm.addEventListener("submit", (e) => {
     let inputID  = document.getElementById("input-id").value;
     let campos = [
         document.getElementById("input-nombre"),
+        document.getElementById("action-read"),
+        document.getElementById("action-edit"),
+        document.getElementById("action-delete")
     ];
 
     // ERRORES DE LOS CAMPOS
     let errores = [
-        document.getElementById("error-nombre")
+        document.getElementById("error-nombre"),
+        document.getElementById("error-read"),
+        document.getElementById("error-edit"),
+        document.getElementById("error-delete")
     ];
 
     let formData = ValidaCampos(campos, errores);
@@ -116,7 +124,14 @@ insertForm.addEventListener("submit", (e) => {
         if (inputID.value !== -1) formData.append("id", inputID); // SOLO PARA MODIFICAR
 
         campos.forEach(campo => {
-            formData.append(campo.name, campo.value);
+            console.log(campo);
+            if (campo.type === "checkbox")
+            {
+                console.log(campo.checked);
+                let valor = (campo.checked) ? 1 : 0;
+                formData.append(campo.name, valor);
+            }else
+                formData.append(campo.name, campo.value);
         });
         AlterRolesTable(formData);
     }
@@ -138,9 +153,9 @@ function UpdateRole(id)
             document.getElementById("form-mode").value          = "UPD";
             document.getElementById("input-id").value           = data[0].id || -1;
             document.getElementById("input-nombre").value       = data[0].nombre || "";
-            document.getElementById("action-leer").value         = data[0].leer || "";
-            document.getElementById("action-editar").value       = data[0].editar || "";
-            document.getElementById("action-eliminar").value     = data[0].eliminar|| "";
+            document.getElementById("action-leer").value        = data[0].leer || "";
+            document.getElementById("action-editar").value      = data[0].editar || "";
+            document.getElementById("action-eliminar").value    = data[0].eliminar|| "";
 
             window.location.href = "#"+document.getElementById("workwith-roles").id;
         }

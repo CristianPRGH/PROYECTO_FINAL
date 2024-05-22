@@ -1,14 +1,13 @@
 /* INSERT FORM */
 .workwith-form{
     width: 50%;
-    /* border: 2px solid #497285; */
-    /* border-bottom: 10px double #497285; */
     border-radius: 20px;
     padding: 20px 50px;
-    /* box-shadow: inset 1px 1px 5px #497285,
-                inset -1px -1px 5px #497285; */
-
-    /* background: linear-gradient(to right, var(--secondary-color),var(--background-color)); */
+    background-color: var(--background-color);
+    box-shadow: 2px 2px 5px var(--primary-color);
+    /* border-right: 5px solid var(--accent-color); */
+    border-top: 5px solid var(--accent-color);
+    border-bottom: 10px solid var(--accent-color);
 }
 
 .workwith-form fieldset{
@@ -54,7 +53,7 @@ input:focus, textarea:focus{
     font-size: 1.2em;
     margin-top: 10px;
     padding: 0;
-    border-radius: 10px;
+    border-radius: 5px;
     border: 0.5px solid var(--primary-color);
     border-bottom: 5px solid var(--primary-color);
     transition: 0.1s;
@@ -75,7 +74,7 @@ input:focus, textarea:focus{
     visibility: hidden;
     position: absolute;
     width: fit-content;
-    background-color: var(--secondary-color);
+    background-color: var(--primary-color);
     color: #dfebed;
     text-align: left;
     text-wrap: nowrap;
@@ -85,7 +84,7 @@ input:focus, textarea:focus{
     top: 5px;
     left: 105%;
 
-    box-shadow: 3px 3px 5px crimson;
+    box-shadow: 2px 2px 5px red;
 }
   
 .tooltip .errortext::after {

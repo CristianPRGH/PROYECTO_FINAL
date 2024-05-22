@@ -16,17 +16,20 @@
                 <article class="flexColumn">
                     <div class="form-action flexRow">
                         <label for="action-read" >Leer</label>
-                        <input type="checkbox" id="action-read" name="action-read" class="form-checkbox">
+                        <input type="checkbox" id="action-read" name="leer" class="form-checkbox">
+                        <span class="errortext" id="error-read"></span>
                     </div>
                     
                     <div class="form-action flexRow">
                         <label for="action-edit" class="flexRow">Editar</label>
-                        <input type="checkbox" id="action-edit" name="action-edit" class="form-checkbox">
+                        <input type="checkbox" id="action-edit" name="editar" class="form-checkbox">
+                        <span class="errortext" id="error-edit"></span>
                     </div>
 
                     <div class="form-action flexRow">
                         <label for="action-delete" class="flexRow">Eliminar</label>
-                        <input type="checkbox" id="action-delete" name="action-delete" class="form-checkbox">
+                        <input type="checkbox" id="action-delete" name="eliminar" class="form-checkbox">
+                        <span class="errortext" id="error-delete"></span>
                     </div>
                 </article>
 
@@ -41,8 +44,8 @@
 
     <section>
         <article>
-            <h4>Filtros</h4>
             <form method="get" action class="filters-form flexRow" id="form-filters">
+                <h4>Filtros</h4>
                 <label>Nombre</label>
                 <input list="name-filter-list" id="filter-name" name="filter-name" />
                 <datalist id="name-filter-list"></datalist>
@@ -70,7 +73,7 @@
     <section class="modal" id="confirm-modal">
         <article class="modal-container flexColumn">
             <span class="close-modal pointer">&times;</span>
-            <hr />
+            <hr/>
             <p id="confirm-msg">Confirma la eliminación?</p>
             <p id="confirm-id"></p>
             <article class="modal-buttons-container flexRow">

@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     let resetForm = document.getElementById("reset-form");
-    resetForm.addEventListener("click", ResetForm);
+    resetForm.addEventListener("click", ResetForm());
 })
 
 function ResetForm()
@@ -21,7 +21,7 @@ function ResetForm()
     if ( textareas != null)
         textareas.forEach ((textarea) => { textarea.style = null; })
 
-    form.getElementById("form-mode").value      = "INS";
-    form.getElementById("input-id").value       = -1;
-    form.getElementById("submitForm").innerHTML = "AGREGAR";
+    document.getElementById("form-mode").value      = "INS";
+    document.getElementById("input-id").value       = -1;
+    document.getElementById("submitForm").innerHTML = "AGREGAR";
 }

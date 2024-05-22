@@ -65,14 +65,14 @@ function CreateUsersTable(data)
             col = row.insertCell(row.cells.length);
             col.setAttribute("class", "material-symbols-rounded pointer");
             col.setAttribute("onclick", "UpdateUser("+element.id+")");
-            let text = document.createTextNode("edit_square");
+            let text = document.createTextNode("edit");
             col.appendChild(text);
 
             // CREA EL ICONO DE ELIMINAR USUARIO
             col = row.insertCell(row.cells.length);
             col.setAttribute("class", "material-symbols-rounded pointer");
             col.setAttribute("onclick", "OpenModal('DLT',"+element.id+")");
-            text = document.createTextNode("delete");
+            text = document.createTextNode("close");
             col.appendChild(text);
 
 
