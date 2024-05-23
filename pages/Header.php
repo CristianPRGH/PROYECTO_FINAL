@@ -1,7 +1,5 @@
 <?php
-session_start();
-
-if (!$_SESSION["user"]) header("Location: Location: Login.html");
+// session_start();
 
 if (isset($_POST["bttn-logout"]))
 {

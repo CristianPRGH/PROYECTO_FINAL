@@ -1,3 +1,9 @@
+<?php
+session_start();
+if (!$_SESSION["user"]) header("Location: Login.html");
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,14 +29,15 @@
         <?php include_once "Header.php" ?>
 
         <aside class="body-leftmenu">
-            <ul>
-                <li class="pointer">Usuarios</li>
-                <li class="pointer">Roles</li>
+            <ul class="modulos">
+                <li class="modulo-titulo">GESTIÓN DE USUARIOS</li>
+                <li class="modulo-opcion pointer">Usuarios</li>
+                <li class="modulo-opcion pointer">Roles</li>
             </ul>
         </aside>
 
-        <?php //include "Users.html" ?>
-        <?php include "Roles.html" ?>
+        <?php include "Users.html" ?>
+        <?php //include "Roles.html" ?>
 
     </section>
 </body>

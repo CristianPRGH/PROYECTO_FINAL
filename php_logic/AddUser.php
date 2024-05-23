@@ -2,6 +2,8 @@
 
 include "../DB_Connection/DB_Connection.php";
 
+header("Location: ../pages/Main.php");
+
 function getDbConnection() {
     global $host, $user, $pass, $db;
     $conn = new mysqli($host, $user, $pass, $db);
@@ -29,39 +31,46 @@ function executeQuery($query, $params, $types) {
     return $msg;
 }
 
-$msg = "";
-$mode = $_POST["mode"];
+$msg        = "";
 
-$id         = $_POST["id"];
-$dni        = $_POST["dni"];
-$nombre     = $_POST["nombre"];
-$apellidos  = $_POST["apellidos"];
-$fechanac   = date("Y-m-d", strtotime($_POST["'fechanacimiento"]));
-$telefono   = $_POST["telefono"];
-$direccion  = $_POST["direccion"];
-$email      = $_POST["email"];
-$usuario    = $_POST["usuario"];
-$password   = sha1(md5($_POST["password"]));
+if (isset($_POST["mode"]))
+{
+    $mode       = $_POST["mode"];
 
+    $id         = $_POST["id"];
+    $dni        = $_POST["dni"];
+    $nombre     = $_POST["nombre"];
+    $apellidos  = $_POST["apellidos"];
+    $fechanac   = date("Y-m-d", strtotime($_POST["'fechanacimiento"]));
+    $telefono   = $_POST["telefono"];
+    $direccion  = $_POST["direccion"];
+    $email      = $_POST["email"];
+    $usuario    = $_POST["usuario"];
+    $password   = sha1(md5($_POST["password"]));
+    $rolid      = $_POST["rol"];
+}
+else if (isset($_GET["mode"]))
+{
+    $mode   = $_GET["mode"];
+    $id     = $_GET["id"];
+}
 
 switch ($mode) {
     case 'INS':
-        $query  = 'INSERT INTO usuarios (dni, nombre, apellidos, fechanacimiento, telefono, direccion, email, usuario, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';
-        $params = [$dni, $nombre, $apellidos, $fechanac, $telefono, $direccion, $email, $usuario, $password];
-        $msg    = executeQuery($query, $params, 'sssssssss');
-        break;
-
-    case 'UPD':
-        echo "hola";
-        $query  = 'UPDATE usuarios SET dni = ?, nombre = ?, apellidos = ?, fechanacimiento = ?, telefono = ?, direccion = ?, email = ?, usuario = ?, password = ? WHERE id = ?';
-        $params = [$dni, $nombre, $apellidos, $fechanac, $telefono, $direccion, $email, $usuario, $password, $id];
+        $query  = 'INSERT INTO usuarios (dni, nombre, apellidos, fechanacimiento, telefono, direccion, email, usuario, password, rolid) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+        $params = [$dni, $nombre, $apellidos, $fechanac, $telefono, $direccion, $email, $usuario, $password, $rolid];
         $msg    = executeQuery($query, $params, 'sssssssssi');
         break;
 
+    case 'UPD':
+        $query  = 'UPDATE usuarios SET dni = ?, nombre = ?, apellidos = ?, fechanacimiento = ?, telefono = ?, direccion = ?, email = ?, usuario = ?, password = ?, rolid = ? WHERE userid = ?';
+        $params = [$dni, $nombre, $apellidos, $fechanac, $telefono, $direccion, $email, $usuario, $password, $rolid, $id];
+        $msg    = executeQuery($query, $params, 'sssssssssii');
+        break;
+
     case 'DLT':
-        $id = $_GET["id"];
         if ($id && $id != -1) {
-            $query  = 'DELETE FROM empleados WHERE id = ?';
+            $query  = 'DELETE FROM usuarios WHERE userid = ?';
             $params = [$id];
             $msg    = executeQuery($query, $params, 'i');
         }
@@ -71,5 +80,5 @@ switch ($mode) {
         $msg = "Modo no válido";
 }
 
-header("Content-Type: application/json");
-echo json_encode($msg);
+// header("Content-Type: application/json");
+// echo json_encode($msg);

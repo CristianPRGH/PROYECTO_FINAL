@@ -13,7 +13,6 @@
 
 body{
     background-color: var(--secondary-color);
-    /* background: linear-gradient(to right,var(--accent-color) 0% 10%, var(--background-color) 30% 70%, var(--accent-color) 90% 100%); */
     max-height: 100vh;
 }
 
@@ -26,6 +25,7 @@ body{
     flex-direction: column;
 }
 
+
 .main-container{
     display: grid;
     grid-template-areas: 
@@ -36,14 +36,6 @@ body{
     grid-template-rows: 70px 1fr;
     grid-template-columns: 200px 1fr;
 }
-
-/* aside{
-    background: linear-gradient(to bottom, #2b4450, #497285);
-}
-
-header{
-    background: linear-gradient(to right, #2b4450  0px 200px, #497285);
-} */
 
 header, aside{
     background-color: var(--primary-color);
@@ -95,36 +87,39 @@ main section{
     height: 100%;
 }
 
-.body-leftmenu ul{
+.modulos{
     margin-top: 20px;
-    padding: 0;
+    padding-bottom: 10px;
     width: 100%;
-    height: 80%;
     border: 3px solid var(--accent-color);
-    border-right: 10px solid var(--accent-color);
+    border-right: 0;
     border-left: 0;
-    border-radius: 0 20px 20px 0;
-    background-color: var(--background-color); 
-    overflow-y: scroll;
+    overflow-y: auto;
+    background-color: var(--secondary-color);
 }
 
-.body-leftmenu ul li{
-    width: 95%;
-    list-style-type: none;
-    padding: 5px;
-    color: var(--primary-color);
-    border-bottom: 2px solid var(--secondary-color);
-    border-radius: 0 0 10px 0 ;
-}
-
-.body-leftmenu ul li:hover{
-    background: linear-gradient(to right, var(--secondary-color), transparent);
+.modulo-titulo{
+    font-size: 0.9em;
+    padding: 10px 0;
+    text-align: center;
     color: var(--background-color);
 }
 
+.modulo-opcion{
+    width: 95%;
+    list-style-type: none;
+    padding: 5px;
+    background-color: var(--background-color);
+    color: var(--primary-color);
+    border-bottom: 2px solid var(--secondary-color);
+}
+
+.modulo-opcion:hover{
+    background: linear-gradient(to left, var(--accent-color), var(--background-color));
+}
+
 hr{
-    border: 2px solid var(--accent-color);
-    /* border-bottom: 3px solid var(--primary-color); */
+    border: 1px solid var(--accent-color);
     box-shadow: 1px 1px 2px var(--primary-color);
     margin: 20px 5px;
 }

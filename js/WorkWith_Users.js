@@ -2,8 +2,43 @@
 let allData = null;
 let urlAlter = "../php_logic/AddUser.php";
 let urlGet   = "../php_logic/GetUsers.php";
+let urlGetRoles   = "../php_logic/GetRoles.php";
 
-const GetUsers = async (url) => {
+
+document.addEventListener("DOMContentLoaded", () => { 
+    GetUsers(urlGet);
+    GetRoles(urlGetRoles);
+});
+
+async function GetRoles(url)
+{
+    try {
+        const res = await fetch(url);
+        if (!res.ok) throw {ok:false, msg:"Error al retornar los roles"};
+        let roles = await res.json();
+
+        let selectRoles =  document.getElementById("input-rol");
+
+        let option = document.createElement("option");
+        option.value = "";
+        option.innerHTML = "- Seleccione un rol de usuario -";
+        selectRoles.appendChild(option);
+
+        roles.datos.forEach(rol => {
+            let option = document.createElement("option");
+            option.value = rol.rolid;
+            option.innerHTML = rol.nombre;
+
+            selectRoles.appendChild(option);
+        });
+
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+async function GetUsers(url)
+{
     try {
         const res = await fetch(url);
         if (!res.ok) throw {ok:false, msg:"Error al retornar los usuarios"};
@@ -15,22 +50,20 @@ const GetUsers = async (url) => {
 }
 
 // AGREGA / MODIFICA / ELIMINA UNA ENTRADA EN LA TABLA DE EMPLEADOS
-const AlterUsersTable = async(formData) => {
+async function AlterUsersTable(formData)
+{
     try {
         const res = await fetch(urlAlter, {
             method:"POST",
             body:formData
         });
         if(!res.ok) throw {ok:false, msg: "No hay datos"};
-        // let data = await res.json();
         ResetForm();
         GetUsers(urlGet);
     } catch (error) {
         console.log(error);
     }
 }
-
-GetUsers(urlGet);
 
 // CREA LA TABLA DE EMPLEADOS
 function CreateUsersTable(data)
@@ -64,14 +97,14 @@ function CreateUsersTable(data)
             // CREA EL ICONO PARA MODIFICAR EL USUARIO
             col = row.insertCell(row.cells.length);
             col.setAttribute("class", "material-symbols-rounded pointer");
-            col.setAttribute("onclick", "UpdateUser("+element.id+")");
+            col.setAttribute("onclick", "UpdateUser("+element.userid+")");
             let text = document.createTextNode("edit");
             col.appendChild(text);
 
             // CREA EL ICONO DE ELIMINAR USUARIO
             col = row.insertCell(row.cells.length);
             col.setAttribute("class", "material-symbols-rounded pointer");
-            col.setAttribute("onclick", "OpenModal('DLT',"+element.id+")");
+            col.setAttribute("onclick", "OpenModal('DLT',"+element.userid+")");
             text = document.createTextNode("close");
             col.appendChild(text);
 
@@ -113,7 +146,8 @@ insertForm.addEventListener("submit", (e) => {
         document.getElementById("input-direccion"),
         document.getElementById("input-email"),
         document.getElementById("input-usuario"),
-        document.getElementById("input-password")
+        document.getElementById("input-password"),
+        document.getElementById("input-rol")
     ];
 
     // ERRORES DE LOS CAMPOS
@@ -126,7 +160,8 @@ insertForm.addEventListener("submit", (e) => {
         document.getElementById("error-direccion"),
         document.getElementById("error-email"),
         document.getElementById("error-usuario"),
-        document.getElementById("error-password")
+        document.getElementById("error-password"),
+        document.getElementById("error-rol")
     ];
 
     let formData = ValidaCampos(campos, errores);
@@ -147,15 +182,15 @@ function UpdateUser(id)
 {
     if (id !== -1)
     {
-        let data = allData.datos.filter((item) => item.id == id);
+        let data = allData.datos.filter((item) => item.userid == id);
 
-        // console.log(data);
+        console.log(data[0].rolid);
         
         if (data.length > 0)
         {
             document.getElementById("submitForm").innerHTML     = "MODIFICAR";
             document.getElementById("form-mode").value          = "UPD";
-            document.getElementById("input-id").value           = data[0].id || -1;
+            document.getElementById("input-id").value           = data[0].userid || -1;
             document.getElementById("input-dni").value          = data[0].dni || "";
             document.getElementById("input-nombre").value       = data[0].nombre || "";
             document.getElementById("input-apellidos").value    = data[0].apellidos || "";
@@ -165,6 +200,8 @@ function UpdateUser(id)
             document.getElementById("input-email").value        = data[0].email || "";
             document.getElementById("input-usuario").value      = data[0].usuario || "";
             // document.getElementById("input-password").value     = data[0].password || "";
+            document.getElementById("input-rol").value          = data[0].rolid || "";
+            
 
             window.location.href = "#"+document.getElementById("workwith-users").id;
         }
@@ -192,9 +229,7 @@ function DeleteUser(id)
 let filtersForm = document.getElementById("form-filters");
 filtersForm.addEventListener("submit", (e) => {
     e.preventDefault();
-
-
-
+    
     let filters = url = "";
 
     let formInputs = filtersForm.querySelectorAll("input");
@@ -211,3 +246,11 @@ filtersForm.addEventListener("submit", (e) => {
         GetUsers(urlGet);
     }
 })
+
+
+function ConfirmDelete()
+{
+    let id = document.getElementById("confirm-id").innerHTML;
+    DeleteUser(id);
+    CloseModal();
+}

@@ -32,14 +32,20 @@ function executeQuery($query, $params, $types) {
 
 
 $msg = "";
-$mode = $_POST["mode"];
-
-$id         = $_POST["id"];
-$nombre     = $_POST["nombre"];
-$leer       = $_POST["leer"];
-$editar     = $_POST["editar"];
-$eliminar   = $_POST["eliminar"];
-
+if (isset($_POST["mode"]))
+{
+    $mode = $_POST["mode"];
+    $id         = $_POST["id"];
+    $nombre     = $_POST["nombre"];
+    $leer       = $_POST["leer"];
+    $editar     = $_POST["editar"];
+    $eliminar   = $_POST["eliminar"];
+}
+else if (isset($_GET["mode"]))
+{
+    $mode   = $_GET["mode"];
+    $id     = $_GET["id"];
+}
 
 
 switch ($mode) {
@@ -50,15 +56,14 @@ switch ($mode) {
         break;
 
     case 'UPD':
-        $query  = 'UPDATE roles SET nombre = ?, leer = ?, editar = ?, eliminar = ? WHERE id = ?';
+        $query  = 'UPDATE roles SET nombre = ?, leer = ?, editar = ?, eliminar = ? WHERE rolid = ?';
         $params = [$nombre,$leer,$editar,$eliminar, $id];
         $msg    = executeQuery($query, $params, 'siiii');
         break;
 
     case 'DLT':
-        $id = $_GET["id"];
         if ($id && $id != -1) {
-            $query  = 'DELETE FROM roles WHERE id = ?';
+            $query  = 'DELETE FROM roles WHERE rolid = ?';
             $params = [$id];
             $msg    = executeQuery($query, $params, 'i');
         }

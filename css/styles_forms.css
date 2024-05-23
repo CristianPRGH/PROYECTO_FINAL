@@ -1,13 +1,12 @@
 /* INSERT FORM */
 .workwith-form{
     width: 50%;
-    border-radius: 20px;
     padding: 20px 50px;
     background-color: var(--background-color);
     box-shadow: 2px 2px 5px var(--primary-color);
     /* border-right: 5px solid var(--accent-color); */
-    border-top: 5px solid var(--accent-color);
-    border-bottom: 10px solid var(--accent-color);
+    border-top: 3px solid var(--accent-color);
+    border-bottom: 3px solid var(--accent-color);
 }
 
 .workwith-form fieldset{
@@ -19,7 +18,7 @@
     margin: 5px auto;
 }
 
-.workwith-form input, .workwith-form textarea{
+.form-input{
     width: calc(100% - 40px);
     padding: 10px 20px;
     border-radius: 5px;

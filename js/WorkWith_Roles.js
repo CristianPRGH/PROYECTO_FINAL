@@ -3,14 +3,15 @@ let allData = null;
 let urlAlter = "../php_logic/AddRole.php";
 let urlGet   = "../php_logic/GetRoles.php";
 
+document.addEventListener("DOMContentLoaded", () => { GetRoles(urlGet)})
 
-const GetRoles = async (url) => {
-    // console.log("hola");
+
+async function GetRoles(url)
+{
     try {
         const res = await fetch(url);
         if (!res.ok) throw {ok:false, msg:"Error al retornar los roles"};
         allData = await res.json();
-        console.log(allData);
         CreateRolesTable(allData);
     } catch (error) {
         console.error(error);
@@ -18,22 +19,20 @@ const GetRoles = async (url) => {
 }
 
 // AGREGA / MODIFICA / ELIMINA UNA ENTRADA EN LA TABLA DE EMPLEADOS
-const AlterRolesTable = async(formData) => {
+async function AlterRolesTable(formData)
+{
     try {
         const res = await fetch(urlAlter, {
             method:"POST",
             body:formData
         });
         if(!res.ok) throw {ok:false, msg: "No hay datos"};
-        // let data = await res.json();
         ResetForm();
         GetRoles(urlGet);
     } catch (error) {
         console.log(error);
     }
 }
-
-GetRoles(urlGet);
 
 // CREA LA TABLA DE EMPLEADOS
 function CreateRolesTable(data)
@@ -124,10 +123,9 @@ insertForm.addEventListener("submit", (e) => {
         if (inputID.value !== -1) formData.append("id", inputID); // SOLO PARA MODIFICAR
 
         campos.forEach(campo => {
-            console.log(campo);
+            // console.log(campo);
             if (campo.type === "checkbox")
             {
-                console.log(campo.checked);
                 let valor = (campo.checked) ? 1 : 0;
                 formData.append(campo.name, valor);
             }else
@@ -151,11 +149,11 @@ function UpdateRole(id)
         {
             document.getElementById("submitForm").innerHTML     = "MODIFICAR";
             document.getElementById("form-mode").value          = "UPD";
-            document.getElementById("input-id").value           = data[0].id || -1;
+            document.getElementById("input-id").value           = data[0].rolid || -1;
             document.getElementById("input-nombre").value       = data[0].nombre || "";
-            document.getElementById("action-leer").value        = data[0].leer || "";
-            document.getElementById("action-editar").value      = data[0].editar || "";
-            document.getElementById("action-eliminar").value    = data[0].eliminar|| "";
+            document.getElementById("action-read").checked      = data[0].leer || "";
+            document.getElementById("action-edit").checked      = data[0].editar || "";
+            document.getElementById("action-delete").checked    = data[0].eliminar|| "";
 
             window.location.href = "#"+document.getElementById("workwith-roles").id;
         }
@@ -198,3 +196,11 @@ filtersForm.addEventListener("submit", (e) => {
         GetRoles(urlGet);
     }
 })
+
+
+function ConfirmDelete()
+{
+    let id = document.getElementById("confirm-id").innerHTML;
+    DeleteRole(id);
+    CloseModal();
+}

@@ -10,43 +10,43 @@
 
                 <label for="input-dni">DNI / NIE: <span class="asterisk">*</span></label>
                 <div class="tooltip">
-                    <input type="text" name="dni" id="input-dni" class="required" maxlength="11" placeholder="12345678A / A12345678B" value=""/>
+                    <input type="text" name="dni" id="input-dni" class="form-input required" maxlength="11" placeholder="12345678A / A12345678B" value=""/>
                     <span class="errortext" id="error-dni"></span>
                 </div>
 
                 <label for="input-nombre">Nombre: <span class="asterisk">*</span></label>
                 <div class="tooltip">
-                    <input type="text" name="nombre" id="input-nombre" class="required" maxlength="50" value=""/>
+                    <input type="text" name="nombre" id="input-nombre" class="form-input required" maxlength="50" value=""/>
                     <span class="errortext" id="error-nombre"></span>
                 </div>
 
                 <label for="input-apellidos">Apellidos:</label>
                 <div class="tooltip">
-                    <input type="text" name="apellidos" id="input-apellidos" maxlength="50" value=""/>
+                    <input type="text" name="apellidos" id="input-apellidos" class="form-input" maxlength="50" value=""/>
                     <span class="errortext" id="error-apellidos"></span>
                 </div>
 
                 <label for="input-fechanac">Fecha de nacimiento:</label>
                 <div class="tooltip">
-                    <input type="date" name="fechanacimiento" id="input-fechanac" value=""/>
+                    <input type="date" name="fechanacimiento" id="input-fechanac" class="form-input" value=""/>
                     <span class="errortext" id="error-fechanac"></span>
                 </div>
 
                 <label for="input-telefono">Telefono:</label>
                 <div class="tooltip">
-                    <input type="tel" name="telefono" id="input-telefono" maxlength="24" value=""/>
+                    <input type="tel" name="telefono" id="input-telefono" class="form-input" maxlength="24" value=""/>
                     <span class="errortext" id="error-telefono"></span>
                 </div>
 
                 <label for="input-direccion">Dirección:</label>
                 <div class="tooltip">
-                    <textarea name="direccion" maxlength="100" columns="30" rows="2" id="input-direccion" value=""></textarea>
+                    <textarea name="direccion" maxlength="100" columns="30" rows="2" id="input-direccion" class="form-input" value=""></textarea>
                     <span class="errortext" id="error-direccion"></span>
                 </div>
 
                 <label for="input-email">Email:</label>
                 <div class="tooltip">
-                    <input type="email" name="email" id="input-email" maxlength="60" value="" />
+                    <input type="email" name="email" id="input-email" class="form-input" maxlength="60" value="" />
                     <span class="errortext" id="error-email"></span>
                 </div>
 
@@ -54,13 +54,13 @@
 
                 <label for="input-usuario">Usuario:</label>
                 <div class="tooltip">
-                    <input type="text" name="usuario" id="input-usuario" maxlength="30" value="" autocomplete="off"/>
+                    <input type="text" name="usuario" id="input-usuario" class="form-input" maxlength="30" value="" autocomplete="off"/>
                     <span class="errortext" id="error-usuario"></span>
                 </div>
 
                 <label for="input-password">Contraseña:</label>
                 <div class="tooltip flexRow">
-                    <input type="password" name="password" id="input-password" minlength="6" maxlength="12" value="" onkeyup="ValidaPassword(this, null)"/>
+                    <input type="password" name="password" id="input-password" class="form-input" minlength="6" maxlength="12" value="" onkeyup="ValidaPassword(this, null)"/>
                     
                     <div class="flexRow help">
                         <i class="material-symbols-rounded">help</i>
@@ -76,12 +76,11 @@
                     <span class="errortext" id="error-password"></span>
                 </div>
 
-                <!-- <label>Empresa:</label>
-                <input type="text" name="empresa" id="input-empresa" value="" /> -->
+                <label for="input-rol">Rol:</label>
+                <select id="input-rol" name="rol" class="form-input"></select>
+                <span class="errortext" id="error-rol"></span>
                 
-                <hr/>
-
-                <button type="submit" name="addUser" class="formBttn pointer" id="submitForm">AGREGAR</button>
+                <button type="submit" name="submit" class="formBttn pointer" id="submitForm">AGREGAR</button>
                 <button type="button" class="formBttn pointer" id="reset-form">LIMPIAR</button>
             </fieldset>
 
@@ -117,7 +116,7 @@
                     <th>Direccion</th>
                     <th>Email</th>
                     <th>Usuario</th>
-                    <th colspan="2"></th>
+                    <th>Rol</th>
                 </thead>
                 <tbody id="tablebody"></tbody>
             </table>
@@ -132,7 +131,7 @@
             <p id="confirm-msg">Confirma la eliminación?</p>
             <p id="confirm-id"></p>
             <article class="modal-buttons-container flexRow">
-                <button class="formBttn pointer" onclick="Confirm()">CONFIRMAR</button>
+                <button class="formBttn pointer" onclick="ConfirmDelete()">CONFIRMAR</button>
                 <button class="formBttn pointer" onclick="CloseModal()">CANCELAR</button>
             </article>
         </article>

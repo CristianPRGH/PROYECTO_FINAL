@@ -3,7 +3,7 @@
 .filters-form{
     padding: 10px;
     margin-bottom: 20px;
-    border-bottom: 5px solid var(--accent-color);
+    border-bottom: 3px solid var(--accent-color);
     border-top: 3px solid var(--accent-color);
     /* border-radius: 20px; */
     background-color: var(--background-color);

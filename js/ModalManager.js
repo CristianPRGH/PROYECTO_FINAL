@@ -21,9 +21,3 @@ window.onclick = function(event) {
     if (event.target == modal) CloseModal();
 }
 
-function Confirm()
-{
-    let id = document.getElementById("confirm-id").innerHTML;
-    DeleteUser(id);
-    CloseModal();
-}
