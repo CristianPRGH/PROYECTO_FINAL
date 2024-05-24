@@ -37,60 +37,13 @@ async function AlterRolesTable(formData)
 // CREA LA TABLA DE EMPLEADOS
 function CreateRolesTable(data)
 {
-
-    let namesFilterList = document.getElementById("name-filter-list");
-    namesFilterList.innerHTML = "";
+    // let namesFilterList = document.getElementById("name-filter-list");
+    // namesFilterList.innerHTML = "";
 
     let tableData = document.getElementById("tablebody");
     tableData.innerHTML = "";
 
-    if (data.code === 0)
-    {
-        data.datos.forEach(element => {
-            let lastRow = tableData.rows[tableData.rows - 1];
-
-            let row = tableData.insertRow(lastRow);
-
-            let i = 0;
-            let col = null;
-            for (const item in element) // element = usuario - item = campo
-            {
-                col = row.insertCell(i);
-                col.innerHTML = element[item];
-                i++;
-            }
-
-            // CREA EL ICONO PARA MODIFICAR EL USUARIO
-            col = row.insertCell(row.cells.length);
-            col.setAttribute("class", "material-symbols-rounded pointer");
-            col.setAttribute("onclick", "UpdateRole("+element.id+")");
-            let text = document.createTextNode("edit");
-            col.appendChild(text);
-
-            // CREA EL ICONO DE ELIMINAR USUARIO
-            col = row.insertCell(row.cells.length);
-            col.setAttribute("class", "material-symbols-rounded pointer");
-            col.setAttribute("onclick", "OpenModal('DLT',"+element.id+")");
-            text = document.createTextNode("close");
-            col.appendChild(text);
-
-
-            // RELLENA EL DATALIST DEL FILTRO "NOMBRE"
-            let nameOption = document.createElement("option");
-            nameOption.innerHTML = element.nombre + " " + element.apellidos;
-            namesFilterList.appendChild(nameOption);
-
-        });
-    }
-    else    // Si no hay datos muestra un mensaje en la tabla
-    {
-        let cols = document.getElementById("columnsTitles").rows[0].cells.length;   // retorna el numero de columnas (contando los th)
-        let row = tableData.insertRow(0);
-        let col = row.insertCell(0);
-        col.setAttribute("colspan", cols);  // hace que la fila ocupe todo el ancho de la tabla
-        col.style.textAlign = "center";
-        col.innerHTML = data.descripcion;
-    }
+    CreateDataTable(tableData, data, 'rolid');
 }
 
 let insertForm = document.getElementById("workwith-roles");
@@ -137,11 +90,11 @@ insertForm.addEventListener("submit", (e) => {
 
 
 // RELLENA EL FORMULARIO CON LOS DATOS DEL EMPLEADO A MODIFICAR
-function UpdateRole(id)
+function UpdateRegister(id)
 {
     if (id !== -1)
     {
-        let data = allData.datos.filter((item) => item.id == id);
+        let data = allData.datos.filter((item) => item.rolid == id);
 
         // console.log(data);
         
@@ -159,7 +112,7 @@ function UpdateRole(id)
         }
         else
         {
-            console.log("No se encontró el elemento a modifica.");
+            console.log("No se encontró el elemento a modificar.");
         }
     }
 }

@@ -124,6 +124,17 @@ hr{
     margin: 20px 5px;
 }
 
+.material-symbols-rounded{
+    font-size: 1.6em;
+}
+
+.material-symbols-rounded:hover{
+    transform: scale(1.2);
+    text-shadow: 1px 1px var(--primary-color);
+    color:var(--accent-color);
+}
+
+
 
 /* CURSORES */
 .pointer{ cursor: pointer; }

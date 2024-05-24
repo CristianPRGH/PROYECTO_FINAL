@@ -1,32 +1,34 @@
 
 let allData = null;
-let urlAlter = "../php_logic/AddUser.php";
-let urlGet   = "../php_logic/GetUsers.php";
-let urlGetRoles   = "../php_logic/GetRoles.php";
+let urlAlter    = "../php_logic/AddUser.php";
+let urlGet      = "../php_logic/GetUsers.php";
+let urlGetRoles = "../php_logic/GetRoles.php";
 
 
-document.addEventListener("DOMContentLoaded", () => { 
+document.addEventListener("DOMContentLoaded", async() => { 
+    await GetRoles(urlGetRoles);
     GetUsers(urlGet);
-    GetRoles(urlGetRoles);
 });
 
+// Rrecoge los roles para llenar el input SELECT del formulario
+let userRoles = null;
 async function GetRoles(url)
 {
     try {
         const res = await fetch(url);
         if (!res.ok) throw {ok:false, msg:"Error al retornar los roles"};
-        let roles = await res.json();
+        userRoles = await res.json();
 
         let selectRoles =  document.getElementById("input-rol");
 
         let option = document.createElement("option");
         option.value = "";
-        option.innerHTML = "- Seleccione un rol de usuario -";
+        option.innerHTML = "- Seleccione un rol para el usuario -";
         selectRoles.appendChild(option);
 
-        roles.datos.forEach(rol => {
+        userRoles.datos.forEach(rol => {
             let option = document.createElement("option");
-            option.value = rol.rolid;
+            option.value     = rol.rolid;
             option.innerHTML = rol.nombre;
 
             selectRoles.appendChild(option);
@@ -69,62 +71,41 @@ async function AlterUsersTable(formData)
 function CreateUsersTable(data)
 {
 
-    let namesFilterList = document.getElementById("name-filter-list");
-    namesFilterList.innerHTML = "";
+    // let namesFilterList = document.getElementById("name-filter-list");
+    // namesFilterList.innerHTML = "";
+
+    // console.log(userRoles);
 
     let tableData = document.getElementById("tablebody");
     tableData.innerHTML = "";
 
-    if (data.code === 0)
-    {
-        data.datos.forEach(element => {
-            let lastRow = tableData.rows[tableData.rows - 1];
+    // CREA UN MAPA DE ROLES PARA ACCEDER RAPIDAMENTE AL NOMBRE MEDIANTE EL 'ID'
+    const rolesMap = userRoles.datos.reduce((map, rol) => {
+        map[rol.rolid] = rol.nombre;
+        return map;
+    }, {})
 
-            let row = tableData.insertRow(lastRow);
-
-            let i = 0;
-            let col = null;
-            for (const item in element) // element = usuario - item = campo
+    data.datos.forEach( (usuario) => {
+        for (const columna in usuario) {
+            if (columna === 'rolid')
             {
-                if (item != "password")
-                {
-                    col = row.insertCell(i);
-                    col.innerHTML = element[item];
-                    i++;
-                }
+                // CAMBIA EL DATO DEL CAMPO 'ROLID' POR EL NOMBRE DEL ROL PARA MOSTRARLO POR PANTALLA
+                usuario[columna] = rolesMap[usuario.rolid];
+                break;
             }
+        }
+    } )
 
-            // CREA EL ICONO PARA MODIFICAR EL USUARIO
-            col = row.insertCell(row.cells.length);
-            col.setAttribute("class", "material-symbols-rounded pointer");
-            col.setAttribute("onclick", "UpdateUser("+element.userid+")");
-            let text = document.createTextNode("edit");
-            col.appendChild(text);
+    // let columnas = [];
+    // data.datos.forEach(registro => {
+    //     for (const columna in registro) {
+    //         columnas.push(columna);
+    //     }
+    // });
 
-            // CREA EL ICONO DE ELIMINAR USUARIO
-            col = row.insertCell(row.cells.length);
-            col.setAttribute("class", "material-symbols-rounded pointer");
-            col.setAttribute("onclick", "OpenModal('DLT',"+element.userid+")");
-            text = document.createTextNode("close");
-            col.appendChild(text);
+    // console.log();
 
-
-            // RELLENA EL DATALIST DEL FILTRO "NOMBRE"
-            let nameOption = document.createElement("option");
-            nameOption.innerHTML = element.nombre + " " + element.apellidos;
-            namesFilterList.appendChild(nameOption);
-
-        });
-    }
-    else    // Si no hay datos muestra un mensaje en la tabla
-    {
-        let cols = document.getElementById("columnsTitles").rows[0].cells.length;   // retorna el numero de columnas (contando los th)
-        let row = tableData.insertRow(0);
-        let col = row.insertCell(0);
-        col.setAttribute("colspan", cols);  // hace que la fila ocupe todo el ancho de la tabla
-        col.style.textAlign = "center";
-        col.innerHTML = data.descripcion;
-    }
+    CreateDataTable(tableData, data, 'userid');
 }
 
 
@@ -178,7 +159,7 @@ insertForm.addEventListener("submit", (e) => {
 });
 
 // RELLENA EL FORMULARIO CON LOS DATOS DEL EMPLEADO A MODIFICAR
-function UpdateUser(id)
+function UpdateRegister(id)
 {
     if (id !== -1)
     {

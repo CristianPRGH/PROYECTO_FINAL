@@ -19,7 +19,6 @@ loginForm.addEventListener("submit", async(e) => {
         if (!res.ok) throw {ok:false, msg:"error"};
         let data = await res.json();
 
-        console.log(data);
         if (data.code == 1) document.getElementById("err-login").innerHTML = data.description;
         else if (data.code == 0) window.location.href = "../pages/Main.php";
             

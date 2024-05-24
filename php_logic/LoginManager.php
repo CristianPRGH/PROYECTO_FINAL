@@ -45,7 +45,7 @@ try {
         { 
             $code = 0;
             $description = "OK"; 
-            CreaSesion($data[0]["id"], $username);
+            CreaSesion($data[0]["userid"], $username);
         }
         else { $code = 1; $description = "El usuario o la contraseña no son correctos"; }
     }

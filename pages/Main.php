@@ -45,5 +45,6 @@ if (!$_SESSION["user"]) header("Location: Login.html");
 <script src="../js/FormValidations.js"></script>
 <script src="../js/ModalManager.js"></script>
 <script src="../js/ResetForm.js"></script>
+<script src="../js/CreateDataTable.js"></script>
 
 </html>

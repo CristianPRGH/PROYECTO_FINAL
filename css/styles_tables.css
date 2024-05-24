@@ -2,7 +2,7 @@
 
 .table-container{
     width: 100%;
-    overflow-x: scroll;
+    overflow-x: auto;
     box-shadow: 2px 2px 5px var(--primary-color);
 }
 
@@ -19,34 +19,30 @@
     background-color: var(--secondary-color);
 } */
 
-.data-view th, .data-view td{
-    font-size: 0.8em;
+th, td{
+    /* font-size: 0.8em; */
     padding: 5px 10px;
     text-align: left;
+    text-wrap: nowrap;
 }
 
-.data-view tr:hover{
+tr:hover{
     background-color: var(--secondary-color);
     color: var(--background-color);
 }
 
-.data-view th{
+th{
     border: 0;
     border-bottom: 1px solid var(--secondary-color);
-    font-size: 1em;
+    font-size: 0.9em;
 }
 
-.data-view tr:hover th{
+tr:hover th{
     background-color: var(--background-color);
     color: black;
 }
 
-.data-view .material-symbols-rounded{
-    font-size: 1.6em;
-}
-
-.material-symbols-rounded:hover{
-    transform: scale(1.2);
-    text-shadow: 1px 1px var(--primary-color);
-    color:var(--accent-color);
+td{
+    border-right: 0.5px solid var(--accent-color);
+    font-size: 0.8em;
 }

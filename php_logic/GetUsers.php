@@ -52,7 +52,24 @@ function buildConditionsAndParams() {
 
 try {
     $conn = getDbConnection();
-    $query = "SELECT * FROM usuarios";
+
+    $columnaExcluir = "password";
+    $result = $conn->query("SHOW COLUMNS FROM usuarios");
+    if ($result->num_rows > 0) {
+        $columnas = [];
+        while ($row = $result->fetch_assoc()) {
+            $columnas[] = $row['Field'];
+        }
+        
+        // Excluir la columna no deseada // Se utilza USE para poder utilizar variables externas a la función anónima
+        $columnasIncluir = array_filter($columnas, function($col) use ($columnaExcluir) {
+            return $col !== $columnaExcluir;
+        });
+    }
+    
+            // print_r($columnasIncluir);
+
+    $query = "SELECT ".implode(', ',$columnasIncluir)." FROM usuarios";
     
     list($conditions, $params, $types) = buildConditionsAndParams();
 

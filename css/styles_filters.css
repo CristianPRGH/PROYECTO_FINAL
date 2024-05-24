@@ -1,23 +1,23 @@
 /* FILTERS FORM */
 
 .filters-form{
-    padding: 10px;
+    padding: 5px;
     margin-bottom: 20px;
     border-bottom: 3px solid var(--accent-color);
     border-top: 3px solid var(--accent-color);
-    /* border-radius: 20px; */
     background-color: var(--background-color);
     box-shadow: 2px 2px 5px var(--primary-color);
 }
 
 .filters-form input{
     width: 200px;
+    border-radius: 5px;
 }
 
 .filters-form input, .filters-form label{
     margin: auto 5px;
     font-size: 0.9em;
-    padding: 5px 5px;
+    padding: 2px 5px;
 }
 
 .filters-form label{
@@ -26,9 +26,7 @@
 }
 
 .filters-form .formBttn{
-    width: 100px;
     width: fit-content;
-    height: 40px;
     margin: 0 20px;
     font-size: 0.9em;
     padding: 0 10px;
