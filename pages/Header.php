@@ -1,5 +1,6 @@
 <?php
-// session_start();
+
+session_start();
 
 if (isset($_POST["bttn-logout"]))
 {
@@ -13,7 +14,7 @@ if (isset($_POST["bttn-logout"]))
 ?>
 
 <header class="flexRow">
-    <img src="../images/logo_erp.png" alt="">
+    <img src="../images/logo_erp.png" alt="" class="pointer">
     <article class="user-box flexRow">
         <p><?= $_SESSION["user"]; ?></p>
         <form method="post" action="Header.php">
