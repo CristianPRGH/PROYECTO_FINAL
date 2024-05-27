@@ -1,7 +1,6 @@
 
 (function() {
 
-    console.log("HOLAA");
     let resetForm = document.getElementById("reset-form");
     resetForm.addEventListener("click", ResetForm);
 // document.addEventListener("DOMContentLoaded", () => {
@@ -32,5 +31,7 @@
         document.getElementById("input-id").value       = -1;
         document.getElementById("submitForm").innerHTML = "AGREGAR";
     }
+
+    window.ResetForm = ResetForm;
 
 })();

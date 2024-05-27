@@ -2,15 +2,6 @@
 
 include "../DB_Connection/DB_Connection.php";
 
-function getDbConnection() {
-    global $host, $user, $pass, $db;
-    $conn = new mysqli($host, $user, $pass, $db);
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-    return $conn;
-}
-
 function buildConditionsAndParams() {
     $conditions = [];
     $params = [];

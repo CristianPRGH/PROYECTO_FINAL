@@ -1,19 +1,9 @@
 <?php
 
-include "../DB_Connection/DB_Connection.php";
-
-function getDbConnection() {
-    global $host, $user, $pass, $db;
-    $conn = new mysqli($host, $user, $pass, $db);
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-    return $conn;
-}
+include_once "../DB_Connection/DB_Connection.php";
 
 
-function executeQuery($query, $params, $types) {
-    $conn = getDbConnection();
+function executeQuery($conn, $query, $params, $types) {
     $stmt = $conn->prepare($query);
     if ($stmt) {
         $stmt->bind_param($types, ...$params);
@@ -34,7 +24,7 @@ function executeQuery($query, $params, $types) {
 $msg = "";
 if (isset($_POST["mode"]))
 {
-    $mode = $_POST["mode"];
+    $mode       = $_POST["mode"];
     $id         = $_POST["id"];
     $nombre     = $_POST["nombre"];
     $leer       = $_POST["leer"];
@@ -52,20 +42,20 @@ switch ($mode) {
     case 'INS':
         $query  = 'INSERT INTO roles (nombre, leer, editar, eliminar) VALUES (?, ?, ?, ?)';
         $params = [$nombre,$leer,$editar,$eliminar];
-        $msg    = executeQuery($query, $params, 'siii');
+        $msg    = executeQuery($conn, $query, $params, 'siii');
         break;
 
     case 'UPD':
         $query  = 'UPDATE roles SET nombre = ?, leer = ?, editar = ?, eliminar = ? WHERE rolid = ?';
         $params = [$nombre,$leer,$editar,$eliminar, $id];
-        $msg    = executeQuery($query, $params, 'siiii');
+        $msg    = executeQuery($conn,$query, $params, 'siiii');
         break;
 
     case 'DLT':
         if ($id && $id != -1) {
             $query  = 'DELETE FROM roles WHERE rolid = ?';
             $params = [$id];
-            $msg    = executeQuery($query, $params, 'i');
+            $msg    = executeQuery($conn,$query, $params, 'i');
         }
         break;
 

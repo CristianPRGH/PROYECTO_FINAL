@@ -4,17 +4,7 @@ include "../DB_Connection/DB_Connection.php";
 
 header("Location: ../pages/Main.php");
 
-function getDbConnection() {
-    global $host, $user, $pass, $db;
-    $conn = new mysqli($host, $user, $pass, $db);
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-    return $conn;
-}
-
-function executeQuery($query, $params, $types) {
-    $conn = getDbConnection();
+function executeQuery($conn, $query, $params, $types) {
     $stmt = $conn->prepare($query);
     if ($stmt) {
         $stmt->bind_param($types, ...$params);
@@ -59,20 +49,20 @@ switch ($mode) {
     case 'INS':
         $query  = 'INSERT INTO usuarios (dni, nombre, apellidos, fechanacimiento, telefono, direccion, email, usuario, password, rolid) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
         $params = [$dni, $nombre, $apellidos, $fechanac, $telefono, $direccion, $email, $usuario, $password, $rolid];
-        $msg    = executeQuery($query, $params, 'sssssssssi');
+        $msg    = executeQuery($conn, $query, $params, 'sssssssssi');
         break;
 
     case 'UPD':
         $query  = 'UPDATE usuarios SET dni = ?, nombre = ?, apellidos = ?, fechanacimiento = ?, telefono = ?, direccion = ?, email = ?, usuario = ?, password = ?, rolid = ? WHERE userid = ?';
         $params = [$dni, $nombre, $apellidos, $fechanac, $telefono, $direccion, $email, $usuario, $password, $rolid, $id];
-        $msg    = executeQuery($query, $params, 'sssssssssii');
+        $msg    = executeQuery($conn, $query, $params, 'sssssssssii');
         break;
 
     case 'DLT':
         if ($id && $id != -1) {
             $query  = 'DELETE FROM usuarios WHERE userid = ?';
             $params = [$id];
-            $msg    = executeQuery($query, $params, 'i');
+            $msg    = executeQuery($conn, $query, $params, 'i');
         }
         break;
 

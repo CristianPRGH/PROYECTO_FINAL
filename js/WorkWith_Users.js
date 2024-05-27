@@ -117,6 +117,8 @@
     insertForm.addEventListener("submit", (e) => {
         e.preventDefault();
 
+        console.log("HOLAA");
+
         // CAMPOS DEL FORMULARIO
         let formMode = document.getElementById("form-mode").value;
         let inputID  = document.getElementById("input-id").value;

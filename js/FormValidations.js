@@ -15,7 +15,7 @@ function ValidaCampos(campos, errores) {
 
         error.innerHTML = "";
 
-        if (campo.className == "required")  if (!ValidaEmpty(campo, error))      { formValid = false; continue; }
+        if (campo.classList.contains("required"))  if (!ValidaEmpty(campo, error))      { formValid = false; continue; }
         if (campo.id.includes("dni"))       if (!ValidarDNI(campo, error))       { formValid = false; continue; }
         if (campo.id.includes("nombre") || campo.id.includes("apellidos")) if (!ValidarNombre(campo, error)) { formValid = false; continue; }
         if (campo.type == "email")          if (!ValidaEmail(campo, error))      { formValid = false; continue; }
@@ -257,17 +257,20 @@ function ValidaPassword(campo, error)
         // campo.style.boxShadow = "inset 2px 2px 5px "+securityColor;
         campo.style.backgroundColor = securityColor;
 
-        if (level < 5)
+        if (error != null)
         {
-            msg += "Requisitos de la contraseña:<br>";
-            msg += "- Longitud entre 6 y 12<br>";
-            msg += "- Mínimo una letra minúscula<br>";
-            msg += "- Mínimo una letra mayúscula<br>";
-            msg += "- Mínimo un numero<br>";
-            msg += "- Mínimo un caracter especial";
+        if (level < 5)
+            {
+                msg += "Requisitos de la contraseña:<br>";
+                msg += "- Longitud entre 6 y 12<br>";
+                msg += "- Mínimo una letra minúscula<br>";
+                msg += "- Mínimo una letra mayúscula<br>";
+                msg += "- Mínimo un numero<br>";
+                msg += "- Mínimo un caracter especial";
 
-            ShowError(campo, error, msg);
-            return false;
+                ShowError(campo, error, msg);
+                return false;
+            }
         }
     }
 
