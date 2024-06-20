@@ -10,38 +10,38 @@
     LoadData();
 
     async function LoadData() {
-        await GetRoles(urlGetRoles);
+        // await GetRoles(urlGetRoles);
         GetUsers(urlGet);
     }
 
     // Rrecoge los roles para llenar el input SELECT del formulario
     let userRoles = null;
-    async function GetRoles(url)
-    {
-        try {
-            const res = await fetch(url);
-            if (!res.ok) throw {ok:false, msg:"Error al retornar los roles"};
-            userRoles = await res.json();
+    // async function GetRoles(url)
+    // {
+    //     try {
+    //         const res = await fetch(url);
+    //         if (!res.ok) throw {ok:false, msg:"Error al retornar los roles"};
+    //         userRoles = await res.json();
 
-            let selectRoles =  document.getElementById("input-rol");
+    //         let selectRoles =  document.getElementById("input-rol");
 
-            let option = document.createElement("option");
-            option.value = "";
-            option.innerHTML = "- Seleccione un rol para el usuario -";
-            selectRoles.appendChild(option);
+    //         let option = document.createElement("option");
+    //         option.value = "";
+    //         option.innerHTML = "- Seleccione un rol para el usuario -";
+    //         selectRoles.appendChild(option);
 
-            userRoles.datos.forEach(rol => {
-                let option = document.createElement("option");
-                option.value     = rol.rolid;
-                option.innerHTML = rol.nombre;
+    //         userRoles.datos.forEach(rol => {
+    //             let option = document.createElement("option");
+    //             option.value     = rol.rolid;
+    //             option.innerHTML = rol.nombre;
 
-                selectRoles.appendChild(option);
-            });
+    //             selectRoles.appendChild(option);
+    //         });
 
-        } catch (error) {
-            console.error(error);
-        }
-    }
+    //     } catch (error) {
+    //         console.error(error);
+    //     }
+    // }
 
     async function GetUsers(url)
     {
@@ -75,37 +75,37 @@
     function CreateUsersTable(data)
     {
 
-        // let namesFilterList = document.getElementById("name-filter-list");
-        // namesFilterList.innerHTML = "";
+        let namesFilterList = document.getElementById("name-filter-list");
+        namesFilterList.innerHTML = "";
 
         // console.log(userRoles);
 
         let tableData = document.getElementById("tablebody");
         tableData.innerHTML = "";
 
-        // CREA UN MAPA DE ROLES PARA ACCEDER RAPIDAMENTE AL NOMBRE MEDIANTE EL 'ID'
-        const rolesMap = userRoles.datos.reduce((map, rol) => {
-            map[rol.rolid] = rol.nombre;
-            return map;
-        }, {})
+        // // CREA UN MAPA DE ROLES PARA ACCEDER RAPIDAMENTE AL NOMBRE MEDIANTE EL 'ID'
+        // const rolesMap = userRoles.datos.reduce((map, rol) => {
+        //     map[rol.rolid] = rol.nombre;
+        //     return map;
+        // }, {})
 
 
-        // AQUI DENTRO SE HARÁN LOS CAMBIOS NECESARIO PARA MOSTRAR EN LA TABLA
-        const nuevosDatos = data.datos.map( (usuario) => {
+        // // AQUI DENTRO SE HARÁN LOS CAMBIOS NECESARIO PARA MOSTRAR EN LA TABLA
+        // const nuevosDatos = data.datos.map( (usuario) => {
 
-            const nuevoUsuario = {...usuario};
+        //     const nuevoUsuario = {...usuario};
 
-            for (const columna in usuario) {
-                if (columna === 'rolid')
-                {
-                    // CAMBIA EL DATO DEL CAMPO 'ROLID' POR EL NOMBRE DEL ROL PARA MOSTRARLO POR PANTALLA
-                    nuevoUsuario[columna] = rolesMap[nuevoUsuario.rolid];
-                    break;
-                }
-            }
+        //     for (const columna in usuario) {
+        //         if (columna === 'rolid')
+        //         {
+        //             // CAMBIA EL DATO DEL CAMPO 'ROLID' POR EL NOMBRE DEL ROL PARA MOSTRARLO POR PANTALLA
+        //             nuevoUsuario[columna] = rolesMap[nuevoUsuario.rolid];
+        //             break;
+        //         }
+        //     }
 
-            return nuevoUsuario;
-        });
+        //     return nuevoUsuario;
+        // });
 
         CreateDataTable(tableData, data, 'userid');
     }

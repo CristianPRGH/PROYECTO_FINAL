@@ -227,10 +227,10 @@ function ValidaPassword(campo, error)
 
         var level = 0;
         level += (valor.length >= 6 && valor.length <= 12) ? 1 : 0;   // Longitud entre 6 y 12 caracteres
-        level += /[!@#$%^&*?_~]{2,}/.test(valor) ? 1 : 0;              // Contiene al menos 1 caracteres especiales
-        level += /[a-z]{2,}/.test(valor) ? 1 : 0;                      // Contiene al menos 1 letras minúsculas
-        level += /[A-Z]{2,}/.test(valor) ? 1 : 0;                      // Contiene al menos 1 letras mayúsculas
-        level += /[0-9]{2,}/.test(valor) ? 1 : 0;                      // Contiene al menos 1 números
+        level += /[!@#$%^&*?_~]{2,}/.test(valor) ? 1 : 0;              // Contiene al menos 2 caracteres especiales
+        level += /[a-z]{2,}/.test(valor) ? 1 : 0;                      // Contiene al menos 2 letras minúsculas
+        level += /[A-Z]{2,}/.test(valor) ? 1 : 0;                      // Contiene al menos 2 letras mayúsculas
+        level += /[0-9]{2,}/.test(valor) ? 1 : 0;                      // Contiene al menos 2 números
 
         // let strongLevel = document.getElementById("strongLevel");
         switch (level) {
@@ -259,14 +259,16 @@ function ValidaPassword(campo, error)
 
         if (error != null)
         {
-        if (level < 5)
+            if (level < 5)
             {
-                msg += "Requisitos de la contraseña:<br>";
-                msg += "- Longitud entre 6 y 12<br>";
-                msg += "- Mínimo una letra minúscula<br>";
-                msg += "- Mínimo una letra mayúscula<br>";
-                msg += "- Mínimo un numero<br>";
-                msg += "- Mínimo un caracter especial";
+                // msg += "Requisitos de la contraseña:<br>";
+                // msg += "- Longitud entre 6 y 12<br>";
+                // msg += "- Mínimo una letra minúscula<br>";
+                // msg += "- Mínimo una letra mayúscula<br>";
+                // msg += "- Mínimo un numero<br>";
+                // msg += "- Mínimo un caracter especial";
+
+                msg = "No se cumplen los requisitos de la contraseña";
 
                 ShowError(campo, error, msg);
                 return false;

@@ -38,13 +38,16 @@ if (!$_SESSION["user"]) header("Location: Login.html");
             <h1>PÁGINA PRINCIPAL</h1>
         </div>
 
+        <aside class="body-rightmenu"></aside>
+
     </section>
 </body>
 
-<script src="../js/FormValidations.js"></script>
-<script src="../js/ModalManager.js"></script>
-<script src="../js/CreateDataTable.js"></script>
 <script src="../js/AJAXLoadContent.js"></script>
+<script src="../js/FormValidations.js"></script>
+<script src="../js/CreateDataTable.js"></script>
+<script src="../js/ModalManager.js"></script>
+
 
 <script>
     document.addEventListener("DOMContentLoaded", () => {

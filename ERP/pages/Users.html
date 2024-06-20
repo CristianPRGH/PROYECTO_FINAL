@@ -1,7 +1,45 @@
 <main>
+
+    <section>
+        <article>
+            <form method="get" action class="filters-form flexRow" id="form-filters">
+                <h4>Filtros</h4>
+                <label>Nombre</label>
+                <input list="name-filter-list" id="filter-name" name="filter-name" />
+                <datalist id="name-filter-list"></datalist>
+
+                <label>Fecha Nacimiento</label>
+                <input type="date" name="filter-date" id="filter-date" />
+
+                <button name="applyFilters" class="formBttn pointer">Aplicar</button>
+            </form>
+        </article>
+
+
+        <article class="table-container">
+            <table class="users-table data-view">
+                <thead id="columnsTitles">
+                    <th></th>
+                    <th>ID</th>
+                    <th>DNI</th>
+                    <th>Nombre</th>
+                    <th>Apellidos</th>
+                    <th>Fecha Nac.</th>
+                    <th>Telefono</th>
+                    <th>Direccion</th>
+                    <th>Email</th>
+                    <th>Usuario</th>
+                    <th>Rol</th>
+                </thead>
+                <tbody id="tablebody"></tbody>
+            </table>
+        </article>
+    </section>
+
+    <hr>
+
     <section>
         <form action method="post" class="workwith-form" id="workwith-users">
-            <!--action="../php_logic/AddEmployee.php"-->
             <h3>USUARIO</h3>
 
             <fieldset>
@@ -85,43 +123,6 @@
             </fieldset>
 
         </form>
-    </section>
-
-    <hr />
-
-    <section>
-        <article>
-            <form method="get" action class="filters-form flexRow" id="form-filters">
-                <h4>Filtros</h4>
-                <label>Nombre</label>
-                <input list="name-filter-list" id="filter-name" name="filter-name" />
-                <datalist id="name-filter-list"></datalist>
-
-                <label>Fecha Nacimiento</label>
-                <input type="date" name="filter-date" id="filter-date" />
-
-                <button name="applyFilters" class="formBttn pointer">Aplicar</button>
-            </form>
-        </article>
-        <!-- <hr /> -->
-        <article class="table-container">
-            <table class="users-table data-view">
-                <thead id="columnsTitles">
-                    <th></th>
-                    <th>ID</th>
-                    <th>DNI</th>
-                    <th>Nombre</th>
-                    <th>Apellidos</th>
-                    <th>Fecha Nac.</th>
-                    <th>Telefono</th>
-                    <th>Direccion</th>
-                    <th>Email</th>
-                    <th>Usuario</th>
-                    <th>Rol</th>
-                </thead>
-                <tbody id="tablebody"></tbody>
-            </table>
-        </article>
     </section>
 
     

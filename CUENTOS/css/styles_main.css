@@ -1,0 +1,26 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.flex-row{
+    display: flex;
+    flex-direction: row;
+}
+.flex-column{
+    display: flex;
+    flex-direction: column;
+}
+
+body{
+    height: 100vh;
+}
+
+main{
+    height: 100%;
+}
+
+.pointer{
+    cursor: pointer;
+}
