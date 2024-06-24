@@ -11,6 +11,8 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
     <script src="../js/auth.js"></script>
+    <script src="../js/tweenControls.js"></script>
+    <script src="../js/formValidations.js"></script>
 </head>
 <body>
     <main class="auth-main flex-column">
@@ -36,23 +38,43 @@
 
 
 
-            <article id="register-form" class="register display-none hide">
+            <article id="register-form" class="register flex-column hide">
                 <h2>REGISTRO</h2>
                 <div class="form-input-container">
-                    <input type="text" id="" placeholder="nombre">
+                    <input type="text" id="input-name" class="required" placeholder="nombre usuario" data-valid="valid-name">
                     <i class="material-symbols-rounded input-icon">person</i>
+                    <div id="valid-name" class="validate-input" data-errormsg="error-name">
+                        <i class="material-symbols-rounded error-icon">error</i>
+                        <p id="error-name" class="input-error"></p>
+                        <i class="material-symbols-rounded valid-icon">check_circle</i>
+                    </div>
                 </div>
                 <div class="form-input-container">
-                    <input type="email" id="" placeholder="email">
+                    <input type="email" id="input-email" class="required" placeholder="email" data-valid="valid-email">
                     <i class="material-symbols-rounded input-icon">mail</i>
+                    <div id="valid-email" class="validate-input"  data-errormsg="error-email">
+                        <i class="material-symbols-rounded error-icon">error</i>
+                        <p id="error-email" class="input-error"></p>
+                        <i class="material-symbols-rounded valid-icon">check_circle</i>
+                    </div>
                 </div>
                 <div class="form-input-container">
-                    <input type="password" id="" placeholder="password">
+                    <input type="password" id="input-password" class="required" placeholder="password" data-valid="valid-password">
                     <i class="material-symbols-rounded input-icon">lock</i>
+                    <div id="valid-password" class="validate-input"  data-errormsg="error-password">
+                        <i class="material-symbols-rounded error-icon">error</i>
+                        <p id="error-password" class="input-error"></p>
+                        <i class="material-symbols-rounded valid-icon">check_circle</i>
+                    </div>
                 </div>
                 <div class="form-input-container">
-                    <input type="password" id="" placeholder="repite password">
+                    <input type="password" id="input-password-repeat" class="required" placeholder="repite password" data-valid="valid-password-repeat">
                     <i class="material-symbols-rounded input-icon">lock_reset</i>
+                    <div id="valid-password-repeat" class="validate-input" data-errormsg="error-password-repeat">
+                        <i class="material-symbols-rounded error-icon">error</i>
+                        <p id="error-password-repeat" class="input-error"></p>
+                        <i class="material-symbols-rounded valid-icon">check_circle</i>
+                    </div>
                 </div>
                 
                 <div class="input-profilepic-container flex-row">
@@ -68,10 +90,6 @@
                 </div>
             </article>
         </section>
-
-
-
-        
     </main>
 </body>
 </html>

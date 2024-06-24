@@ -1,8 +1,10 @@
 let loginForm = registerForm = null;
 let loginClassList = registerClassList = null;
+let tweenLogin = tweenRegister = tweenErrorIcon = tweenValidIcon = null;
 
 document.addEventListener("DOMContentLoaded", ()=>{
     InitializeVariables();
+    InitializeTweens();
     InitializeEvents();
 })
 
@@ -16,44 +18,101 @@ function InitializeVariables()
 
 function InitializeEvents()
 {
-    document.getElementById("to-signup").addEventListener('click', ToggleAnimation);
-    document.getElementById("submit-register").addEventListener('click', ToggleAnimation);
-    document.getElementById("submit-login").addEventListener('click', ToggleAnimation);
+    document.getElementById("to-signup").addEventListener('click', ()=>{
+        ResetRegisterForm();
+        PlayAnimation(tweenLogin);
+        PlayAnimation(tweenRegister);
+    });
+    
+    document.getElementById("submit-register").addEventListener('click', ()=>{
+        if (ValidateRegister())
+        {
+            ReverseAnimation(tweenLogin);
+            ReverseAnimation(tweenRegister);
+        }
+    });
+    
+    document.getElementById("submit-login").addEventListener('click', ()=>{
+        // if (Validatelogin())
+        // {
+            
+        // }
 
-    // loginForm.addEventListener('transitionend', ShowHideForm);
-    // registerForm.addEventListener('transitionend', ShowHideForm);
+        window.location.href = "index.html";
+    });
+
+    
+    // Añade un evento de cambio al input de tipo file
+    document.getElementById('input-file').addEventListener('change', function(event) {
+    // Verifica si hay un archivo seleccionado
+    if (event.target.files && event.target.files[0]) {
+        var reader = new FileReader(); // Crea un nuevo FileReader
+
+        // Define una función que se ejecutará cuando el archivo se haya leído
+        reader.onload = function(e) {
+            // Cambia la fuente de la imagen de perfil a la URL de los datos leídos del archivo
+            document.getElementById('input-profilepic').src = e.target.result;
+        }
+
+        // Lee el archivo seleccionado como una URL de datos
+        reader.readAsDataURL(event.target.files[0]);
+    }
+});
 }
 
-function ToggleAnimation()
+function InitializeTweens()
 {
-    ToggleClasses(loginForm,    loginClassList.includes("show") ? "hide" : "show", loginClassList.includes("show") ? "show" : "hide");
-    console.log("gasap");
-    gsap.to(".hide", {yPercent: -100, duration: 1});
-    // gsap.to(".hide", {yPercent: -100, opacity: 1, duration: 1});
-    // ToggleClasses(registerForm, registerClassList.includes("show") ? "hide" : "show", registerClassList.includes("show") ? "show" : "hide");
+    tweenLogin     = gsap.to(loginForm,    {duration: 1, yPercent: -100, opacity: 0, ease:"sine.inOut", paused:true});
+    tweenRegister  = gsap.to(registerForm, {duration: 1, yPercent: -100, opacity: 1, ease:"sine.inOut", paused:true});
+    tweenErrorIcon = gsap.fromTo(".error-icon", {y:-5}, {duration: 0.5, y:0, ease:"bounce", paused:true});
+    tweenValidIcon = gsap.fromTo(".valid-icon", {y:-5}, {duration: 0.5, y:0, ease:"bounce", paused:true});
 }
 
-function ShowHideForm(e)
+function ValidateRegister()
 {
-    console.log(e);
-    if (e.propertyName == "opacity")
-    {
-        const classList = Array.from(e.target.classList);
-        ToggleClasses(e.target,    classList.includes("show") ? "flex-column" : "display-none", classList.includes("show") ? "display-none" : "flex-column");
-        // ToggleClasses(registerForm, registerClassList.includes("show") ? "display-none" : "flex-column", registerClassList.includes("show") ? "flex-column" : "display-none");
+    const inputs = [
+        document.getElementById("input-name"),
+        document.getElementById("input-email"),
+        document.getElementById("input-password"),
+        document.getElementById("input-password-repeat")
+    ];
+
+    const formValid = ValidateInputs(inputs);
+    if (!formValid.isValid) ShowInputErrors(formValid);
+    return formValid.isValid;
+}
+
+function ShowInputErrors(formValid)
+{
+    for (const [input, msg] of Object.entries(formValid)) {
+        if (input != "isValid")
+        {
+            const validInputId = document.getElementById(input).dataset.valid;
+            const validInput = document.getElementById(validInputId);
+            const errorMsg = document.getElementById(validInput.dataset.errormsg);
+            
+            if (msg != "valid")
+            {
+                PlayAnimation(tweenErrorIcon);
+                validInput.classList.remove("valid");
+                validInput.classList.add("notvalid");
+                errorMsg.innerHTML = msg;
+            }
+            else
+            {
+                PlayAnimation(tweenValidIcon);
+                validInput.classList.remove("notvalid");
+                validInput.classList.add("valid");
+                errorMsg.innerHTML = "";
+            }
+        }
     }
 }
 
-function ToggleClasses(element, addClass = "", removeClass = "")
+function ResetRegisterForm()
 {
-
-    console.log(element);
-    console.log(addClass);
-    console.log(removeClass);
-
-    if (removeClass != "") element.classList.remove(removeClass);
-    if (addClass != "")    element.classList.add(addClass);
-
-    
-    console.log(element);
+    document.getElementById("input-name").value = "";
+    document.getElementById("input-email").value = "";
+    document.getElementById("input-password").value = "";
+    document.getElementById("input-password-repeat").value = "";
 }
