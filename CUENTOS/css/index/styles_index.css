@@ -1,0 +1,48 @@
+body{
+    display: grid;
+    grid-template-areas: 
+    "main"
+    "footer";
+
+    grid-template-columns: 100%;
+    grid-template-rows: 90% 10%;
+}
+
+.section{
+    width: 100%;
+
+    i{
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+        color: var(--white);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+/* FOOTER */
+.index-footer{
+    grid-area: footer;
+    border-top: 5px solid var(--orange);
+    background-color: var(--darkGreen);
+
+}
+
+
+/* MAIN */
+.index-main{
+    grid-area: main;
+    padding: 20px;
+}
+
+
+
+
+@media screen and (min-width:480px)
+{
+    .book-authors{
+        flex-direction: row;
+    }
+}

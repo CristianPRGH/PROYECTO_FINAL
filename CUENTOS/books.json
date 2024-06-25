@@ -1,0 +1,26 @@
+[
+    {
+        "type":"book",
+        "properties":{
+            "id":"book1",
+            "cover":"./images/book_covers/cover.jpg",
+            "title":"Titulo1",
+            "pages":"100",
+            "author":"Cristian",
+            "coauthors":[
+                {
+                    "name":"Cristian2"
+                },
+                {
+                    "name":"Cristian3"
+                },
+                {
+                    "name":"Cristian4"
+                },
+                {
+                    "name":"Cristian5"
+                }
+            ]
+        }
+    }
+]
