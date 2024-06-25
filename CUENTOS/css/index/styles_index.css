@@ -27,7 +27,6 @@ body{
     grid-area: footer;
     border-top: 5px solid var(--orange);
     background-color: var(--darkGreen);
-
 }
 
 
@@ -38,6 +37,13 @@ body{
 }
 
 
+.book-details-toggle{
+    height: 100%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
 
 @media screen and (min-width:480px)

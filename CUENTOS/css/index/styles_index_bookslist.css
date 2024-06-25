@@ -59,12 +59,4 @@
         width: 16px;
         height: 16px;
     }
-
-    .book-details-toggle{
-        height: 100%;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
 }

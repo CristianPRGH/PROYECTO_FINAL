@@ -32,12 +32,13 @@
         .book-detail-coauthor{
             padding: 5px;
             align-items: center;
-            .book-detail-coauthor-img{
-                width: 32px;
-                height: 32px;
-                margin-right: 20px;
-            }
-            /* .book-detail-coauthor-name{} */
+            border-bottom: 1px solid var(--orange);
         }
+    }
+    
+    .book-detail-author-img{
+        width: 32px;
+        height: 32px;
+        margin-right: 20px;
     }
 }
