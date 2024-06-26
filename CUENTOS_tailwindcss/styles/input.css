@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components{
+    *{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    .form-icon{
+        @apply absolute top-3 left-2 text-green-950 text-xl;
+    }
+    .form-input{
+        @apply w-full p-1 pl-10 outline-none rounded-3xl my-2 shadow-sm shadow-orange-400;
+    }
+    .form-error-icon{
+        @apply absolute top-3 right-2 text-base hidden text-red-500 
+    }
+    .form-error-message{
+        @apply absolute top-10 right-0 text-xs text-red-500 text-right pr-2 w-full;
+    }
+    .form-valid-icon{
+        @apply absolute top-3 right-2 text-base hidden text-green-500 
+    }
+}

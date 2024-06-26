@@ -1,0 +1,44 @@
+
+.book-details{
+    position: fixed;
+    background-color: var(--white);
+    top: 0;
+    right: -100%;
+    width: 100%;
+    height: 90%;
+    padding: 30px;
+    opacity: 0;
+    z-index: 1;
+
+    overflow-y: auto;
+
+    .book-detail-cover{
+        width: 50%;
+        align-self: center;
+    }
+    .book-detail-title{
+        font-weight: bold;
+        text-align: center;
+        margin: 10px auto;
+    }
+    /* .book-detail-pages{} */
+    .book-detail-sinopsis{
+        margin: 5px 0;
+        text-align: justify;
+    }
+    /* .book-detail-author{} */
+    /* .book-detail-coauthors{} */
+    .book-detail-coauthors-list{
+        .book-detail-coauthor{
+            padding: 5px;
+            align-items: center;
+            border-bottom: 1px solid var(--orange);
+        }
+    }
+    
+    .book-detail-author-img{
+        width: 32px;
+        height: 32px;
+        margin-right: 20px;
+    }
+}
