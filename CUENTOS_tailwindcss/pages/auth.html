@@ -16,7 +16,7 @@
     <script src="../js/formValidations.js"></script>
 </head>
 <body class="bg-orange-100 h-screen">
-    <main class="flex flex-col p-20 h-full w-full">
+    <main class="flex flex-col px-16 h-full w-full">
 
         <section class="h-full overflow-y-hidden">
             <article id="login-form" class="flex flex-col justify-center align-middle h-full w-full">
@@ -34,9 +34,8 @@
                     <button type="button" id="submit-login" class="py-1 px-16 my-5 mx-0 rounded-3xl shadow-md shadow-orange-400 text-green-950 bg-white w-full">Login</button>
                 </div>
     
-                <p>No tienes cuenta? <a id="to-signup" href="#" class="text-green-950 underline">Registrate</a></p>
+                <p class="text-center">No tienes cuenta? <a id="to-signup" href="#" class="text-green-950 underline">Registrate</a></p>
             </article>
-
 
 
             <article id="register-form" class="flex flex-col justify-center align-middle h-full w-full opacity-0">
@@ -53,9 +52,9 @@
                 <div class="relative w-full">
                     <input type="email" id="input-email" class="required form-input" placeholder="email" data-valid="valid-email">
                     <i class="material-symbols-rounded form-icon">mail</i>
-                    <div id="valid-email" class="validate-input"  data-errormsg="error-email">
+                    <div id="valid-email" class="validate-input" data-errormsg="error-email">
                         <i class="material-symbols-rounded form-error-icon">error</i>
-                        <p id="error-email" class="form-error-message"></p>
+                        <p id="error-email" class="form-error-message invisible"></p>
                         <i class="material-symbols-rounded form-valid-icon">check_circle</i>
                     </div>
                 </div>
@@ -79,10 +78,10 @@
                 </div>
                 
                 <div class="flex flex-row justify-center align-middle relative w-full mt-5">
-                    <img src="../images/user-default.png" id="input-profilepic" class="w-16 h-16 rounded-full" alt="Imagen de perfil">
-                    <label for="input-file" class="flex flex-row justify-center align-middle absolute w-full h-full rounded-full opacity-0 transition-opacity hover:opacity-100">
-                        <i class="material-symbols-rounded w-2/4 h-2/4">add_a_photo</i>
-                    </label>
+                    <img src="../images/user-default.png" id="input-profilepic" class="w-2/4 rounded-full" alt="Imagen de perfil">
+                    <label for="input-file" class="cursor-pointer flex flex-col justify-center align-middle absolute w-2/4 h-full rounded-full opacity-0 transition-opacity hover:opacity-100">
+                        <i class="material-symbols-rounded text-center">add_a_photo</i>
+                    </label> 
                     <input type="file" id="input-file" name="imagen" accept="image/*" style="display: none;">
                 </div>
                 

@@ -64,8 +64,8 @@ function InitializeTweens()
 {
     tweenLogin     = gsap.to(loginForm,    {duration: 1, yPercent: -100, opacity: 0, ease:"sine.inOut", paused:true});
     tweenRegister  = gsap.to(registerForm, {duration: 1, yPercent: -100, opacity: 1, ease:"sine.inOut", paused:true});
-    tweenErrorIcon = gsap.fromTo(".error-icon", {y:-5}, {duration: 0.5, y:0, ease:"bounce", paused:true});
-    tweenValidIcon = gsap.fromTo(".valid-icon", {y:-5}, {duration: 0.5, y:0, ease:"bounce", paused:true});
+    tweenErrorIcon = gsap.fromTo(".form-error-icon", {y:-5}, {duration: 0.5, y:0, ease:"bounce", paused:true});
+    tweenValidIcon = gsap.fromTo(".form-valid-icon", {y:-5}, {duration: 0.5, y:0, ease:"bounce", paused:true});
 }
 
 function ValidateRegister()
@@ -88,8 +88,8 @@ function ShowInputErrors(formValid)
         if (input != "isValid")
         {
             const validInputId = document.getElementById(input).dataset.valid;
-            const validInput = document.getElementById(validInputId);
-            const errorMsg = document.getElementById(validInput.dataset.errormsg);
+            const validInput   = document.getElementById(validInputId);
+            const errorMsg     = document.getElementById(validInput.dataset.errormsg);
             
             if (msg != "valid")
             {
