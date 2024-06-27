@@ -73,8 +73,7 @@ function ValidateRegister()
     const inputs = [
         document.getElementById("input-name"),
         document.getElementById("input-email"),
-        document.getElementById("input-password"),
-        document.getElementById("input-password-repeat")
+        document.getElementById("input-password")
     ];
 
     const formValid = ValidateInputs(inputs);
@@ -115,4 +114,6 @@ function ResetRegisterForm()
     document.getElementById("input-email").value = "";
     document.getElementById("input-password").value = "";
     document.getElementById("input-password-repeat").value = "";
+    Array.from(document.getElementsByClassName("valid")).map(each=>each.classList.remove("valid"));
+    Array.from(document.getElementsByClassName("notvalid")).map(each=>each.classList.remove("notvalid"));
 }

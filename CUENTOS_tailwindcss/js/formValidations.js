@@ -8,7 +8,7 @@ const validations = {
     tel: ValidateTel,
     username: ValidateUsername,
     password: ValidatePassword,
-    passwordRepeat: ValidatePasswordRepeat
+    password: ValidatePasswordRepeat
 };
 
 function SetInputValidation(inputid, msg)
@@ -241,7 +241,7 @@ function ValidatePassword(input)
     let valor = input.value;
     let msg = "";
 
-    input.classList.remove(input.classList.item(input.classList.length -1));
+    // input.classList.remove(input.classList.item(input.classList.length -1));
     if (valor.length > 0)
     {
         let level = 0;
@@ -251,23 +251,23 @@ function ValidatePassword(input)
         level += /(?=(.*[A-Z]){2,})/.test(valor) ? 1 : 0;                   // Contiene al menos 2 letras mayúsculas
         level += /(?=(.*\d){2,})/.test(valor) ? 1 : 0;                      // Contiene al menos 2 números
 
-        switch (level) {
-            case 1:
-                input.classList.add("veryweak");
-                break;
-            case 2:
-                input.classList.add("weak");
-                break;
-            case 3:
-                input.classList.add("moderate");
-                break;
-            case 4:
-                input.classList.add("strong");
-                break;
-            case 5:
-                input.classList.add("verystrong");
-                break;
-        }
+        // switch (level) {
+        //     case 1:
+        //         input.classList.add("veryweak");
+        //         break;
+        //     case 2:
+        //         input.classList.add("weak");
+        //         break;
+        //     case 3:
+        //         input.classList.add("moderate");
+        //         break;
+        //     case 4:
+        //         input.classList.add("strong");
+        //         break;
+        //     case 5:
+        //         input.classList.add("verystrong");
+        //         break;
+        // }
     
         
         if (level < 5)
@@ -277,9 +277,9 @@ function ValidatePassword(input)
             SetInputValidation(input.id, msg);
             return false;
         }
-        else{
-            input.classList.add("default");
-        }
+        // else{
+        //     input.classList.add("default");
+        // }
     }
 
     return true;
@@ -287,6 +287,7 @@ function ValidatePassword(input)
 
 function ValidatePasswordRepeat(input)
 {
+    console.log("hola");
     let pass2 = document.getElementById(input.dataset.repeat);
 
     if (input.value != pass2.value)
