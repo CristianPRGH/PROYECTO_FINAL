@@ -1,4 +1,4 @@
-import { BookItemComponent } from "./book_item.js";
+import { BookItemComponent } from "../components/book_item.js";
 
 let bookDetailActive = false;
 let books = null;
@@ -79,7 +79,7 @@ function SetupMainBooksList()
     const booksList = document.getElementById("books-list");
 
     booksList.innerHTML = books.map(book =>
-        BookItemComponent(book.properties.cover, book.properties.title, book.properties.author.name, book.properties.coauthors.length, book.properties.pages, book.properties.tags)
+        BookItemComponent(book.properties.id, book.properties.cover, book.properties.title, book.properties.author.name, book.properties.coauthors.length, book.properties.pages, book.properties.tags)
     ).join('');
 }
 
