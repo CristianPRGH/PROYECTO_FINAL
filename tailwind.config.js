@@ -2,6 +2,8 @@
 module.exports = {
   mode: 'jit',
   content: ["./**/*.{html,js}"],
+  // purge: [],
+  // purge: ['./**/*.{html,js}'],
   theme: {
     extend: {
       visibility:{
