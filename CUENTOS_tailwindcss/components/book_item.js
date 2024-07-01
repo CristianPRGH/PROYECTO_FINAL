@@ -1,5 +1,13 @@
-export function BookListItem(id,cover, title, authorname, coauthors, pages, tags)
+export function BookListItem(book)
 {
+    const id = book.properties.id;
+    const cover = book.properties.cover;
+    const title = book.properties.title;
+    const authorname = book.properties.author.name;
+    const coauthors = book.properties.coauthors.length;
+    const pages = book.properties.pages;
+    const tags = book.properties.tags;
+
     return `<article class="grid grid-cols-[20%_1fr_10%] gap-1  py-1 border-b-2 border-b-orange-400">
                 <img class="h-full" src="../images/book_covers/${cover}">
                 <div class="flex flex-col justify-evenly overflow-x-hidden">
