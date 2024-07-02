@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
     document.getElementById("book-cover-color").addEventListener('input', UpdateBookCoverColor);
     document.getElementById('select-cover-img').addEventListener('change', SetCoverImg);
     document.getElementById("remove-cover-img").addEventListener('click', RemoveCoverImg);
-    document.getElementById("create-book").addEventListener('click', InitCreateBook);
+    document.getElementById("create-book").addEventListener('click', CreateBookDialog);
 })
 
 function UpdateBookCoverColor(event)
@@ -38,8 +38,27 @@ function RemoveCoverImg()
     coverimage.src = "";
 }
 
-function InitCreateBook()
+function CreateBookDialog()
 {
-    console.log("hola");
-    tweens.PlayAnimation(gsap.to("#confirm-create-book", {y:-100, opacity:1}));
+    const createBookDialog = document.getElementById("confirm-create-book");
+    createBookDialog.showModal();
+
+    document.getElementById("create-yes").addEventListener('click', ()=>{
+        // TODO INSERTA EL LIBRO EN LA BASE DE DATOS
+        createBookDialog.close()
+        WriteBookDialog();
+    })
+    document.getElementById("create-no").addEventListener('click', ()=>{createBookDialog.close()})
+}
+
+function WriteBookDialog()
+{
+    const writeBookDialog = document.getElementById("confirm-write-book");
+    writeBookDialog.showModal();
+
+    document.getElementById("write-yes").addEventListener('click',()=>{
+        // TODO IR A LA PAGINA PARA EMPEZAR A ESCRIBIR EL LIBRO
+        writeBookDialog.close()
+    })
+    document.getElementById("write-no").addEventListener('click', ()=>{writeBookDialog.close()})
 }

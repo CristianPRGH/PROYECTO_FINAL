@@ -11,7 +11,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
     <script src="../js/createBook.js" type="module"></script>
 </head>
-<body class="bg-green-900 p-7 h-screen flex flex-col relative">
+<body class="bg-green-900 p-7 h-screen flex flex-col border-y-8 border-y-orange-400">
     <main id="book-cover" class="flex items-center h-full bg-white rounded-md shadow-lg shadow-black">
         <section class="w-[10%] h-full rounded-sm shadow-[inset_-2px_0_3px_rgba(137,137,137,0.5)] bg-transparent flex flex-col justify-start items-center">
             <div>
@@ -35,12 +35,20 @@
         </section> 
     </main>
 
-    <section id="confirm-create-book" class="absolute flex flex-col bg-orange-50 w-full p-6 rounded-t-md -bottom-full opacity-0 z-10">
-        <p class="text-center">Desea empezar a escribir su libro?</p>
+    <dialog id="confirm-create-book" class="p-6 m-auto shadow-lg rounded-md z-20 backdrop:bg-orange-100/30 backdrop:backdrop-blur-md">
+        <p class="text-center p-3">Desea crear el libro?</p>
         <article class="flex justify-evenly">
-            <button type="button" class="shadow-md p-3 rounded-md bg-white w-32 mr-1">SI</button>
-            <button type="button" class="shadow-md p-3 rounded-md bg-white w-32 ">NO</button>
+            <button id="create-yes" type="button" class="shadow-md p-1 rounded-md bg-green-600 text-orange-100 w-20">SI</button>
+            <button id="create-no"  type="button" class="shadow-md p-1 rounded-md bg-red-600 text-orange-100 w-20">NO</button>
         </article>
-    </section>
+    </dialog>
+
+    <dialog id="confirm-write-book" class="p-6 m-auto shadow-lg rounded-md z-20 backdrop:bg-orange-100/30 backdrop:backdrop-blur-md">
+        <p class="text-center p-3">Desea empezar a escribir el libro?</p>
+        <article class="flex justify-evenly">
+            <button id="write-yes" type="button" class="shadow-md p-1 rounded-md bg-green-600 text-orange-100 w-20">SI</button>
+            <button id="write-no"  type="button" class="shadow-md p-1 rounded-md bg-red-600 text-orange-100 w-20">NO</button>
+        </article>
+    </dialog>
 </body>
 </html>
