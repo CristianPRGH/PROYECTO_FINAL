@@ -11,17 +11,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
     <script src="../js/createBook.js" type="module"></script>
 </head>
-<body class="bg-green-900 p-7 h-screen flex flex-col border-y-8 border-y-orange-400">
-    <main id="book-cover" class="flex items-center h-full bg-white rounded-md shadow-lg shadow-black">
-        <section class="w-[10%] h-full rounded-sm shadow-[inset_-2px_0_3px_rgba(137,137,137,0.5)] bg-transparent flex flex-col justify-start items-center">
-            <div>
-                <label for="select-cover-img" class="material-symbols-rounded text-3xl cursor-pointer">add_photo_alternate</label>
-                <input type="file" id="select-cover-img" class="hidden" accept="image/*">
-            </div>
-            <i id="remove-cover-img" class="material-symbols-rounded cursor-pointer text-3xl">remove_selection</i>
-            <input type="color" id="book-cover-color" class="w-6 h-7">
-        </section>
-        <section class="flex flex-col w-[90%] h-full p-4 rounded-sm shadow-[inset_2px_0_3px_rgba(137,137,137,0.5)] relative">
+<body class="bg-green-900 h-screen flex flex-col p-2">
+    <main id="book-cover" class="flex h-full bg-white rounded-md">
+        <section class="w-[10%] h-full rounded-sm shadow-[inset_-2px_0_3px_rgba(137,137,137,0.5)] bg-transparent flex flex-col justify-start items-center"></section>
+        <section class="flex flex-col justify-center w-[90%] h-full p-4 rounded-sm shadow-[inset_2px_0_3px_rgba(137,137,137,0.5)] relative">
             <input type="text" id="" placeholder="título" class="form-input placeholder:text-sm rounded-sm pl-4 z-10">
             <select id="" class="form-input rounded-sm pl-4 z-10">
                 <option value="0">- Tipo -</option>
@@ -31,9 +24,18 @@
             <div class="h-full w-full absolute top-0 left-0 z-0">
                 <img src="" alt="" id="book-cover-img" class="w-full h-full opacity-0">
             </div>
-            <button id="create-book" class="shadow-md bg-orange-100 rounded-md cursor-pointer z-10">Crear</button>
         </section> 
     </main>
+
+    <section class="bg-green-900 w-full flex items-center justify-between p-1">
+        <div class="flex items-center justify-evenly w-1/2">
+            <label for="select-cover-img" class="material-symbols-rounded cursor-pointer text-white">add_photo_alternate</label>
+            <input type="file" id="select-cover-img" class="hidden" accept="image/*">
+            <i id="remove-cover-img" class="material-symbols-rounded cursor-pointer text-white">remove_selection</i>
+            <input type="color" id="book-cover-color" class="w-5 h-5 ring-1 ring-white">
+        </div>
+        <i id="create-book" class="material-symbols-rounded cursor-pointer text-white justify-self-end">check_circle</i>
+    </section>
 
     <dialog id="confirm-create-book" class="p-6 m-auto shadow-lg rounded-md z-20 backdrop:bg-orange-100/30 backdrop:backdrop-blur-md">
         <p class="text-center p-3">Desea crear el libro?</p>
