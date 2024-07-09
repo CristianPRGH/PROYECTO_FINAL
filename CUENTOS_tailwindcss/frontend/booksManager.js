@@ -1,33 +1,24 @@
 import { BookListItem, BookDetail } from "../components/book_item.js";
+import { Book } from "../js/Book.js";
 import * as tweens from "../components/tweenControls.js";
 
-let bookDetailActive = false;
-let books = null;
 
-// OBTIENE LA LISTA DE LIBROS
-export async function GetBooks()
+let book = null;
+export function InitializeMain()
 {
-    try {
-        const res = await fetch("../books.json");
-        if (res.ok)
-        {
-            books = await res.json();
-            SetupMainBooksList();
-        }else {
-            console.error('Error fetching books:', res.statusText);
-        }
-    } catch (error) {
-        console.error('Fetch error:', error);
-    }
+    book = new Book();
+    SetupMainBooksList();
 }
 
 // CARGA LA LISTA PRINCIPAL DE LIBROS
-function SetupMainBooksList()
+async function SetupMainBooksList()
 {
+    await book.SearchAllBooks();
+    const books = book.GetBooks();
     const booksList = document.getElementById("books-list");
 
-    booksList.innerHTML = books.map(book =>
-        BookListItem(book.properties.id, book.properties.cover, book.properties.title, book.properties.author.name, book.properties.coauthors.length, book.properties.pages, book.properties.tags)
+    booksList.innerHTML = books.map(eachbook =>
+        BookListItem(eachbook)
     ).join('');
 
     SetupToggleBookDetail();
@@ -37,7 +28,6 @@ function SetupMainBooksList()
 function SetupToggleBookDetail()
 {
     /* -- Botones para ver el detalle del libro -- */
-    // const bookDetailTween = gsap.to("#book-details", { duration: 0.5, xPercent: -100, opacity: 1, ease: "sine.inOut", paused: true });
     const toggleBookDetail = document.getElementsByClassName("book-details-toggle");
     Array.from(toggleBookDetail).forEach((toggle)=>{
         toggle.addEventListener('click', ()=> {ToggleBookDetail(toggle, tweens.bookDetailTween)});
@@ -45,6 +35,7 @@ function SetupToggleBookDetail()
 }
 
 // ACTIVA/DESACTIVA LA PANTALLA DEL DETALLE DEL LIBRO
+let bookDetailActive = false;
 function ToggleBookDetail(toggle, tween)
 {
     if (toggle) { SetBookDetail(toggle);}
@@ -57,11 +48,12 @@ function SetBookDetail(toggle)
 {
     // BUSCAR LA INFORMACION DEL LIBRO EN LA LISTA DE LIBROS OBTENIDA DEL SERVIDOR MEDIANTE EL ID DEL LIBRO
     const bookid = toggle.id.split('-').pop();
-    const book = books.find(book => book.properties.id.includes(bookid));
-    if (book)
+    const books = book.GetBooks();
+    const selectedbook = books.find(book => book.properties.id.includes(bookid));
+    if (selectedbook)
     {
         const bookDetail = document.getElementById("book-details");
-        bookDetail.innerHTML = BookDetail(book);
+        bookDetail.innerHTML = BookDetail(selectedbook);
         const toogleCloseDetail = document.getElementById("close-book-detail");
         toogleCloseDetail.addEventListener('click', ()=>{ToggleBookDetail(null, tweens.bookDetailTween)})
     }

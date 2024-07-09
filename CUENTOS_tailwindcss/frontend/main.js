@@ -1,8 +1,9 @@
 import { GetBooks } from "./booksManager.js";
 import * as tweens from "../components/tweenControls.js";
+import { InitializeMain } from "./booksManager.js";
 
 document.addEventListener('DOMContentLoaded', async () => {
-    await GetBooks();
+    InitializeMain();
     SetupToggleMenus();
 
     document.getElementById("toLogin").addEventListener('click', GoToLogin);
