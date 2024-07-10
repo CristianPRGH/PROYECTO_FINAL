@@ -96,3 +96,8 @@ export function BookDetail(book)
                 ).join('')}
             </div>`
 }
+
+export function BookPage(id)
+{
+    return `<textarea id="page-${id}" class="bg-transparent w-full h-full p-2 outline-none text-justify overflow-x-hidden resize-none" placeholder="Escribe aquí..."></textarea>`
+}
