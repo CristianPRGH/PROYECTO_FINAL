@@ -1,6 +1,5 @@
-import { GetBooks } from "./booksManager.js";
 import * as tweens from "../components/tweenControls.js";
-import { InitializeMain } from "./booksManager.js";
+import { InitializeMain } from "../frontend/booksManager.js";
 
 document.addEventListener('DOMContentLoaded', async () => {
     InitializeMain();

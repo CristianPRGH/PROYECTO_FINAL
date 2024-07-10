@@ -1,5 +1,5 @@
+import { Book } from "./Book.js";
 import { BookListItem, BookDetail } from "../components/book_item.js";
-import { Book } from "../js/Book.js";
 import * as tweens from "../components/tweenControls.js";
 
 
@@ -15,6 +15,7 @@ async function SetupMainBooksList()
 {
     await book.SearchAllBooks();
     const books = book.GetBooks();
+    console.log(books);
     const booksList = document.getElementById("books-list");
 
     booksList.innerHTML = books.map(eachbook =>
