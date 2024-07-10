@@ -1,6 +1,11 @@
-let loginForm = registerForm = null;
-let loginClassList = registerClassList = null;
-let tweenLogin = tweenRegister = tweenErrorIcon = tweenValidIcon = null;
+import * as tweens from "../components/tweenControls.js";
+
+let loginForm;
+let registerForm;
+let tweenLogin;
+let tweenRegister;
+let tweenErrorIcon;
+let tweenValidIcon;
 
 document.addEventListener("DOMContentLoaded", ()=>{
     InitializeVariables();
@@ -10,25 +15,23 @@ document.addEventListener("DOMContentLoaded", ()=>{
 
 function InitializeVariables()
 {
-    loginForm           = document.getElementById("login-form");
-    registerForm        = document.getElementById("register-form");
-    loginClassList      = Array.from(loginForm.classList);
-    registerClassList   = Array.from(registerForm.classList);
+    loginForm    = document.getElementById("login-form");
+    registerForm = document.getElementById("register-form");
 }
 
 function InitializeEvents()
 {
     document.getElementById("to-signup").addEventListener('click', ()=>{
         ResetRegisterForm();
-        PlayAnimation(tweenLogin);
-        PlayAnimation(tweenRegister);
+        tweens.PlayAnimation(tweenLogin);
+        tweens.PlayAnimation(tweenRegister);
     });
     
     document.getElementById("submit-register").addEventListener('click', ()=>{
         if (ValidateRegister())
         {
-            ReverseAnimation(tweenLogin);
-            ReverseAnimation(tweenRegister);
+            tweens.ReverseAnimation(tweenLogin);
+            tweens.ReverseAnimation(tweenRegister);
         }
     });
     
@@ -38,26 +41,26 @@ function InitializeEvents()
             
         // }
 
-        window.location.href = "index.html";
+        window.location.href = "../index.html";
     });
 
     
     // Añade un evento de cambio al input de tipo file
     document.getElementById('input-file').addEventListener('change', function(event) {
-    // Verifica si hay un archivo seleccionado
-    if (event.target.files && event.target.files[0]) {
-        var reader = new FileReader(); // Crea un nuevo FileReader
+        // Verifica si hay un archivo seleccionado
+        if (event.target.files && event.target.files[0]) {
+            var reader = new FileReader(); // Crea un nuevo FileReader
 
-        // Define una función que se ejecutará cuando el archivo se haya leído
-        reader.onload = function(e) {
-            // Cambia la fuente de la imagen de perfil a la URL de los datos leídos del archivo
-            document.getElementById('input-profilepic').src = e.target.result;
+            // Define una función que se ejecutará cuando el archivo se haya leído
+            reader.onload = function(e) {
+                // Cambia la fuente de la imagen de perfil a la URL de los datos leídos del archivo
+                document.getElementById('input-profilepic').src = e.target.result;
+            }
+
+            // Lee el archivo seleccionado como una URL de datos
+            reader.readAsDataURL(event.target.files[0]);
         }
-
-        // Lee el archivo seleccionado como una URL de datos
-        reader.readAsDataURL(event.target.files[0]);
-    }
-});
+    });
 }
 
 function InitializeTweens()
@@ -92,14 +95,14 @@ function ShowInputErrors(formValid)
             
             if (msg != "valid")
             {
-                PlayAnimation(tweenErrorIcon);
+                tweens.PlayAnimation(tweenErrorIcon);
                 validInput.classList.remove("valid");
                 validInput.classList.add("notvalid");
                 errorMsg.innerHTML = msg;
             }
             else
             {
-                PlayAnimation(tweenValidIcon);
+                tweens.PlayAnimation(tweenValidIcon);
                 validInput.classList.remove("notvalid");
                 validInput.classList.add("valid");
                 errorMsg.innerHTML = "";

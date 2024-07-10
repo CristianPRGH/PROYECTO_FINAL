@@ -2,7 +2,7 @@ export class Book{
 
     booksList = null;
 
-    constructor(coverimg, covercolor, author, pages, tags, sinopsis)
+    constructor(coverimg = "", covercolor = "", author = "", pages = "", tags = "", sinopsis = "")
     {
         this.coverimg = coverimg;
         this.covercolor = covercolor;
@@ -17,7 +17,7 @@ export class Book{
     async SearchAllBooks()
     {
         try {
-            const res = await fetch("../books.json");
+            const res = await fetch("books.json");
             if (res.ok)
             {
                 this.booksList = await res.json();

@@ -3,7 +3,9 @@ import { BookListItem, BookDetail } from "../components/book_item.js";
 import * as tweens from "../components/tweenControls.js";
 
 
+const bookDetailTween = gsap.to("#book-details", { duration: 0.5, xPercent: -100, opacity: 1, ease: "sine.inOut", paused: true });
 let book = null;
+
 export function InitializeMain()
 {
     book = new Book();
@@ -15,7 +17,6 @@ async function SetupMainBooksList()
 {
     await book.SearchAllBooks();
     const books = book.GetBooks();
-    console.log(books);
     const booksList = document.getElementById("books-list");
 
     booksList.innerHTML = books.map(eachbook =>
@@ -31,7 +32,7 @@ function SetupToggleBookDetail()
     /* -- Botones para ver el detalle del libro -- */
     const toggleBookDetail = document.getElementsByClassName("book-details-toggle");
     Array.from(toggleBookDetail).forEach((toggle)=>{
-        toggle.addEventListener('click', ()=> {ToggleBookDetail(toggle, tweens.bookDetailTween)});
+        toggle.addEventListener('click', ()=> {ToggleBookDetail(toggle, bookDetailTween)});
     });
 }
 
@@ -56,6 +57,6 @@ function SetBookDetail(toggle)
         const bookDetail = document.getElementById("book-details");
         bookDetail.innerHTML = BookDetail(selectedbook);
         const toogleCloseDetail = document.getElementById("close-book-detail");
-        toogleCloseDetail.addEventListener('click', ()=>{ToggleBookDetail(null, tweens.bookDetailTween)})
+        toogleCloseDetail.addEventListener('click', ()=>{ToggleBookDetail(null, bookDetailTween)})
     }
 }

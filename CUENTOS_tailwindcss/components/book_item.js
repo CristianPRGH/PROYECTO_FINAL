@@ -8,8 +8,8 @@ export function BookListItem(book)
     const pages = book.properties.pages;
     const tags = book.properties.tags;
 
-    return `<article class="grid grid-cols-[20%_1fr_10%] gap-1  py-1 border-b-2 border-b-orange-400">
-                <img class="h-full" src="../images/book_covers/${cover}">
+    return `<article class="grid grid-cols-[20%_1fr_10%] gap-1 py-1 border-b-2 border-b-orange-400">
+                <img class="h-full" src="images/book_covers/${cover}">
                 <div class="flex flex-col justify-evenly overflow-x-hidden">
                     <p class="text-ellipsis overflow-hidden whitespace-nowrap font-bold">${title}</p>
                     
@@ -78,19 +78,19 @@ export function BookDetail(book)
                 <path d="M15 7L10 12L15 17" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
             </div>
-            <img class="w-2/4 self-center" src="../images/book_covers/${cover}">
+            <img class="w-2/4 self-center" src="images/book_covers/${cover}">
             <p class="font-bold text-center text-xl w-full my-3 break-words">${title}</p>
             <p>${pages} páginas</p>
             <p class="my-1 text-justify">${sinopsis}</p>
             <div class="flex flex-row items-center">
-                <img class="w-8 h-8 mr-3" src="../images/${authorimg}">
+                <img class="w-8 h-8 mr-3" src="images/${authorimg}">
                 <p>${authorname}</p>
             </div>
             <p>Coautores</p>
             <div class="flex flex-col">
                 ${coauthors.map(coauthor =>
                     `<div class="flex p-1 items-center border-b-[1px] border-b-orange-400">
-                        <img class="w-8 h-8 mr-3" src="../images/${coauthor.image}">
+                        <img class="w-8 h-8 mr-3" src="images/${coauthor.image}">
                         <p>${coauthor.name}</p>
                     </div>`
                 ).join('')}

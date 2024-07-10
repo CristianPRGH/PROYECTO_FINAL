@@ -16,7 +16,7 @@ function SetupToggleMenus()
             menu: document.getElementById("menu-bookfilters"),
             toggle: document.getElementById("toggleLeftMenu"),
             active: false,
-            tween: tweens.bookFiltersTween
+            tween: gsap.to("#menu-bookfilters", { duration: 0.5, xPercent: 100, opacity: 1,ease: "sine.inOut", paused: true })
         },
         {
             menu: document.getElementById("index-rightmenu"),
