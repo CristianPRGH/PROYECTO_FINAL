@@ -1,9 +1,12 @@
+import { GetBooks } from "./booksManager.js";
 import * as tweens from "../components/tweenControls.js";
 import { InitializeMain } from "./booksManager.js";
 
 document.addEventListener('DOMContentLoaded', async () => {
     InitializeMain();
     SetupToggleMenus();
+
+    document.getElementById("toLogin").addEventListener('click', GoToLogin);
 });
 
 function SetupToggleMenus()
@@ -30,4 +33,9 @@ function SetupToggleMenus()
             menus[index].active ? tweens.PlayAnimation(tween) : tweens.ReverseAnimation(tween);
         });
     });
+}
+
+function GoToLogin()
+{
+    window.location = "./pages/auth.html";
 }
