@@ -8,15 +8,17 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
     <link rel="stylesheet" href="../styles/output.css">
 
-    <script src="../frontend/"></script>
+    <script src="../frontend/bookPageManager.js"></script>
 
 </head>
-<body class="bg-green-900 h-screen flex flex-col p-2">
+<body class="bg-orange-100 h-screen flex flex-col p-2">
     
-    <main id="book-cover" class="flex justify-between items-center w-full h-full bg-white rounded-md">
+    <main id="book-cover" class="flex justify-between items-center w-full h-full bg-white rounded-t-lg shadow-sm shadow-green-900">
         <section class="h-full w-full flex flex-col mx-1">
-            <textarea id="" class="bg-transparent w-full h-full p-2 outline-none text-justify overflow-x-hidden resize-none" placeholder="Escribe aquí...">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem ipsam architecto aliquid obcaecati sed nulla animi quaerat. Et, sit voluptate cupiditate nihil necessitatibus earum accusantium ipsam in, incidunt sunt ipsum fugit temporibus reprehenderit voluptatem, suscipit possimus quod! Consectetur sint est earum! At officia quis labore quos cumque eius, velit in ut corrupti nihil laboriosam ea, nisi quo harum odit ipsam!</textarea>
-            <div class="flex align-bottom justify-between border-t-2 text-sm">
+            <div id="pages-container" class="h-full w-full flex">
+                
+            </div>
+            <div class="flex align-bottom justify-between border-t-2 text-sm px-2">
                 <p>2</p>
                 <p>3</p>
                 <p>4</p>
@@ -24,7 +26,7 @@
         </section>
     </main>
 
-    <section class="flex justify-between p-1">
+    <section class="bg-green-900 rounded-b-lg flex justify-between p-1">
         <button id="prev-page" class="text-white rounded-md cursor-pointer material-symbols-rounded">chevron_left</button>
         <button id="confirm-pages" class="text-white rounded-md cursor-pointer material-symbols-rounded">check_circle</button>
         <button id="next-page" class="text-white rounded-md cursor-pointer material-symbols-rounded">chevron_right</button>

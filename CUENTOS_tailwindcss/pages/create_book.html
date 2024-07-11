@@ -12,22 +12,22 @@
     <script src="../frontend/createBook.js" type="module"></script>
 </head>
 <body class="bg-orange-100 h-screen flex flex-col p-2">
-    <main id="book-cover" class="flex items-start h-full pb-1 mb-1 bg-white rounded-md shadow-md shadow-black">
+    <main id="book-cover" class="flex items-start h-full bg-white rounded-t-lg shadow-sm shadow-green-900">
         <section class="w-[10%] h-full rounded-sm shadow-[inset_-2px_0_3px_rgba(137,137,137,0.5)] bg-transparent flex flex-col justify-start items-center"></section>
         <section class="flex flex-col justify-center w-[90%] h-full p-4 rounded-sm  shadow-[inset_2px_0_3px_rgba(137,137,137,0.5)] relative">
-            <input type="text" id="" placeholder="título" class="form-input placeholder:text-sm rounded-sm pl-4 z-10">
+            <input type="text" id="" placeholder="título" class="form-input placeholder:text-sm placeholder:italic rounded-sm pl-4 z-10">
             <select id="" class="form-input rounded-sm pl-4 z-10">
                 <option value="0">- Tipo -</option>
             </select>
-            <input type="number" id="" placeholder="nº páginas (1-500)" class="form-input placeholder:text-sm rounded-sm pl-4 z-10">
-            <input type="text" id="" placeholder="tags" class="form-input placeholder:text-sm rounded-sm pl-4 z-10">
+            <input type="number" id="" placeholder="nº páginas (1-500)" class="form-input placeholder:text-sm placeholder:italic rounded-sm pl-4 z-10">
+            <input type="text" id="" placeholder="tags" class="form-input placeholder:text-sm placeholder:italic rounded-sm pl-4 z-10">
             <div class="h-full w-full absolute top-0 left-0 z-0">
                 <img src="" alt="" id="book-cover-img" class="w-full h-full opacity-0">
             </div>
         </section> 
     </main>
 
-    <section class="bg-green-900 w-full flex items-center justify-between p-1 rounded-lg">
+    <section class="bg-green-900 w-full flex items-center justify-between p-1 rounded-b-lg">
         <div class="flex items-center justify-evenly w-1/2">
             <label for="select-cover-img" class="material-symbols-rounded cursor-pointer text-white">add_photo_alternate</label>
             <input type="file" id="select-cover-img" class="hidden" accept="image/*">
