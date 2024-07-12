@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     SetupToggleMenus();
 
     document.getElementById("toLogin").addEventListener('click', GoToLogin);
+    document.getElementById("newBook").addEventListener('click', GoToNewBook);
 });
 
 function SetupToggleMenus()
@@ -36,5 +37,11 @@ function SetupToggleMenus()
 
 function GoToLogin()
 {
-    window.location = "./pages/auth.html";
+    window.location = "pages/auth.html";
 }
+
+function GoToNewBook()
+{
+    window.location = "pages/CreateBook.html";
+}
+
