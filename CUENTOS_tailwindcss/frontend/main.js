@@ -5,8 +5,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     InitializeMain();
     SetupToggleMenus();
 
-    document.getElementById("toLogin").addEventListener('click', GoToLogin);
+    document.getElementById("to-login").addEventListener('click', GoToLogin);
     document.getElementById("newBook").addEventListener('click', GoToNewBook);
+    document.getElementById("new-book").addEventListener('click', GoTocreateBook);
+    // document.getElementById("library").addEventListener('click', GoToLogin);
+    // document.getElementById("logout").addEventListener('click', GoToLogin);
 });
 
 function SetupToggleMenus()
