@@ -1,27 +1,99 @@
+const numPages = 100;   // Numero de páginas seleccionadas por el usuario
+let currentPage = 1;    // Página actual
+const pagesContent = {} // Contenido de las páginas
+let quill = null;
+
 document.addEventListener("DOMContentLoaded", ()=>{
-    document.getElementById("prev-page").addEventListener('click', PageControl);
-    document.getElementById("next-page").addEventListener('click', PageControl);
-    // document.getElementById("confirm-pages").addEventListener('click', lalala);
+    document.getElementById("prev").addEventListener('click', PageControl);
+    document.getElementById("next").addEventListener('click', PageControl);
+    document.getElementById("confirm").addEventListener('click', ConfirmPages);
 
-    // <textarea id="" class="bg-transparent w-full h-full p-2 outline-none text-justify overflow-x-hidden resize-none placeholder:italic" maxlength="1650" placeholder="Escribe aquí...(max 300 palabras)"></textarea>
-    // const pagescontainer = document.getElementById("pages-container");
-    // for (let index = 0; index < 10; index++)
-    // {
-        
-    //     // if (index != 0)
-    //     // {
-    //     //     newPage.classList.add("hidden");
-    //     // }
-    // }
-    // const newPage = `<textarea id="page-${index}" class="bg-transparent w-full h-full p-2 outline-none text-justify overflow-x-hidden resize-none placeholder:italic" maxlength="1650" placeholder="Escribe aquí...(max 300 palabras)"></textarea>`
-    // pagescontainer.innerHTML = newPage;
-
-    const quill = new Quill('#editor', {
-        theme: 'snow'
-    });
+    InitializeQuill();
+    LoadPage();
+    SetPages();
 })
 
 function PageControl(event)
 {
-    
+    const content = quill.getContents();
+    SavePage(currentPage, content);
+    const direction = event.target.id;
+    if (direction === "next" && currentPage < numPages)
+    {
+        currentPage++;
+    } else if (direction === "prev" && currentPage > 1)
+    {
+        currentPage--;
+    }
+
+    LoadPage(currentPage);
+    SetPages();
 }
+
+function SetPages()
+{
+    document.getElementById("prev-page").textContent = currentPage > 1 ? currentPage -1 : "";
+    document.getElementById("current-page").innerHTML = `<strong>${currentPage}</strong>`;
+    document.getElementById("next-page").textContent = currentPage < numPages ? currentPage+1 : "";
+}
+
+function SavePage(pageNumber, content)
+{
+    pagesContent[pageNumber] = content;
+}
+
+function LoadPage(pageNumber)
+{
+    const content = pagesContent[pageNumber];
+    quill.setContents(content);
+}
+
+function InitializeQuill()
+{
+    quill = new Quill('#editor', {
+        // readOnly: true,
+        // modules: {
+        //     toolbar: null
+        //   },
+        modules: {
+            syntax: true,
+            toolbar: '#toolbar-container',
+          },
+        placeholder: 'Empieza a escribir...',
+        theme: 'snow'
+    });
+}
+
+function ConfirmPages()
+{
+    const modal = document.getElementById("confirm-pages");
+    modal.showModal();
+
+    document.getElementById("write-yes").addEventListener('click', ()=>{
+        window.location = "../index.html";
+    })
+
+    document.getElementById("write-no").addEventListener('click', ()=>{
+        modal.close();
+    })
+}
+
+
+
+
+
+// function GetContent(quill)
+// {
+//     const newPage = {
+//         id:"page-1",
+//         content:""
+//     }
+
+//     const length = quill.getLength();
+//     newPage.content = quill.getContents();
+//     console.log(newPage);
+
+//     quill.deleteText(0, length);
+
+//     quill.setContents(newPage.content);
+// }

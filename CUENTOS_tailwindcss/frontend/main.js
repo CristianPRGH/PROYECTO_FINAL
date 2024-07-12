@@ -6,8 +6,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     SetupToggleMenus();
 
     document.getElementById("to-login").addEventListener('click', GoToLogin);
-    document.getElementById("newBook").addEventListener('click', GoToNewBook);
-    document.getElementById("new-book").addEventListener('click', GoTocreateBook);
+    document.getElementById("new-book").addEventListener('click', GoToNewBook);
     // document.getElementById("library").addEventListener('click', GoToLogin);
     // document.getElementById("logout").addEventListener('click', GoToLogin);
 });
@@ -38,13 +37,5 @@ function SetupToggleMenus()
     });
 }
 
-function GoToLogin()
-{
-    window.location = "pages/auth.html";
-}
-
-function GoToNewBook()
-{
-    window.location = "pages/CreateBook.html";
-}
-
+function GoToLogin() { window.location = "pages/auth.html"; }
+function GoToNewBook() { window.location = "pages/create_book.html"; }
