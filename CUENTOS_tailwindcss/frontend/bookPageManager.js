@@ -15,8 +15,8 @@ document.addEventListener("DOMContentLoaded", ()=>{
 
 function PageControl(event)
 {
-    const content = quill.getContents();
-    SavePage(currentPage, content);
+    SavePage(currentPage);
+
     const direction = event.target.id;
     if (direction === "next" && currentPage < numPages)
     {
@@ -32,13 +32,14 @@ function PageControl(event)
 
 function SetPages()
 {
-    document.getElementById("prev-page").textContent = currentPage > 1 ? currentPage -1 : "";
+    document.getElementById("prev-page").textContent = currentPage > 1 ? currentPage - 1 : "";
     document.getElementById("current-page").innerHTML = `<strong>${currentPage}</strong>`;
-    document.getElementById("next-page").textContent = currentPage < numPages ? currentPage+1 : "";
+    document.getElementById("next-page").textContent = currentPage < numPages ? currentPage + 1 : "";
 }
 
-function SavePage(pageNumber, content)
+function SavePage(pageNumber)
 {
+    const content = GetQuillContent();
     pagesContent[pageNumber] = content;
 }
 
@@ -65,7 +66,10 @@ function InitializeQuill()
 }
 
 function ConfirmPages()
-{
+{    
+    SavePage(currentPage);
+    console.log(pagesContent);
+
     const modal = document.getElementById("confirm-pages");
     modal.showModal();
 
@@ -78,7 +82,10 @@ function ConfirmPages()
     })
 }
 
-
+function GetQuillContent()
+{
+    return quill.getContents();
+}
 
 
 

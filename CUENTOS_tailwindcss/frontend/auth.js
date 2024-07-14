@@ -86,26 +86,27 @@ function ValidateRegister()
 
 function ShowInputErrors(formValid)
 {
+    // Recorre las validaciones del formulario
     for (const [input, msg] of Object.entries(formValid)) {
-        if (input != "isValid")
+        if (input != "isValid") // Si el formulario no es válido:
         {
-            const validInputId = document.getElementById(input).dataset.valid;
-            const validInput   = document.getElementById(validInputId);
-            const errorMsg     = document.getElementById(validInput.dataset.errormsg);
+            const validInputId = document.getElementById(input).dataset.valid;  // Obtiene el id del contenedor de los iconos y mensaje de validación
+            const validInput   = document.getElementById(validInputId);         // Obtiene el contenedor
+            const errorMsg     = document.getElementById(validInput.dataset.errormsg);  // Obtiene el id del mensaje de error
             
-            if (msg != "valid")
+            if (msg != "valid") // Si el mensaje de validación no es "valid":
             {
-                tweens.PlayAnimation(tweenErrorIcon);
-                validInput.classList.remove("valid");
-                validInput.classList.add("notvalid");
-                errorMsg.innerHTML = msg;
+                tweens.PlayAnimation(tweenErrorIcon);   // Reproduce la animación de los iconos de error
+                validInput.classList.remove("valid");   // Quita la clase "valid" del contenedor de validación 
+                validInput.classList.add("notvalid");   // Añade la clase "notvalid" del contenedor de validación 
+                errorMsg.innerHTML = msg;               // Añade el mensaje de la validación
             }
             else
             {
-                tweens.PlayAnimation(tweenValidIcon);
-                validInput.classList.remove("notvalid");
-                validInput.classList.add("valid");
-                errorMsg.innerHTML = "";
+                tweens.PlayAnimation(tweenValidIcon);   // Reproduce la animación de los iconos de check
+                validInput.classList.remove("notvalid");// Quita la clase "notvalid" del contenedor de validación 
+                validInput.classList.add("valid");      // Añade la clase "valid" del contenedor de validación 
+                errorMsg.innerHTML = "";                // No hay mensaje de validación
             }
         }
     }
