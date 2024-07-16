@@ -1,45 +1,57 @@
-let formValid = [];
 const validations = {
     required: ValidateEmpty,
-    dni: ValidateDNI,
-    name: ValidateName,
+    // dni: ValidateDNI,
+    // name: ValidateName,
     email: ValidateEmail,
-    date: ValidateDate,
-    tel: ValidateTel,
+    // date: ValidateDate,
+    // tel: ValidateTel,
     username: ValidateUsername,
     password: ValidatePassword,
-    password: ValidatePasswordRepeat
+    repeatPassword: ValidatePasswordRepeat
 };
+let inputvalidations = [];
 
+// Añade el input id y el mensaje de validación a un array
 function SetInputValidation(inputid, msg)
 {
-    formValid[inputid] = msg;
+    inputvalidations[inputid] = msg;
 }
 
-function ValidateInputs(inputs)
+// Recibe los inputs de la vista
+export function ValidateInputs(inputs)
 {
     let isValid = true;
-
+    
     for (const input of inputs) {
         for (const [key, validation] of Object.entries(validations)) {
-            if (input.classList.contains(key) || input.id.includes(key) || input.type == key)
+            if (input.classes.includes(key) || input.id.includes(key) || input.type == key)
             {
-                if (!validation(input)) { isValid = false; break; }
-                else { SetInputValidation(input.id, "valid"); }
+                if (!validation(input)) { isValid = false; break; } // Si la validación es False
+                else { SetInputValidation(input.id, "valid"); }     // Si la validación es True
             }
         }        
     }
 
-    formValid["isValid"] = isValid;
-    return formValid;
+    // formValid["isValid"] = isValid;
+    // console.log(inputvalidations);
+    return {
+        "isvalid":isValid,
+        "inputs":inputvalidations
+    };
 }
 
+/* ---------------------------------------------------------------------------------------------------------------------------------- */
 
+function CleanData(value)
+{
+    return DOMPurify.sanitize(value, {USE_PROFILES: {html: true}});
+}
 
-// VALIDACIONES //
+// VALIDACIONES // Retornan TRUE si es válido o FALSE si no lo es
 function ValidateEmpty(input) {
-    inputValue = input.value.trim();
-    if (inputValue.length === 0) {
+    
+    const value = CleanData(input.value);
+    if (value.length === 0) {
         const msg = "Campo vacío";
         SetInputValidation(input.id, msg);
         return false;
@@ -52,8 +64,9 @@ function ValidateName(input)
 {
     // let nameRegex = (input.id.includes("publico")) ? /^[0-9a-zA-ZáéíóúÁÉÍÓÚüÜñÑ'-]+$/ : /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ'-]+(\s+[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ'-]+)*$/;
     const regex = /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ'-]+(\s+[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ'-]+)*$/;
+    const value = CleanData(input.value).trim();
 
-    if (input.value.length > 0 && !regex.test(input.value))
+    if (value.length > 0 && !regex.test(value))
     {
         const msg = "Formato incorrecto.";
         SetInputValidation(input.id, msg);
@@ -66,8 +79,9 @@ function ValidateName(input)
 function ValidateUsername(input)
 {
     const regex = /^[a-z\d]+$/i;
+    const value = CleanData(input.value).trim();
 
-    if (input.value.length > 0 && !regex.text(input.value))
+    if (value.length > 0 && !regex.test(value))
     {
         const msg = "Formato incorrecto.";
         SetInputValidation(input.id, msg);
@@ -78,9 +92,10 @@ function ValidateUsername(input)
 }
 
 function ValidateDNI(input) {
-    let dniRegex = /^(\d{8}[A-HJ-NP-TV-Z]|[XYZ]\d{7}[A-Z])$/;
-    let dniCompleto = input.value.trim().toUpperCase();
-    let letras = [
+    const dniRegex = /^(\d{8}[A-HJ-NP-TV-Z]|[XYZ]\d{7}[A-Z])$/;
+    // let dniCompleto = input.value.trim().toUpperCase();
+    const dniCompleto = CleanData(input.value).trim().toUpperCase();
+    const letras = [
         "T","R","W","A","G","M","Y","F","P",
         "D","X","B","N","J","Z","S","Q","V",
         "H","L","C","K","E","T",
@@ -95,7 +110,7 @@ function ValidateDNI(input) {
         return false;
     }
 
-    let primerDigito = dniCompleto.slice(0, 1);
+    const primerDigito = dniCompleto.slice(0, 1);
 
     if (!isNaN(parseInt(primerDigito))) {
         // => DNI
@@ -112,8 +127,8 @@ function ValidateDNI(input) {
     } // => NIE
     else {
         // Reemplazar la letra inicial por el número correspondiente
-        var letrasIniciales = { 'X': 0, 'Y': 1, 'Z': 2 };
-        var nieNumerico = dniCompleto.replace(/[XYZ]/, function(match) {
+        const letrasIniciales = { 'X': 0, 'Y': 1, 'Z': 2 };
+        const nieNumerico = dniCompleto.replace(/[XYZ]/, function(match) {
             return letrasIniciales[match];
         });
 
@@ -133,9 +148,10 @@ function ValidateDNI(input) {
 }
 
 function ValidateEmail(input) {
-    let regexEmail = /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/;
+    const regexEmail = /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/;
+    const value = CleanData(input.value).trim().toLowerCase();
 
-    if (input.value.length > 0 && !regexEmail.test(input.value)) {
+    if (value.length > 0 && !regexEmail.test(value)) {
         const msg = "Formato no válido";
         SetInputValidation(input.id, msg);
         return false;
@@ -156,11 +172,12 @@ function ValidateDate(input) {
 
     let validDate = true;
     let msg = "";
+    const value = CleanData(input.value).trim();
 
-    if (input.value.length > 0)
+    if (value.length > 0)
     {
-        let valoresFecha = input.value.split('-');
-        let fechaFormateada = valoresFecha[2]+'/'+valoresFecha[1]+'/'+valoresFecha[0];
+        const valoresFecha = value.split('-');
+        const fechaFormateada = valoresFecha[2]+'/'+valoresFecha[1]+'/'+valoresFecha[0];
 
         /* Comprobar formato dd/mm/yyyy, que el no sea mayor de 12 y los días mayores de 31 */
         if (!DATE_REGEX.test(fechaFormateada)) {
@@ -186,8 +203,8 @@ function ValidateDate(input) {
         }
 
         // VALIDA MAYOR DE EDAD
-        let miFecha = new Date(input.value);
-        let diffYear = CURRENT_YEAR - miFecha.getFullYear();
+        const miFecha = new Date(input.value);
+        const diffYear = CURRENT_YEAR - miFecha.getFullYear();
         if (diffYear < 18)
         {
             msg = "Debe ser mayor de edad";
@@ -213,19 +230,20 @@ function ValidateDate(input) {
         }
     }
 
-    if (validDate) return validDate;
+    if (validDate)
+        return validDate;
     else{
         SetInputValidation(input.id, msg);
         return validDate;
     }
-
-    
 }
 
 function ValidateTel(input)
 {
-    let telRegex = /^(\+\d{1,3}\s?)?(\d{3,4}[-\s]?){2}\d{3,4}$/;
-    if (input.value.length > 0 && !telRegex.test(input.value))
+    const telRegex = /^(\+\d{1,3}\s?)?(\d{3,4}[-\s]?){2}\d{3,4}$/;
+    const value = CleanData(input.value).trim();
+
+    if (value.length > 0 && !telRegex.test(value))
     {
         const msg = "Formato no válido";
         SetInputValidation(input.id, msg);
@@ -238,18 +256,18 @@ function ValidateTel(input)
 
 function ValidatePassword(input)
 {
-    let valor = input.value;
+    const value = CleanData(input.value).trim();
     let msg = "";
-
+    
     // input.classList.remove(input.classList.item(input.classList.length -1));
-    if (valor.length > 0)
+    if (value.length > 0)
     {
         let level = 0;
-        level += (valor.length > 5 && valor.length < 13) ? 1 : 0;           // Longitud entre 6 y 12 caracteres
-        level += /(?=(.*[!@#$%^&*(),.?":{}|<>]){2,})/.test(valor) ? 1 : 0;  // Contiene al menos 2 caracteres especiales
-        level += /(?=(.*[a-z]){2,})/.test(valor) ? 1 : 0;                   // Contiene al menos 2 letras minúsculas
-        level += /(?=(.*[A-Z]){2,})/.test(valor) ? 1 : 0;                   // Contiene al menos 2 letras mayúsculas
-        level += /(?=(.*\d){2,})/.test(valor) ? 1 : 0;                      // Contiene al menos 2 números
+        level += (value.length > 5 && value.length < 13) ? 1 : 0;           // Longitud entre 6 y 12 caracteres
+        level += /(?=(.*[!@#$%^&*(),.?":{}|<>]){2,})/.test(value) ? 1 : 0;  // Contiene al menos 2 caracteres especiales
+        level += /(?=(.*[a-z]){2,})/.test(value) ? 1 : 0;                   // Contiene al menos 2 letras minúsculas
+        level += /(?=(.*[A-Z]){2,})/.test(value) ? 1 : 0;                   // Contiene al menos 2 letras mayúsculas
+        level += /(?=(.*\d){2,})/.test(value) ? 1 : 0;                      // Contiene al menos 2 números
 
         // switch (level) {
         //     case 1:
@@ -273,7 +291,6 @@ function ValidatePassword(input)
         if (level < 5)
         {
             msg = "No cumple los requisitos";
-            
             SetInputValidation(input.id, msg);
             return false;
         }
@@ -287,10 +304,12 @@ function ValidatePassword(input)
 
 function ValidatePasswordRepeat(input)
 {
-    console.log("hola");
-    let pass2 = document.getElementById(input.dataset.repeat);
+    const pass1 = CleanData(input.value).trim();
+    const inputpassword = document.getElementById(input.id);
+    let pass2 = document.getElementById(inputpassword.dataset.repeat).value;
+    pass2 = CleanData(pass2).trim();
 
-    if (input.value != pass2.value)
+    if (pass1 != pass2)
     {
         const msg = "Las contraseñas no coinciden";
         SetInputValidation(input.id, msg);

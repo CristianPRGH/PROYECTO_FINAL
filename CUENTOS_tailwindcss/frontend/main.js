@@ -37,5 +37,5 @@ function SetupToggleMenus()
     });
 }
 
-function GoToLogin() { window.location = "pages/auth.html"; }
-function GoToNewBook() { window.location = "pages/create_book.html"; }
+function GoToLogin() { window.location = "view/auth.html"; }
+function GoToNewBook() { window.location = "view/create_book.html"; }

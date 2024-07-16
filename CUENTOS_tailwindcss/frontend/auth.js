@@ -1,23 +1,16 @@
 import * as tweens from "../components/tweenControls.js";
+import {ValidateInputs} from "./formValidations.js";
 
-let loginForm;
-let registerForm;
 let tweenLogin;
 let tweenRegister;
 let tweenErrorIcon;
 let tweenValidIcon;
 
 document.addEventListener("DOMContentLoaded", ()=>{
-    InitializeVariables();
     InitializeTweens();
     InitializeEvents();
 })
 
-function InitializeVariables()
-{
-    loginForm    = document.getElementById("login-form");
-    registerForm = document.getElementById("register-form");
-}
 
 function InitializeEvents()
 {
@@ -28,7 +21,8 @@ function InitializeEvents()
     });
     
     document.getElementById("submit-register").addEventListener('click', ()=>{
-        if (ValidateRegister())
+        const res =  ValidateRegister();
+        if (res === true)
         {
             tweens.ReverseAnimation(tweenLogin);
             tweens.ReverseAnimation(tweenRegister);
@@ -65,23 +59,44 @@ function InitializeEvents()
 
 function InitializeTweens()
 {
-    tweenLogin     = gsap.to(loginForm,    {duration: 1, yPercent: -100, opacity: 0, ease:"sine.inOut", paused:true});
-    tweenRegister  = gsap.to(registerForm, {duration: 1, yPercent: -100, opacity: 1, ease:"sine.inOut", paused:true});
+    tweenLogin     = gsap.to("#login-form",    {duration: 1, yPercent: -100, opacity: 0, ease:"sine.inOut", paused:true});
+    tweenRegister  = gsap.to("#register-form", {duration: 1, yPercent: -100, opacity: 1, ease:"sine.inOut", paused:true});
     tweenErrorIcon = gsap.fromTo(".form-error-icon", {y:-5}, {duration: 0.5, y:0, ease:"bounce", paused:true});
     tweenValidIcon = gsap.fromTo(".form-valid-icon", {y:-5}, {duration: 0.5, y:0, ease:"bounce", paused:true});
 }
 
-function ValidateRegister()
+async function ValidateRegister()
 {
     const inputs = [
-        document.getElementById("input-name"),
-        document.getElementById("input-email"),
-        document.getElementById("input-password")
+        GeneraInputsJson(document.getElementById("input-username")),
+        GeneraInputsJson(document.getElementById("input-email")),
+        GeneraInputsJson(document.getElementById("input-password"))
     ];
 
     const formValid = ValidateInputs(inputs);
-    if (!formValid.isValid) ShowInputErrors(formValid);
-    return formValid.isValid;
+    console.log(formValid);
+    
+    ShowInputErrors(formValid.inputs);
+    if (formValid.isvalid)
+    {
+        try {
+            const res = await fetch("../backend/includes/signin-validations.php",{
+                method:"post",
+                headers:{'Content-Type': 'application/json'},
+                body:JSON.stringify(inputs)
+            })
+            if (res.ok)
+            {
+                const result = await res.json();
+                ShowInputErrors(result.datos);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    // console.log(formValid);
+    return formValid.isvalid;
 }
 
 function ShowInputErrors(formValid)
@@ -114,10 +129,20 @@ function ShowInputErrors(formValid)
 
 function ResetRegisterForm()
 {
-    document.getElementById("input-name").value = "";
+    document.getElementById("input-username").value = "";
     document.getElementById("input-email").value = "";
     document.getElementById("input-password").value = "";
     document.getElementById("input-password-repeat").value = "";
     Array.from(document.getElementsByClassName("valid")).map(each=>each.classList.remove("valid"));
     Array.from(document.getElementsByClassName("notvalid")).map(each=>each.classList.remove("notvalid"));
+}
+
+function GeneraInputsJson(input)
+{
+    return {
+        "id":input.id,
+        "classes":Array.from(input.classList).join(' '),
+        "type":input.type,
+        "value":input.value
+    }
 }
