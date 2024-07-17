@@ -4,17 +4,34 @@ class UserControl extends User{
     
     use TValidations;
 
+    private $username;
+    private $email;
+    private $password;
+
     private $validations = array(
         "required"=>"ValidateEmpty",
-        // "dni"=>"ValidateDNI",
-        // "name"=>"ValidateName",
         "email"=>"ValidateEmail",
-        // "date"=>"ValidateDate",
-        // "tel"=>"ValidateTel",
+        "checkemail"=>"CheckEmailExists",
         "username"=>"ValidateUsername",
+        "checkusername"=>"CheckUsernameExists",
         "password"=>"ValidatePassword"
     );
     private $formValid = array();
+
+    public function __construct($username = null, $email = null, $password = null)
+    {
+        $this->username = $username;
+        $this->email = $email;
+        $this->password = $password;
+    }
+
+    public function SetUsername($username) { $this->username = $username; }
+    public function SetEmail($email) { $this->email = $email; }
+    public function SetPassword($password) { $this->password = $password; }
+
+    public function GetUsername() { return $this->username; }
+    public function GetEmail() { return $this->email; }
+    public function GetPassword() { return $this->password; }
 
     public function ValidaInputs($inputs)
     {
@@ -42,18 +59,47 @@ class UserControl extends User{
             array_push($values, $input["value"]);
         }
 
-
-        // $msg = $formIsValid  
-        //         ? (!parent::SetUser($values) ? "Usuario ingresado correctamente" : "Error al ingresar al usuario")
-        //         : "Formulario con errores";
-
         $code = $formIsValid ? 0 : 1;
         
         return array(
-            "datos"=>$datos,
             "code"=>$code,
-            "msg"=>""//$msg
+            "msg"=>"",//$msg
+            "datos"=>$datos
         );
+    }
+
+    private function CheckUsernameExists($username)
+    {
+        if (strlen($username) > 0)
+        {
+            $result = parent::CheckUsername($username);
+            if ($result["data"][0]["total_lines"] > 0)
+            {
+                $msg = "Usuario ya existe";
+                return [false, $msg];
+            }
+            else{
+                return [true, "valid"];
+            }
+        }
+
+    }
+
+    private function CheckEmailExists($email)
+    {
+        if (strlen($email) > 0)
+        {
+            $result = parent::CheckEmail($email);
+            if ($result["data"][0]["total_lines"] > 0)
+            {
+                $msg = "Email ya existe";
+                return [false, $msg];
+            }
+            else{
+                return [true, "valid"];
+            }
+        }
+
     }
 
     // public function ValidaLogin($inputs)
@@ -87,20 +133,11 @@ class UserControl extends User{
     //     return $result;
     // }
 
-    // public function InsertUser($values)
-    // {
-    //     parent::SetUser($values);
-    // }
+    public function InsertUser($values)
+    {
+        return parent::InsertNewUser($values);
+    }
 
-    // private function CheckUsernameExists($input)
-    // {
-    //     if (strlen($input["value"]) > 0 && parent::CheckUsername($input["value"])) {
-    //         $msg = "Usuario ya existe";
-    //         return [false, $input["id"], $msg];
-    //     }
-
-    //     return [true, $input["id"], "valid"];
-    // }
 
     // private function CheckEmailExists($input)
     // {
@@ -110,11 +147,5 @@ class UserControl extends User{
     //     }
 
     //     return [true, $input["id"], "valid"];
-    // }
-
-    // public function GetUsersList()
-    // {
-    //     $result = $this->GetUsers();
-    //     return $result; // -> LISTA DE USUARIOS
     // }
 }

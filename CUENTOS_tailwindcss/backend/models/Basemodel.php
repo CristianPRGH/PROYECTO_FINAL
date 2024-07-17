@@ -37,15 +37,23 @@ class Basemodel extends Database{
     {
         $stmt = $this->connect()->prepare($query);
         $error = !$stmt->execute($params) ? 1 : 0;
-        return $this->GetResult($error);
+        $err = $stmt->errorInfo();
+
+        if (isset($err[1]))
+        {
+            // 1062 - Duplicate entry
+            if ($err[1] == 1062)
+                $msg = 'Este usuario o email ya existe';
+        }
+        return $this->GetResult($error, null, $msg);
     }
 
-    protected function GetResult($error, $data = null)
+    protected function GetResult($error, $data = null, $msg = "")
     {
         return array(
             "error"=>$error,
             "data"=>$data,
-            "msg"=> ""
+            "msg"=> $msg
         );
     }
 }

@@ -1,10 +1,6 @@
 const validations = {
     required: ValidateEmpty,
-    // dni: ValidateDNI,
-    // name: ValidateName,
     email: ValidateEmail,
-    // date: ValidateDate,
-    // tel: ValidateTel,
     username: ValidateUsername,
     password: ValidatePassword,
     repeatPassword: ValidatePasswordRepeat

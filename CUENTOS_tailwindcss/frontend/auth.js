@@ -19,6 +19,15 @@ function InitializeEvents()
         tweens.PlayAnimation(tweenLogin);
         tweens.PlayAnimation(tweenRegister);
     });
+
+    document.getElementById("submit-login").addEventListener('click', ()=>{
+        // if (Validatelogin())
+        // {
+            
+        // }
+
+        window.location.href = "../index.html";
+    });
     
     document.getElementById("submit-register").addEventListener('click', ()=>{
         const res =  ValidateRegister();
@@ -27,15 +36,6 @@ function InitializeEvents()
             tweens.ReverseAnimation(tweenLogin);
             tweens.ReverseAnimation(tweenRegister);
         }
-    });
-    
-    document.getElementById("submit-login").addEventListener('click', ()=>{
-        // if (Validatelogin())
-        // {
-            
-        // }
-
-        window.location.href = "../index.html";
     });
 
     
@@ -73,12 +73,13 @@ async function ValidateRegister()
         GeneraInputsJson(document.getElementById("input-password"))
     ];
 
+    // Valida inputs en cliente
     const formValid = ValidateInputs(inputs);
-    console.log(formValid);
-    
     ShowInputErrors(formValid.inputs);
+
     if (formValid.isvalid)
     {
+        // Valida inputs en servidor
         try {
             const res = await fetch("../backend/includes/signin-validations.php",{
                 method:"post",
@@ -89,6 +90,8 @@ async function ValidateRegister()
             {
                 const result = await res.json();
                 ShowInputErrors(result.datos);
+
+                if (result.code == 0) { InsertUser(inputs); }
             }
         } catch (error) {
             console.error(error);
@@ -97,6 +100,28 @@ async function ValidateRegister()
 
     // console.log(formValid);
     return formValid.isvalid;
+}
+
+async function InsertUser(inputs)
+{
+    try {
+        const res = await fetch("../backend/includes/user-insert.php",{
+            method:"post",
+            headers:{'Content-Type': 'application/json'},
+            body:JSON.stringify(inputs)
+        })
+        if (res.ok)
+        {
+            const result = await res.json();
+            console.log(result);
+            // if (result == 0)
+            // {
+                
+            // }
+        }
+    } catch (error) {
+        console.error(error);
+    }
 }
 
 function ShowInputErrors(formValid)

@@ -17,6 +17,12 @@ module.exports = {
       visibility: ['group-hover', 'group-focus', 'group-inactive', 'valid', 'notvalid']
     }
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/forms'),
+    require('@tailwindcss/typography'),
+    require('@tailwind/base'),
+    require('@tailwind/components'),
+    require('@tailwind/utilities')
+  ],
 }
 
