@@ -9,24 +9,24 @@
             "sinopsis":"Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quasi facilis sequi distinctio debitis laudantium, labore reiciendis cupiditate, eveniet vitae omnis eum ab aliquid porro totam veniam nisi impedit suscipit architecto. Voluptates, neque omnis soluta vero veritatis at perferendis, corporis ex corrupti quibusdam dolorem ipsum maxime, debitis aliquam explicabo saepe! Sunt laboriosam deleniti natus ea dicta tenetur reprehenderit suscipit facere modi.",
             "tags":["Aventura","Fantasía","Romance"],
             "author":{
-                "image":"user-default.png",
+                "image":"cristian.png",
                 "name":"Cristian"
             },
             "coauthors":[
                 {
-                    "image":"user-default.png",
+                    "image":"cristian.png",
                     "name":"Cristian2"
                 },
                 {
-                    "image":"user-default.png",
+                    "image":"cristian.png",
                     "name":"Cristian3"
                 },
                 {
-                    "image":"user-default.png",
+                    "image":"cristian.png",
                     "name":"Cristian4"
                 },
                 {
-                    "image":"user-default.png",
+                    "image":"cristian.png",
                     "name":"Cristian5"
                 }
             ]
@@ -42,24 +42,24 @@
             "sinopsis":"Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quasi facilis sequi distinctio debitis laudantium, labore reiciendis cupiditate, eveniet vitae omnis eum ab aliquid porro totam veniam nisi impedit suscipit architecto. Voluptates, neque omnis soluta vero veritatis at perferendis, corporis ex corrupti quibusdam dolorem ipsum maxime, debitis aliquam explicabo saepe! Sunt laboriosam deleniti natus ea dicta tenetur reprehenderit suscipit facere modi.",
             "tags":["Aventura","Policíaca","Detectives"],
             "author":{
-                "image":"user-default.png",
+                "image":"cristian.png",
                 "name":"Cristian"
             },
             "coauthors":[
                 {
-                    "image":"user-default.png",
+                    "image":"cristian.png",
                     "name":"Cristian2"
                 },
                 {
-                    "image":"user-default.png",
+                    "image":"cristian.png",
                     "name":"Cristian3"
                 },
                 {
-                    "image":"user-default.png",
+                    "image":"cristian.png",
                     "name":"Cristian4"
                 },
                 {
-                    "image":"user-default.png",
+                    "image":"cristian.png",
                     "name":"Cristian5"
                 }
             ]
