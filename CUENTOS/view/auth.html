@@ -39,7 +39,7 @@
             <article id="register-form" class="flex flex-col justify-center align-middle h-full w-full opacity-0">
                 <p class="w-full text-2xl text-center">REGISTRO</p>
                 <div class="relative w-full">
-                    <input type="text" id="input-username" class="required form-input" placeholder="username" data-valid="valid-username">
+                    <input type="text" id="input-username" class="v_required v_usernameexists v_usernameformat form-input" placeholder="username" data-valid="valid-username" maxlength="20">
                     <i class="material-symbols-rounded form-icon">person</i>
                     <div id="valid-username" class="validate-input" data-errormsg="error-username">
                         <i class="material-symbols-rounded form-error-icon">error</i>
@@ -48,7 +48,7 @@
                     </div>
                 </div>
                 <div class="relative w-full">
-                    <input type="email" id="input-email" class="required form-input" placeholder="email" data-valid="valid-email">
+                    <input type="email" id="input-email" class="v_required v_emailexists v_emailformat form-input" placeholder="email" data-valid="valid-email">
                     <i class="material-symbols-rounded form-icon">mail</i>
                     <div id="valid-email" class="validate-input" data-errormsg="error-email">
                         <i class="material-symbols-rounded form-error-icon">error</i>
@@ -57,7 +57,7 @@
                     </div>
                 </div>
                 <div class="relative w-full">
-                    <input type="password" id="input-password" class="required form-input" placeholder="password" data-valid="valid-password" data-repeat="input-password-repeat">
+                    <input type="password" id="input-password" class="v_required v_pwdformat v_repeatpwd form-input" placeholder="password" data-valid="valid-password" data-repeat="input-password-repeat">
                     <i class="material-symbols-rounded form-icon">lock</i>
                     <div id="valid-password" class="validate-input"  data-errormsg="error-password">
                         <i class="material-symbols-rounded form-error-icon">error</i>
@@ -66,7 +66,7 @@
                     </div>
                 </div>
                 <div class="relative w-full">
-                    <input type="password" id="input-password-repeat" class="required repeatPassword form-input" placeholder="repite password" data-valid="valid-password-repeat">
+                    <input type="password" id="input-password-repeat" class="v_required form-input" placeholder="repite password" data-valid="valid-password-repeat">
                     <i class="material-symbols-rounded form-icon">lock_reset</i>
                     <div id="valid-password-repeat" class="validate-input" data-errormsg="error-password-repeat">
                         <i class="material-symbols-rounded form-error-icon">error</i>

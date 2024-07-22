@@ -59,7 +59,7 @@ function WriteBookDialog()
     document.getElementById("write-yes").addEventListener('click',()=>{
         // TODO IR A LA PAGINA PARA EMPEZAR A ESCRIBIR EL LIBRO
         writeBookDialog.close()
-        window.location = "../pages/write_pages.html";
+        window.location = "../view/write_pages.html";
     })
     document.getElementById("write-no").addEventListener('click', ()=>{writeBookDialog.close()})
 }

@@ -1,11 +1,23 @@
+import * as tweens from "../components/tweenControls.js";
 const validations = {
-    required: ValidateEmpty,
-    email: ValidateEmail,
-    username: ValidateUsername,
-    password: ValidatePassword,
-    repeatPassword: ValidatePasswordRepeat
+    v_required: ValidateEmpty,
+    v_emailexists: ValidateEmailExists,
+    v_emailformat: ValidateEmail,
+    v_usernameexists: ValidateUsernameExists,
+    v_username: ValidateUsername,
+    v_pwdformat: ValidatePassword,
+    v_repeatpwd: ValidatePasswordRepeat
 };
 let inputvalidations = [];
+let tweenErrorIcon, tweenValidIcon;
+InitializeTweens();
+
+function InitializeTweens()
+{
+    tweenErrorIcon = gsap.fromTo(".form-error-icon", {y:-5}, {duration: 0.5, y:0, ease:"bounce", paused:true});
+    tweenValidIcon = gsap.fromTo(".form-valid-icon", {y:-5}, {duration: 0.5, y:0, ease:"bounce", paused:true});
+}
+
 
 // Añade el input id y el mensaje de validación a un array
 function SetInputValidation(inputid, msg)
@@ -14,27 +26,88 @@ function SetInputValidation(inputid, msg)
 }
 
 // Recibe los inputs de la vista
-export function ValidateInputs(inputs)
+export async function ValidateInputs(inputs)
 {
     let isValid = true;
     
     for (const input of inputs) {
         for (const [key, validation] of Object.entries(validations)) {
-            if (input.classes.includes(key) || input.id.includes(key) || input.type == key)
+            if (input.classes.includes(key))
             {
-                if (!validation(input)) { isValid = false; break; } // Si la validación es False
-                else { SetInputValidation(input.id, "valid"); }     // Si la validación es True
+                const res =  await validation(input);
+                if (!res)
+                {
+                    isValid = false;
+                    break;
+                }else{
+                    SetInputValidation(input.id, "valid");
+                }
             }
         }        
     }
 
-    return {
-        "isvalid":isValid,
-        "inputs":inputvalidations
-    };
+    // return {
+    //     "isvalid":isValid,
+    //     "inputs":inputvalidations
+    // };
+
+    ShowInputErrors(inputvalidations);
+    return isValid;
 }
 
-/* ---------------------------------------------------------------------------------------------------------------------------------- */
+export async function ValidateOnServer(inputs)
+{
+    let formValid = false;
+    try {
+        const response = await fetch("../backend/includes/signup-validations.php", {
+            method: "post",
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(inputs)
+        });
+        if (response.ok) {
+            const result = await response.json();
+            formValid = result.error == 0 ? true: false;
+            ShowInputErrors(result.inputs);
+        }
+    } catch (error) {
+        console.error(error);
+    }
+
+    return formValid;
+}
+
+function ShowInputErrors(formValidations)
+{
+    // Recorre las validaciones del formulario
+    for (const [inputid, msg] of Object.entries(formValidations)) {
+        const validInputId = document.getElementById(inputid).dataset.valid;        // Obtiene el id del contenedor de los iconos y mensaje de validación
+        const validInput   = document.getElementById(validInputId);                 // Obtiene el contenedor
+        const errorMsg     = document.getElementById(validInput.dataset.errormsg);  // Obtiene el id del mensaje de error
+        
+        if (msg != "")
+        {
+            if (msg != "valid") // Si el mensaje de validación no es "valid":
+            {
+                tweens.PlayAnimation(tweenErrorIcon);   // Reproduce la animación de los iconos de error
+                validInput.classList.remove("valid");   // Quita la clase "valid" del contenedor de validación 
+                validInput.classList.add("notvalid");   // Añade la clase "notvalid" al contenedor de validación 
+                errorMsg.innerHTML = msg;               // Añade el mensaje de la validación
+            }
+            else
+            {
+                tweens.PlayAnimation(tweenValidIcon);   // Reproduce la animación de los iconos de check
+                validInput.classList.remove("notvalid");// Quita la clase "notvalid" del contenedor de validación 
+                validInput.classList.add("valid");      // Añade la clase "valid" al contenedor de validación 
+                errorMsg.innerHTML = "";                // No hay mensaje de validación
+            }
+        }else{
+            validInput.classList.remove("valid", "notvalid");   // Quita la clase "valid" del contenedor de validación 
+            errorMsg.innerHTML = "";                // No hay mensaje de validación
+        }
+    }
+}
+
+/* ------------------------------------------------------------------------------------------------------------ */
 
 function CleanData(value)
 {
@@ -42,6 +115,10 @@ function CleanData(value)
 }
 
 // VALIDACIONES // Retornan TRUE si es válido o FALSE si no lo es
+
+
+// REQUIRED -------------------------------------------------------------------------
+
 function ValidateEmpty(input) {
     
     const value = CleanData(input.value);
@@ -70,6 +147,41 @@ function ValidateName(input)
     return true;
 }
 
+
+
+
+// USERNAME -------------------------------------------------------------------------
+
+async function ValidateUsernameExists(input)
+{
+    const value = CleanData(input.value).trim();
+    if (value.length > 0)
+    {
+        const formdata = new FormData();
+        formdata.append('value', value);
+
+        try {
+            const response = await fetch('../backend/includes/user.checkusername.php', {
+                method: "post",
+                body: formdata
+            });
+            if (response.ok) 
+            {
+                const result = await response.json();
+                if (result.error !== 0)
+                {
+                    SetInputValidation(input.id, result.msg);
+                    return false;
+                }
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    return true;
+}
+
 function ValidateUsername(input)
 {
     const regex = /^[a-z\d]+$/i;
@@ -84,6 +196,12 @@ function ValidateUsername(input)
 
     return true;
 }
+
+
+
+
+
+// DNI -------------------------------------------------------------------------
 
 function ValidateDNI(input) {
     const dniRegex = /^(\d{8}[A-HJ-NP-TV-Z]|[XYZ]\d{7}[A-Z])$/;
@@ -141,6 +259,42 @@ function ValidateDNI(input) {
     return true;
 }
 
+
+
+
+
+// EMAIL -------------------------------------------------------------------------
+
+async function ValidateEmailExists(input)
+{
+    const value = CleanData(input.value).trim();
+    if (value.length > 0)
+    {
+        const formdata = new FormData();
+        formdata.append('value', value);
+
+        try {
+            const response = await fetch('../backend/includes/user.checkemail.php', {
+                method: "post",
+                body: formdata
+            });
+            if (response.ok) 
+            {
+                const result = await response.json();
+                if (result.error !== 0)
+                {
+                    SetInputValidation(input.id, result.msg);
+                    return false;
+                }
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    return true;
+}
+
 function ValidateEmail(input) {
     const regexEmail = /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/;
     const value = CleanData(input.value).trim().toLowerCase();
@@ -153,6 +307,10 @@ function ValidateEmail(input) {
 
     return true;
 }
+
+
+
+// DATES -------------------------------------------------------------------------
 
 const DATE_REGEX = /^(0[1-9]|[1-2]\d|3[01])(\/)(0[1-9]|1[012])\2(\d{4})$/;
 // const DATE_REGEX = /^\d{4}-\d{2}/;
@@ -232,6 +390,10 @@ function ValidateDate(input) {
     }
 }
 
+
+
+// PHONE -------------------------------------------------------------------------
+
 function ValidateTel(input)
 {
     const telRegex = /^(\+\d{1,3}\s?)?(\d{3,4}[-\s]?){2}\d{3,4}$/;
@@ -247,6 +409,11 @@ function ValidateTel(input)
     return true;
 }
 
+
+
+
+
+// PASSWORD -------------------------------------------------------------------------
 
 function ValidatePassword(input)
 {

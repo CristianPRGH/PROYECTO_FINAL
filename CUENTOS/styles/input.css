@@ -12,7 +12,7 @@
     @apply absolute top-3 left-2 text-green-900 text-xl;
   }
   .form-input {
-    @apply w-full p-1 pl-10 outline-none rounded-3xl my-2 shadow-sm shadow-green-900;
+    @apply w-full p-1 px-10 outline-none rounded-3xl my-2 shadow-sm shadow-green-900;
   }
   .form-error-icon {
     @apply absolute top-3 right-2 text-base text-orange-500 invisible;

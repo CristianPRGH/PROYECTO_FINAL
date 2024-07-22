@@ -5,10 +5,12 @@ class UserControl extends User{
     use TValidations;
 
     private $validations = array(
-        "required"=>"ValidateEmpty",
-        "email"=>"ValidateEmail",
-        "username"=>"ValidateUsername",
-        "password"=>"ValidatePassword"
+        "v_required"=>"ValidateEmpty",
+        "v_emailexists"=>"ValidateEmailExists",
+        "v_emailformat"=>"ValidateEmail",
+        "v_usernameexists"=>"ValidateUsernameExists",
+        "v_username"=>"ValidateUsername",
+        "v_pwdformat"=>"ValidatePassword"
     );
     private $formValid = array();
 
@@ -21,21 +23,29 @@ class UserControl extends User{
         $this->password = $password;
     }
 
+    public function SetUsername($username){ $this->username = $username; }
+    public function SetEmail($email){ $this->email = $email; }
+    public function SetPassword($password){ $this->password = $password; }
+
+    public function GetUsername(){ return $this->username; }
+    public function GetEmail(){ return $this->email; }
+    public function GetPassword(){ return $this->password; }
+
     public function ValidaInputs($inputs)
     {
         // VALIDA LOS CAMPOS
-        $datos = array();
+        $validations = array();
         $values = array();
         $formIsValid = true;
         
         // print_r($this->inputs);
         foreach ($inputs as $input) {
             foreach ($this->validations as $key => $validation) {
-                if (in_array($key, explode(' ', $input['classes'])) || strpos($input['id'], $key) !== false || $input['type'] === $key) {
+                if (in_array($key, explode(' ', $input['classes']))) {
                     
                     // Esto asegura que la función se llame en el contexto de la instancia actual de la clase ($this), permitiendo así el acceso a las funciones del trait.
                     $data = call_user_func_array([$this, $validation], [$input["value"]]);
-                    $datos[$input['id']] = $data[1]; // [ID] = validmsg
+                    $validations[$input['id']] = $data[1]; // [ID] = validmsg
                     if (!$data[0])  // is valid?
                     {
                         $formIsValid = false;
@@ -47,17 +57,11 @@ class UserControl extends User{
             array_push($values, $input["value"]);
         }
 
-
-        // $msg = $formIsValid  
-        //         ? (!parent::SetUser($values) ? "Usuario ingresado correctamente" : "Error al ingresar al usuario")
-        //         : "Formulario con errores";
-
-        $code = $formIsValid ? 0 : 1;
+        $error = $formIsValid ? 0 : 1;
         
         return array(
-            "datos"=>$datos,
-            "code"=>$code,
-            "msg"=>""//$msg
+            "inputs"=>$validations,
+            "error"=>$error
         );
     }
 
@@ -92,10 +96,10 @@ class UserControl extends User{
     //     return $result;
     // }
 
-    // public function InsertUser($values)
-    // {
-    //     parent::SetUser($values);
-    // }
+    public function InsertNewUser()
+    {
+        return parent::InsertUser([$this->username, $this->email, $this->password]);
+    }
 
     public function CheckUsernameEmail()
     {
@@ -108,25 +112,29 @@ class UserControl extends User{
         return $result;
     }
 
-    // private function CheckUsernameExists($input)
-    // {
-    //     if (strlen($input["value"]) > 0 && parent::CheckUsername($input["value"])) {
-    //         $msg = "Usuario ya existe";
-    //         return [false, $input["id"], $msg];
-    //     }
+    private function ValidateUsernameExists($value = null)
+    {
+        if (strlen($this->username) > 0)
+        {
+            $result = $this->CheckUsernameEmail();
+            $msg = $result["msg"];
+            return [false, $msg];
+        }
 
-    //     return [true, $input["id"], "valid"];
-    // }
+        return [true, "valid"];
+    }
 
-    // private function CheckEmailExists($input)
-    // {
-    //     if (strlen($input["value"]) > 0 && parent::CheckEmail($input["value"])) {
-    //         $msg = "Email ya existe";
-    //         return [false, $input["id"], $msg];
-    //     }
+    private function ValidateEmailExists($value = null)
+    {
+        if (strlen($this->email) > 0)
+        {
+            $result = $this->CheckUsernameEmail();
+            $msg = $result["msg"];
+            return [false, $msg];
+        }
 
-    //     return [true, $input["id"], "valid"];
-    // }
+        return [true, "valid"];
+    }
 
     // public function GetUsersList()
     // {

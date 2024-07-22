@@ -25,6 +25,8 @@ trait TValidations {
         return [true, "valid"];
     }
 
+
+
     public function ValidateUsername($value) {
         $regex = '/^[a-z\d]+$/i';
         $value = htmlspecialchars($value);
