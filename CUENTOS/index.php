@@ -1,3 +1,5 @@
+<?php session_start(); ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -69,10 +71,13 @@
         </section>
 
         <section class="h-full flex flex-col justify-end overflow-y-auto">
+        <?php if (isset($_SESSION["userid"])){ ?>
             <button id="new-book"   class="group p-2 my-1 bg-white cursor-pointer rounded-md flex justify-between items-center hover:bg-gradient-to-r hover:from-white hover:from-80% hover:to-green-700 hover:to-80%">Crear libro  <i class="material-symbols-rounded group-hover:text-white">book_2</i></button>
             <button id="library"    class="group p-2 my-1 bg-white cursor-pointer rounded-md flex justify-between items-center hover:bg-gradient-to-r hover:from-white hover:from-80% hover:to-green-700 hover:to-80%">Tus Libros   <i class="material-symbols-rounded group-hover:text-white">book_4</i></button>
             <button id="logout"     class="group p-2 my-1 bg-white cursor-pointer rounded-md flex justify-between items-center hover:bg-gradient-to-r hover:from-white hover:from-80% hover:to-green-700 hover:to-80%">Logout       <i class="material-symbols-rounded group-hover:text-white">logout</i></button>
+        <?php }else{ ?>
             <button id="to-login"   class="group p-2 my-1 bg-white cursor-pointer rounded-md flex justify-between items-center hover:bg-gradient-to-r hover:from-white hover:from-80% hover:to-green-700 hover:to-80%">Login        <i class="material-symbols-rounded group-hover:text-white">login</i></button>
+        <?php } ?>
         </section>
     </aside>
 

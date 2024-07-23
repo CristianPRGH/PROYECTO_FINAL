@@ -36,7 +36,7 @@ function InitializeEvents()
 
 function HandleSignupLink()
 {
-    ResetRegisterForm();
+    // ResetRegisterForm();
     tweens.PlayAnimation(tweenLogin);
     tweens.PlayAnimation(tweenRegister);
 }
@@ -52,14 +52,13 @@ async function HandleSignupSubmit()
     }
 }
 
-function HandleLoginSubmit()
+async function HandleLoginSubmit()
 {
-        // if (Validatelogin())
-        // {
-            
-        // }
-
-        window.location.href = "../index.html";
+    const res = await ValidateLogin();
+    if (res)
+    {
+        window.location.href = "../index.php";
+    }
 }
 
 function HandleSigninUserImg(event)
@@ -104,6 +103,42 @@ function HandleEmailExists(event)
     }
 }
 
+async function ValidateLogin()
+{
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+    const formdata = new FormData();
+    formdata.append("username",username);
+    formdata.append("password",password);
+
+    try {
+        const response = await fetch("../backend/includes/user.checklogin.php",{
+            method:"post",
+            body: formdata
+        })
+
+        if (response.ok)
+        {
+            const result = await response.json();
+            const errormsg = document.getElementById("error-login");
+            if (!result[0])
+            {
+                errormsg.textContent = result[1];
+                errormsg.classList.remove("invisible");
+                errormsg.classList.add("visible");
+            }
+            else{
+                errormsg.classList.remove("visible");
+                errormsg.classList.add("invisible");
+            }
+
+            return result[0];
+        }
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 async function ValidateRegister()
 {
     let result = false;
@@ -130,7 +165,7 @@ async function ValidateRegister()
     // Si la validacion en servidor es correcta -> Inserta usuario
     if (result) { result = InsertUser(inputs); } 
 
-    return result.error;
+    return result;
 }
 
 
@@ -171,6 +206,8 @@ function ResetRegisterForm()
     document.querySelectorAll(".valid, .notvalid").forEach(element => {
         element.classList.remove("valid", "notvalid");
     });
+
+    document.getElementById("input-profilepic").src = "../images/users_avatars/user-default.png";
 }
 
 function GenerateInputJson(id, inputclasses = "")

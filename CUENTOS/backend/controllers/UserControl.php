@@ -30,36 +30,10 @@ class UserControl extends User{
         return $this->ValidaInputs($inputs);
     }
 
-    // public function ValidaLogin($inputs)
-    // {
-    //     $username = $inputs[0]["value"];
-    //     $password = $inputs[1]["value"];
-
-    //     $result = parent::CheckLogin($username);
-
-    //     if ($result["error"] == 0)
-    //     {
-    //         if (count($result["data"]) > 0)// $result[1]->rowCount() > 0)
-    //         {
-    //             $userPass = $result["data"][0]["password"];
-    //             if (!password_verify($password, $userPass))
-    //             {
-    //                 $result["error"] = 1;
-    //                 $result["msg"] = "Usuario o contraseña son incorrectos";
-    //             }else{
-    //                 $_SESSION["userid"] = $result["data"][0]["id"];
-    //                 $_SESSION["username"] = $result["data"][0]["username"];
-    //             }
-    //         }
-    //         else
-    //         {
-    //             $result["error"] = 1;
-    //             $result["msg"] = "Usuario o contraseña son incorrectos";
-    //         }
-    //     }
-
-    //     return $result;
-    // }
+    public function ValidateLogin()
+    {
+        return parent::CheckLogin($this->username, $this->password);
+    }
 
     public function InsertNewUser()
     {
@@ -79,7 +53,7 @@ class UserControl extends User{
         return $result;
     }
 
-    private function ValidateUsernameExists($value = null)
+    private function ValidateUsernameExists()
     {
         if (strlen($this->username) > 0)
         {
@@ -91,7 +65,7 @@ class UserControl extends User{
         return [true, "valid"];
     }
 
-    private function ValidateEmailExists($value = null)
+    private function ValidateEmailExists()
     {
         if (strlen($this->email) > 0)
         {
@@ -106,28 +80,39 @@ class UserControl extends User{
     private function SaveImage()
     {
         $userImagesFolder = "../../images/users_avatars/";
+
+        // Verifica si el directorio existe, si no, créalo
+        if (!is_dir($userImagesFolder)) {
+            if (!mkdir($userImagesFolder, 0777, true)) {
+                return [false, ""]; // Falló al crear el directorio
+            }
+        }
+
         $imgname = $this->image["name"];
         $tmpname = $this->image["tmp_name"];
         $namesplit = explode('.', $imgname);
-        $imgext  = array_pop($namesplit);
+        $imgext    = array_pop($namesplit);
 
         $imagenewname = $this->username."image";
-        $imagenewname = password_hash($imagenewname, PASSWORD_DEFAULT);
+        $imagenewname = hash('sha256', $imagenewname).'.'.$imgext;
 
         $fullpath = $userImagesFolder.$imagenewname.'.'.$imgext;
 
-        if (!file_exists($fullpath))
-        {
-            // print_r([$tmpname,$fullpath]);
+        // Verifica si el archivo temporal existe
+        if (!file_exists($tmpname)) {
+            error_log("Temp file does not exist: $tmpname");
+            return [false, ""];
+        }
 
-            if ( move_uploaded_file($tmpname, $fullpath))
-            {
-                return [true, $imagenewname];
-            }
+        if (move_uploaded_file($tmpname, $fullpath)) {
+            return [true, $imagenewname];
+        } else {
+            error_log("Failed to move uploaded file");
         }
 
         return [false, ""];
     }
+    
 
     // public function GetUsersList()
     // {
