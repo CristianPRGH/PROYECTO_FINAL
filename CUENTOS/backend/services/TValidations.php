@@ -3,7 +3,52 @@
 // VALIDACIONES
 trait TValidations {
 
-    public function ValidateEmpty($value) {
+    private $validations = array(
+        "v_required"=>"ValidateEmpty",
+        "v_emailexists"=>"ValidateEmailExists",
+        "v_emailformat"=>"ValidateEmail",
+        "v_usernameexists"=>"ValidateUsernameExists",
+        "v_username"=>"ValidateUsername",
+        "v_pwdformat"=>"ValidatePassword",
+        "v_imgsize"=>"ValidateImageSize"
+    );
+
+    public function ValidaInputs($inputs)
+    {
+        // VALIDA LOS CAMPOS
+        $validations = array();
+        $values = array();
+        $formIsValid = true;
+        
+        // print_r($this->inputs);
+        foreach ($inputs as $input) {
+            foreach ($this->validations as $key => $validation) {
+                if (in_array($key, explode(' ', $input['classes']))) {
+                    
+                    // Esto asegura que la función se llame en el contexto de la instancia actual de la clase ($this), permitiendo así el acceso a las funciones del trait.
+                    $data = call_user_func_array([$this, $validation], [$input["value"]]);
+                    $validations[$input['id']] = $data[1]; // [ID] = validmsg
+                    if (!$data[0])  // is valid?
+                    {
+                        $formIsValid = false;
+                        break; // Sale del bucle que busca las funciones de validacion para ir al siguiente input
+                    }
+                }
+            }
+
+            array_push($values, $input["value"]);
+        }
+
+        $error = $formIsValid ? 0 : 1;
+        
+        return array(
+            "inputs"=>$validations,
+            "error"=>$error
+        );
+    }
+
+
+    private function ValidateEmpty($value) {
         $valueValue = $value;
         if (empty($valueValue)) {
             $msg = "Campo vacío";
@@ -13,7 +58,7 @@ trait TValidations {
         return [true, "valid"];
     }
 
-    public function ValidateName($value) {
+    private function ValidateName($value) {
         $regex = '/^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ-]+(\s+[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ-]+)*$/';
         $value = htmlspecialchars($value);
 
@@ -27,7 +72,7 @@ trait TValidations {
 
 
 
-    public function ValidateUsername($value) {
+    private function ValidateUsername($value) {
         $regex = '/^[a-z\d]+$/i';
         $value = htmlspecialchars($value);
 
@@ -39,7 +84,7 @@ trait TValidations {
         return [true, "valid"];
     }
 
-    public function ValidateDNI($value) {
+    private function ValidateDNI($value) {
         $dniRegex = '/^(\d{8}[A-HJ-NP-TV-Z]|[XYZ]\d{7}[A-Z])$/';
         $dniCompleto = strtoupper(trim($value));
         $dniCompleto = htmlspecialchars($dniCompleto);
@@ -85,7 +130,7 @@ trait TValidations {
         return [true, "valid"];
     }
 
-    public function ValidateEmail($value) {
+    private function ValidateEmail($value) {
         $regexEmail = '/^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/';
         $value = filter_var($value, FILTER_SANITIZE_EMAIL);
 
@@ -97,7 +142,7 @@ trait TValidations {
         return [true, "valid"];
     }
 
-    public function ValidateDate($value) {
+    private function ValidateDate($value) {
         $DATE_REGEX = '/^(0[1-9]|[1-2]\d|3[01])(\/)(0[1-9]|1[012])\2(\d{4})$/';
         $TODAY = new DateTime();
         $CURRENT_YEAR = $TODAY->format('Y');
@@ -158,7 +203,7 @@ trait TValidations {
         }
     }
 
-    public function ValidateTel($value) {
+    private function ValidateTel($value) {
         $telRegex = '/^(\+\d{1,3}\s?)?(\d{3,4}[-\s]?){2}\d{3,4}$/';
         $value = htmlspecialchars($value);
 
@@ -170,7 +215,7 @@ trait TValidations {
         return [true, "valid"];
     }
 
-    public function ValidatePassword($value) {
+    private function ValidatePassword($value) {
         $valor = $value;
 
         if (strlen($valor) > 0) {
@@ -190,7 +235,7 @@ trait TValidations {
         return [true, "valid"];
     }
 
-    public function ValidatePasswordRepeat($value, $pass2) {
+    private function ValidatePasswordRepeat($value, $pass2) {
         // $pass2 = $_POST[$value["dataset"]["repeat"]];
 
         if ($value != $pass2) {
@@ -200,4 +245,24 @@ trait TValidations {
 
         return [true, "valid"];
     }
+
+    private function ValidateImageSize($value)
+    {
+        $maxsize = 100;
+
+        if (strlen($value) > 0)
+        {
+            $sizeMb = round(($value/1024));
+
+            if ($sizeMb > $maxsize)
+            {
+                $msg = "La imagen debe ser menor a 1Mb";
+                return [false, $msg];
+            }
+        }
+
+        return [true, "valid"];
+    }
 }
+
+

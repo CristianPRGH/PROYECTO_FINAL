@@ -11,7 +11,7 @@ class User extends Basemodel{
 
     protected function InsertUser($values)
     {
-        $query = "INSERT INTO $this->table (username, email, password) VALUES (?,?,?)";
+        $query = "INSERT INTO $this->table (username, email, password, image) VALUES (?,?,?,?)";
         $values[2] = password_hash($values[1], PASSWORD_DEFAULT);
         return parent::InsUpdDel($query, $values);
     }

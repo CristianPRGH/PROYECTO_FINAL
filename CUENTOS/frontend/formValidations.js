@@ -6,7 +6,8 @@ const validations = {
     v_usernameexists: ValidateUsernameExists,
     v_username: ValidateUsername,
     v_pwdformat: ValidatePassword,
-    v_repeatpwd: ValidatePasswordRepeat
+    v_repeatpwd: ValidatePasswordRepeat,
+    v_imgsize: ValidateImageSize
 };
 let inputvalidations = [];
 let tweenErrorIcon, tweenValidIcon;
@@ -61,12 +62,13 @@ export async function ValidateOnServer(inputs)
     try {
         const response = await fetch("../backend/includes/signup-validations.php", {
             method: "post",
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(inputs)
+            body:inputs
+            // headers: { 'Content-Type': 'application/json' },
+            // body: JSON.stringify(inputs)
         });
         if (response.ok) {
             const result = await response.json();
-            formValid = result.error == 0 ? true: false;
+            formValid = result.error == 0 ? true : false;
             ShowInputErrors(result.inputs);
         }
     } catch (error) {
@@ -189,7 +191,7 @@ function ValidateUsername(input)
 
     if (value.length > 0 && !regex.test(value))
     {
-        const msg = "Formato incorrecto.";
+        const msg = "Formato incorrecto";
         SetInputValidation(input.id, msg);
         return false;
     }
@@ -475,6 +477,47 @@ function ValidatePasswordRepeat(input)
         const msg = "Las contraseñas no coinciden";
         SetInputValidation(input.id, msg);
         return false;
+    }
+
+    return true;
+}
+
+
+// IMAGES ---------------------------------------------------------------
+
+function ValidateImageSize(input)
+{
+    const maxsize   = 100;
+    // const maxwidth  = 512;
+    // const maxheight = 512;
+
+    if (input.value != null)
+    {
+        // const newImage = new Image();
+        // newImage.src = URL.createObjectURL(input.value);
+        // let width, height = 0;
+        // newImage.onload = function(){
+        //     width = newImage.width;
+        //     height = newImage.height;
+        // }
+
+
+        const filesize = input.value.size;
+        const sizeMb = Math.round((filesize/1024));
+
+        if (sizeMb > maxsize)
+        {
+            const msg = "La imagen debe ser menor a 1Mb";
+            SetInputValidation(input.id, msg);
+            return false;
+        }
+
+        // if (width > maxwidth || height > maxheight)
+        // {
+        //     const msg = "La imagen debe ser como máximo de 512x512";
+        //     SetInputValidation(input.id, msg);
+        //     return false;
+        // }
     }
 
     return true;

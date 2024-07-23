@@ -4,65 +4,30 @@ class UserControl extends User{
     
     use TValidations;
 
-    private $validations = array(
-        "v_required"=>"ValidateEmpty",
-        "v_emailexists"=>"ValidateEmailExists",
-        "v_emailformat"=>"ValidateEmail",
-        "v_usernameexists"=>"ValidateUsernameExists",
-        "v_username"=>"ValidateUsername",
-        "v_pwdformat"=>"ValidatePassword"
-    );
     private $formValid = array();
+    private $username, $email, $password, $image;
 
-    private $username, $email, $password;
-
-    public function __construct($username = null, $email = null, $password = null)
+    public function __construct($username = null, $email = null, $password = null, $image = null)
     {
         $this->username = $username;
         $this->email = $email;
         $this->password = $password;
+        $this->image = $image;
     }
 
     public function SetUsername($username){ $this->username = $username; }
     public function SetEmail($email){ $this->email = $email; }
     public function SetPassword($password){ $this->password = $password; }
+    public function SetImage($image){ $this->image = $image; }
 
     public function GetUsername(){ return $this->username; }
     public function GetEmail(){ return $this->email; }
     public function GetPassword(){ return $this->password; }
+    public function GetImage(){ return $this->image; }
 
-    public function ValidaInputs($inputs)
+    public function ValidateUserInputs($inputs)
     {
-        // VALIDA LOS CAMPOS
-        $validations = array();
-        $values = array();
-        $formIsValid = true;
-        
-        // print_r($this->inputs);
-        foreach ($inputs as $input) {
-            foreach ($this->validations as $key => $validation) {
-                if (in_array($key, explode(' ', $input['classes']))) {
-                    
-                    // Esto asegura que la función se llame en el contexto de la instancia actual de la clase ($this), permitiendo así el acceso a las funciones del trait.
-                    $data = call_user_func_array([$this, $validation], [$input["value"]]);
-                    $validations[$input['id']] = $data[1]; // [ID] = validmsg
-                    if (!$data[0])  // is valid?
-                    {
-                        $formIsValid = false;
-                        break; // Sale del bucle que busca las funciones de validacion para ir al siguiente input
-                    }
-                }
-            }
-
-            array_push($values, $input["value"]);
-        }
-
-        $error = $formIsValid ? 0 : 1;
-        
-        return array(
-            "inputs"=>$validations,
-            "error"=>$error
-        );
+        return $this->ValidaInputs($inputs);
     }
 
     // public function ValidaLogin($inputs)
@@ -98,7 +63,9 @@ class UserControl extends User{
 
     public function InsertNewUser()
     {
-        return parent::InsertUser([$this->username, $this->email, $this->password]);
+        $res = $this->SaveImage();
+        if ($res[0])
+            return parent::InsertUser([$this->username, $this->email, $this->password, $res[1]]);
     }
 
     public function CheckUsernameEmail()
@@ -134,6 +101,32 @@ class UserControl extends User{
         }
 
         return [true, "valid"];
+    }
+
+    private function SaveImage()
+    {
+        $userImagesFolder = "../../images/users_avatars/";
+        $imgname = $this->image["name"];
+        $tmpname = $this->image["tmp_name"];
+        $namesplit = explode('.', $imgname);
+        $imgext  = array_pop($namesplit);
+
+        $imagenewname = $this->username."image";
+        $imagenewname = password_hash($imagenewname, PASSWORD_DEFAULT);
+
+        $fullpath = $userImagesFolder.$imagenewname.'.'.$imgext;
+
+        if (!file_exists($fullpath))
+        {
+            // print_r([$tmpname,$fullpath]);
+
+            if ( move_uploaded_file($tmpname, $fullpath))
+            {
+                return [true, $imagenewname];
+            }
+        }
+
+        return [false, ""];
     }
 
     // public function GetUsersList()

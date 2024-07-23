@@ -1,18 +1,15 @@
 <?php
 
+require_once "myAutoload.php";
+
 if ($_SERVER["REQUEST_METHOD"] == "POST")
 {
-    $username = $_POST["username"];
-    $email = $_POST["email"];
-    $password = $_POST["password"];
+    $username   = $_POST["username"];
+    $email      = $_POST["email"];
+    $password   = $_POST["password"];
+    $image      = $_FILES["image"];
 
-    $values = [];
-    for ($i=0; $i < count($inputs); $i++) { 
-        array_push($values,$inputs[$i]["value"]);
-    }
-
-    // print_r($values);
-    $user = new UserControl($username, $email, $password);
+    $user = new UserControl($username, $email, $password, $image);
     $result = $user->InsertNewUser();
 
     header("Content-Type: application/json");
