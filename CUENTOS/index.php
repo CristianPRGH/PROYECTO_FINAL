@@ -15,16 +15,28 @@
     <script src="frontend/booksManager.js" type="module"></script>
 </head>
 <body class="bg-orange-100 h-screen flex flex-col">
+    <header id="index-footer" class=" h-[10%] flex self-bottom border-b-4 border-b-orange-500 bg-green-900">
+        <section class="w-full">
+            <i id="toggleLeftMenu" class="material-symbols-rounded w-full h-full cursor-pointer text-orange-100 flex items-center justify-center">menu</i>
+        </section>
+        <section class="w-full">
+            <i id="homePage" class="material-symbols-rounded w-full h-full cursor-pointer text-orange-100 flex items-center justify-center">home</i>
+        </section>
+        <section class="w-full">
+            <i id="toggleRightMenu" class="material-symbols-rounded w-full h-full cursor-pointer text-orange-100 flex items-center justify-center">account_circle</i>
+        </section>
+    </header>
+
     <main id="index-main" class="index-main flex-row p-4 h-[90%]">
         <section class="flex flex-col pb-2 h-full overflow-y-auto overflow-x-hidden scroll">
             <p class="w-full border-b border-b-green-900 mb-2">Libros</p>
             <section id="books-list"></section>
         </section>
 
-        <section id="book-details" class="flex flex-col fixed bg-orange-100 top-0 right-[-100%] w-full h-[90%] p-8 opacity-0 z-10 overflow-y-auto "></section>
+        <section id="book-details" class="w-full h-full flex flex-col fixed bg-orange-100 ring-2 ring-green-900 top-0 -right-[100%] p-8 opacity-0 z-10 overflow-y-auto"></section>
     </main> 
 
-    <aside id="menu-bookfilters" class="flex flex-col justify-between bg-green-900 fixed top-0 w-full h-[90%] p-8 z-10 -left-full opacity-0">
+    <aside id="menu-bookfilters" class="flex flex-col justify-between bg-green-900 fixed bottom-0 w-full h-[90%] p-8 z-10 -left-full opacity-0">
         <article class="relative w-full">
             <input type="text" id="input-search" class="w-full p-1 pl-10 rounded-md outline-none border-b-4 border-b-orange-500 placeholder:italic placeholder:text-sm" placeholder="Título, autor">
             <i class="material-symbols-rounded form-icon top-1">search</i>
@@ -60,7 +72,7 @@
         </article>
     </aside>
 
-    <aside id="index-rightmenu" class="flex flex-col justify-between bg-green-900 fixed top-0 w-full h-[90%] -right-full p-6 z-10 opacity-0">
+    <aside id="index-rightmenu" class="flex flex-col justify-between bg-green-900 fixed bottom-0 w-full h-[90%] -right-full p-6 z-10 opacity-0">
         <section class="flex flex-col items-center border-b-2 border-b-orange-500 py-3">
             <img src="./images/users_avatars/cristian.png" class="w-2/4 justify-center rounded-full border-4 border-orange-100">
             <div class="flex flex-col text-white w-full">
@@ -81,16 +93,6 @@
         </section>
     </aside>
 
-    <footer id="index-footer" class="h-[10%] flex self-bottom border-t-4 border-t-orange-500 bg-green-900">
-        <section class="w-full">
-            <i id="toggleLeftMenu" class="material-symbols-rounded w-full h-full cursor-pointer text-orange-100 flex items-center justify-center">menu</i>
-        </section>
-        <section class="w-full">
-            <i id="homePage" class="material-symbols-rounded w-full h-full cursor-pointer text-orange-100 flex items-center justify-center">home</i>
-        </section>
-        <section class="w-full">
-            <i id="toggleRightMenu" class="material-symbols-rounded w-full h-full cursor-pointer text-orange-100 flex items-center justify-center">account_circle</i>
-        </section>
-    </footer>
+
 </body>
 </html>

@@ -44,7 +44,7 @@ function HandleSignupLink()
 async function HandleSignupSubmit()
 {
     const res = await ValidateRegister();
-    if (res == 0)
+    if (res)
     {
         tweens.ReverseAnimation(tweenLogin);
         tweens.ReverseAnimation(tweenRegister);
@@ -151,8 +151,6 @@ async function ValidateRegister()
     ];
 
     const isvalid = await ValidateInputs(inputs);    // Valida en cliente
-    
-    console.log(isvalid);
 
     //Si la validacion en cliente es correcta -> Valida en servidor
     if (isvalid)

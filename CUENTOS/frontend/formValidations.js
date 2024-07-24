@@ -170,7 +170,7 @@ async function ValidateUsernameExists(input)
             if (response.ok) 
             {
                 const result = await response.json();
-                if (result.error !== 0)
+                if (result.error == 0)
                 {
                     SetInputValidation(input.id, result.msg);
                     return false;
@@ -283,7 +283,7 @@ async function ValidateEmailExists(input)
             if (response.ok) 
             {
                 const result = await response.json();
-                if (result.error !== 0)
+                if (result.error == 0)
                 {
                     SetInputValidation(input.id, result.msg);
                     return false;

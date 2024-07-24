@@ -45,7 +45,7 @@ class UserControl extends User{
     public function CheckUsernameEmail()
     {
         $result = parent::CheckUsernameEmailExists($this->username, $this->email);
-        if ($result["error"] == 2)
+        if ($result["error"] == 0)
         {
             $result["msg"] = $this->username != null ? "El nombre de usuario ya existe" : "El email ya existe";
         }
@@ -112,11 +112,4 @@ class UserControl extends User{
 
         return [false, ""];
     }
-    
-
-    // public function GetUsersList()
-    // {
-    //     $result = $this->GetUsers();
-    //     return $result; // -> LISTA DE USUARIOS
-    // }
 }
