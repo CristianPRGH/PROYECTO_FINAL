@@ -40,4 +40,10 @@ class User extends Basemodel{
             return [false, "Usuario o contraseña no válidos"];
         }
     }
+
+    protected function SelectUserInfo($id)
+    {
+        $query = "SELECT * FROM $this->table WHERE id = ?";
+        return parent::SelectOne($query, [$id]);
+    }
 }

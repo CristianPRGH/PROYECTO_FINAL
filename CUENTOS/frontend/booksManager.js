@@ -6,7 +6,7 @@ import * as tweens from "../components/tweenControls.js";
 const bookDetailTween = gsap.to("#book-details", { duration: 0.5, xPercent: -100, opacity: 1, ease: "sine.inOut", paused: true });
 let book = null;
 
-export function InitializeMain()
+export function InitializeBooksList()
 {
     book = new Book();
     SetupMainBooksList();

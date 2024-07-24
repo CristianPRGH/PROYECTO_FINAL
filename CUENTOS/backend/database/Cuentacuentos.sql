@@ -138,11 +138,12 @@ CREATE TABLE `users` (
   `username` varchar(45) NOT NULL,
   `email` varchar(60) NOT NULL,
   `password` longtext NOT NULL,
-  `image` varchar(45) DEFAULT NULL,
+  `image` longtext DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username_UNIQUE` (`username`),
-  UNIQUE KEY `email_UNIQUE` (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  UNIQUE KEY `email_UNIQUE` (`email`),
+  UNIQUE KEY `image_UNIQUE` (`image`) USING HASH
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -151,6 +152,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES (1,'cristian','cpr.1992@gmail.com','123',NULL),(10,'vampy','vampy@gmail.com','$2y$10$f6sKmVARb7Vl.fVznNQpROxhM0jocboK.HS.89l5KBv5.dbi8..6y','5df15a7e8973e22f12e454ccf0b47cdc72a0beafbc4ac1e80ca5d5793fcd4c08.png'),(11,'Franky','franky@gmail.com','$2y$10$usmxPf4lmU5VShTF4GPKquVVULM9coNJxTUw6DYQUjjXnmhZAxXVm','f036dd2ff1d93b3b84472106ff745f5a5a6c3c76b1c7b5c69b3a4efc005bf4e2.png'),(12,'mummy','mummy@gmail.com','$2y$10$cE0nVKijPZMAm8Kw3edVi.Qf1yZp2hKdxDUSj9YDGbftaNJTNfxHu','4d72c0e52451948d846b038a73d23574908f025504df15d4be14028cce4af860.png');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -163,4 +165,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-07-14 21:01:11
+-- Dump completed on 2024-07-24 19:47:14

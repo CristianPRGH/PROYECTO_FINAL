@@ -5,25 +5,36 @@ class UserControl extends User{
     use TValidations;
 
     private $formValid = array();
-    private $username, $email, $password, $image;
+    private $id, $username, $email, $password, $image;
 
-    public function __construct($username = null, $email = null, $password = null, $image = null)
+    public function __construct($username = null, $email = null, $password = null, $image = null, $id = null)
     {
         $this->username = $username;
         $this->email = $email;
         $this->password = $password;
         $this->image = $image;
+        $this->id = $id;
     }
 
+
+    // GETTERS / SETTERS ----------------------------------------------------------------------
+
+    public function SetId($id){ $this->id = $id; }
     public function SetUsername($username){ $this->username = $username; }
     public function SetEmail($email){ $this->email = $email; }
     public function SetPassword($password){ $this->password = $password; }
     public function SetImage($image){ $this->image = $image; }
 
+    public function GetId(){ return $this->id; }
     public function GetUsername(){ return $this->username; }
     public function GetEmail(){ return $this->email; }
     public function GetPassword(){ return $this->password; }
     public function GetImage(){ return $this->image; }
+
+
+
+
+    // PUBLIC METHODS ----------------------------------------------------------------------
 
     public function ValidateUserInputs($inputs)
     {
@@ -52,6 +63,14 @@ class UserControl extends User{
 
         return $result;
     }
+
+    public function GetUserInfo()
+    {
+        return parent::SelectUserInfo($this->id);
+    }
+
+
+    // PRIVATE METHODS ----------------------------------------------------------------------
 
     private function ValidateUsernameExists()
     {
@@ -105,6 +124,8 @@ class UserControl extends User{
         }
 
         if (move_uploaded_file($tmpname, $fullpath)) {
+            
+            print_r($imagenewname);
             return [true, $imagenewname];
         } else {
             error_log("Failed to move uploaded file");

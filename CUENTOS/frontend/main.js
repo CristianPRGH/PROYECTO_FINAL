@@ -1,15 +1,27 @@
 import * as tweens from "../components/tweenControls.js";
-import { InitializeMain } from "./booksManager.js";
+import { InitializeBooksList } from "./booksManager.js";
 
 document.addEventListener('DOMContentLoaded', async () => {
-    InitializeMain();
+    InitializeEvents();
+    InitializeBooksList();
     SetupToggleMenus();
-
-    document.getElementById("to-login").addEventListener('click', GoToLogin);
-    document.getElementById("new-book").addEventListener('click', GoToNewBook);
-    // document.getElementById("library").addEventListener('click', GoToLogin);
-    // document.getElementById("logout").addEventListener('click', GoToLogin);
 });
+
+function InitializeEvents()
+{
+    const loginbttn = document.getElementById("to-login");
+    if (loginbttn != null)
+    {
+        loginbttn.addEventListener('click', GoToAuthenticate);
+    }
+    else{
+        document.getElementById("new-book").addEventListener('click', GoToNewBook);
+        document.getElementById("library").addEventListener('click', GoToAuthenticate);
+        document.getElementById("logout").addEventListener('click', Logout);
+
+        GetLoggedUserInfo();
+    }
+}
 
 function SetupToggleMenus()
 {
@@ -37,5 +49,35 @@ function SetupToggleMenus()
     });
 }
 
-function GoToLogin() { window.location = "view/auth.html"; }
+function GoToAuthenticate() { window.location = "view/auth.html"; }
 function GoToNewBook() { window.location = "view/create_book.html"; }
+async function Logout()
+{
+    try {
+        const response = await fetch("backend/includes/user.logout.php");
+        if (response.ok)
+        {
+            window.location.reload();
+        }
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+async function GetLoggedUserInfo()
+{
+    try {
+        const response = await fetch("backend/includes/user.getuserinfo.php");
+        if (response.ok)
+        {
+            const result = await response.json();
+            const username = result.data.username;
+            const userimg = result.data.image;
+
+            document.getElementById("logged-username").textContent = username;
+            document.getElementById("logged-userimg").src = `images/users_avatars/${userimg}`;
+        }
+    } catch (error) {
+        console.error(error);
+    }
+}

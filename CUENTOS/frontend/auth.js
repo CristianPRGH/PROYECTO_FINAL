@@ -44,7 +44,7 @@ function HandleSignupLink()
 async function HandleSignupSubmit()
 {
     const res = await ValidateRegister();
-    if (res)
+    if (res == 0)
     {
         tweens.ReverseAnimation(tweenLogin);
         tweens.ReverseAnimation(tweenRegister);

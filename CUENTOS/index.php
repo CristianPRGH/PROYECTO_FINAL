@@ -74,9 +74,9 @@
 
     <aside id="index-rightmenu" class="flex flex-col justify-between bg-green-900 fixed bottom-0 w-full h-[90%] -right-full p-6 z-10 opacity-0">
         <section class="flex flex-col items-center border-b-2 border-b-orange-500 py-3">
-            <img src="./images/users_avatars/cristian.png" class="w-2/4 justify-center rounded-full border-4 border-orange-100">
+            <img id="logged-userimg" src="./images/users_avatars/user-default.png" class="w-40 h-40 justify-center rounded-full border-4 border-orange-100">
             <div class="flex flex-col text-white w-full">
-                <p class="text-center">User</p>
+                <p id="logged-username" class="text-center">User</p>
                 <p class="user-books">Autor de: <span class="font-bold text-orange-500">#</span> libros</p>
                 <p class="user-books">Coautor de: <span class="font-bold text-orange-500">#</span> libros</p>
             </div>
