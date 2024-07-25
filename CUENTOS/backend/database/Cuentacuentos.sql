@@ -1,6 +1,6 @@
 CREATE DATABASE  IF NOT EXISTS `cuentacuentos` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci */;
 USE `cuentacuentos`;
--- MySQL dump 10.13  Distrib 8.0.38, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.36, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: cuentacuentos
 -- ------------------------------------------------------
@@ -18,6 +18,58 @@ USE `cuentacuentos`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `book_categories`
+--
+
+DROP TABLE IF EXISTS `book_categories`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `book_categories` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `category` varchar(45) NOT NULL,
+  `min_pages` smallint(6) NOT NULL,
+  `max_pages` smallint(6) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `category_UNIQUE` (`category`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `book_categories`
+--
+
+LOCK TABLES `book_categories` WRITE;
+/*!40000 ALTER TABLE `book_categories` DISABLE KEYS */;
+INSERT INTO `book_categories` VALUES (1,'Novela corta',80,200),(2,'Novela',200,400),(3,'Ensayo corto',40,120),(4,'Libro de autoayuda',120,280),(5,'Biografia',280,600),(6,'Libros ilustrados',24,48),(7,'Primeros lectores',48,120),(8,'Novelas juveniles',80,200),(9,'Tesis',100,300),(10,'Coleccion de poemas',50,200);
+/*!40000 ALTER TABLE `book_categories` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `book_tags`
+--
+
+DROP TABLE IF EXISTS `book_tags`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `book_tags` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `tag` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `tag_UNIQUE` (`tag`)
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `book_tags`
+--
+
+LOCK TABLES `book_tags` WRITE;
+/*!40000 ALTER TABLE `book_tags` DISABLE KEYS */;
+INSERT INTO `book_tags` VALUES (2,'Acción'),(3,'Aventura'),(12,'Biografía-Autobiografía'),(5,'Ciencia-ficción'),(10,'Comedia'),(8,'Drama'),(15,'Ensayo'),(1,'Fantasía'),(9,'Histórico'),(13,'Infantil-Juvenil'),(6,'Misterio'),(16,'Poesía'),(14,'Policíaca'),(4,'Romance'),(7,'Terror'),(11,'Thriller');
+/*!40000 ALTER TABLE `book_tags` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `books`
 --
 
@@ -28,13 +80,16 @@ CREATE TABLE `books` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(45) NOT NULL,
   `sinopsis` longtext DEFAULT NULL,
-  `created_at` datetime DEFAULT current_timestamp(),
-  `rating` int(11) DEFAULT NULL,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `no_pages` smallint(6) NOT NULL,
+  `tags` mediumtext DEFAULT NULL,
   `author` int(11) NOT NULL,
+  `category` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `users_id_UNIQUE` (`author`),
   KEY `fk_books_users1_idx` (`author`),
-  CONSTRAINT `fk_books_users1` FOREIGN KEY (`author`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `fk_categories_idx` (`category`),
+  CONSTRAINT `fk_books_users1` FOREIGN KEY (`author`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_categories` FOREIGN KEY (`category`) REFERENCES `book_categories` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -152,7 +207,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'cristian','cpr.1992@gmail.com','123',NULL),(10,'vampy','vampy@gmail.com','$2y$10$f6sKmVARb7Vl.fVznNQpROxhM0jocboK.HS.89l5KBv5.dbi8..6y','5df15a7e8973e22f12e454ccf0b47cdc72a0beafbc4ac1e80ca5d5793fcd4c08.png'),(11,'Franky','franky@gmail.com','$2y$10$usmxPf4lmU5VShTF4GPKquVVULM9coNJxTUw6DYQUjjXnmhZAxXVm','f036dd2ff1d93b3b84472106ff745f5a5a6c3c76b1c7b5c69b3a4efc005bf4e2.png'),(12,'mummy','mummy@gmail.com','$2y$10$cE0nVKijPZMAm8Kw3edVi.Qf1yZp2hKdxDUSj9YDGbftaNJTNfxHu','4d72c0e52451948d846b038a73d23574908f025504df15d4be14028cce4af860.png');
+INSERT INTO `users` VALUES (1,'cristian','cpr.1992@gmail.com','123',NULL),(11,'Franky','franky@gmail.com','$2y$10$usmxPf4lmU5VShTF4GPKquVVULM9coNJxTUw6DYQUjjXnmhZAxXVm','f036dd2ff1d93b3b84472106ff745f5a5a6c3c76b1c7b5c69b3a4efc005bf4e2.png'),(12,'mummy','mummy@gmail.com','$2y$10$cE0nVKijPZMAm8Kw3edVi.Qf1yZp2hKdxDUSj9YDGbftaNJTNfxHu','4d72c0e52451948d846b038a73d23574908f025504df15d4be14028cce4af860.png');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -165,4 +220,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-07-24 19:47:14
+-- Dump completed on 2024-07-25 13:28:05
