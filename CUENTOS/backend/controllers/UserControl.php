@@ -115,7 +115,7 @@ class UserControl extends User{
         $imagenewname = $this->username."image";
         $imagenewname = hash('sha256', $imagenewname).'.'.$imgext;
 
-        $fullpath = $userImagesFolder.$imagenewname.'.'.$imgext;
+        $fullpath = $userImagesFolder.$imagenewname;
 
         // Verifica si el archivo temporal existe
         if (!file_exists($tmpname)) {

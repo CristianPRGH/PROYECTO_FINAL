@@ -50,7 +50,7 @@ function SetupToggleMenus()
 }
 
 function GoToAuthenticate() { window.location = "view/auth.html"; }
-function GoToNewBook() { window.location = "view/create_book.html"; }
+function GoToNewBook() { window.location = "view/create_book.php"; }
 async function Logout()
 {
     try {

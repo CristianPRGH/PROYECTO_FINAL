@@ -1,3 +1,11 @@
+<?php
+session_start();
+if (!isset($_SESSION["userid"]))
+{
+    header('Location: ../index.php');
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,19 +17,23 @@
     <link rel="stylesheet" href="../styles/output.css">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
-    <script src="../frontend/createBook.js" type="module"></script>
+    <script src="../frontend/createBookManager.js" type="module"></script>
 </head>
-<body class="bg-orange-100 h-screen flex flex-col p-2">
+<body class="bg-[#F7F3E9] h-screen flex flex-col p-2">
     <main id="book-cover" class="flex items-start h-full bg-white rounded-t-lg">
         <!-- <section class="w-[10%] h-full rounded-sm shadow-[inset_-2px_0_3px_rgba(137,137,137,0.5)] bg-transparent flex flex-col justify-start items-center"></section> -->
         <section class="flex flex-col justify-center w-full h-full p-4 rounded-sm shadow-[inset_5px_2px_3px_rgba(137,137,137,0.5)] relative">
             <input type="text" id="" placeholder="título" class="form-input placeholder:text-sm placeholder:italic rounded-sm pl-4 z-10">
-            <textarea id="" placeholder="Sinopsis" class="form-input placeholder:italic placeholder:text-sm z-10 pl-4 rounded-sm" rows="5" ></textarea>
-            <select id="" class="form-input rounded-sm pl-4 z-10">
-                <option value="0">- Categoría -</option>
+            <div class="relative z-10 ">
+                <textarea id="book-sinopsis" placeholder="Sinopsis" class="form-input placeholder:italic placeholder:text-sm pl-4 rounded-sm text-justify" rows="6" maxlength="300"></textarea>
+                <p class="absolute -bottom-1 right-2 text-xs"><span id="curr-letters">0</span>/300</p>
+            </div>
+            <select id="book-categories" class="form-input rounded-sm pl-4 z-10">
+                <option value="-1">- Categoría -</option>
             </select>
-            <input type="number" id="" placeholder="nº páginas (1-500)" class="form-input placeholder:text-sm placeholder:italic rounded-sm pl-4 z-10">
-            <input type="text" id="" placeholder="tags" class="form-input placeholder:text-sm placeholder:italic rounded-sm pl-4 z-10">
+            <input type="number" id="book-pages" placeholder="nº páginas (1-500)" class="form-input placeholder:text-sm placeholder:italic rounded-sm pl-4 z-10">
+            <input type="text" list="tags-list" id="" placeholder="tags" class="form-input placeholder:text-sm placeholder:italic rounded-sm pl-4 z-10">
+            <datalist id="tags-list"></datalist>
             <div class="h-full w-full absolute top-0 left-0 z-0">
                 <img src="" alt="" id="book-cover-img" class="w-full h-full opacity-0">
             </div>

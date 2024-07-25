@@ -10,7 +10,7 @@
 
 class Basemodel extends Database{
 
-    protected function SelectAll($query, $params)
+    protected function SelectAll($query, $params = null)
     {
         $stmt = $this->connect()->prepare($query);  // *
         $error = !$stmt->execute($params) ? 1 : 0;  // **

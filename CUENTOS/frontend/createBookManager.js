@@ -1,11 +1,85 @@
 import * as tweens from "../components/tweenControls.js";
+import {ValidateInputs, ValidateOnServer} from "./formValidations.js";
 
 document.addEventListener("DOMContentLoaded", ()=>{
+    InitializeEvents();
+    SetCategories();
+    SetTags();
+})
+
+function InitializeEvents()
+{
+    document.getElementById("book-sinopsis").addEventListener('keyup', CountLetters);
+    document.getElementById("book-categories").addEventListener('change', SetPages);
+
     document.getElementById("book-cover-color").addEventListener('input', UpdateBookCoverColor);
     document.getElementById('select-cover-img').addEventListener('change', SetCoverImg);
     document.getElementById("remove-cover-img").addEventListener('click', RemoveCoverImg);
     document.getElementById("create-book").addEventListener('click', CreateBookDialog);
-})
+}
+
+async function SetCategories()
+{
+    try {
+        const response = await fetch("../backend/includes/categories.getall.php");
+        if (response.ok)
+        {
+            const result = await response.json();
+            const select = document.getElementById("book-categories");
+            result.data.map(category =>{
+                // console.log(category);
+                const option = document.createElement("option");
+                option.value = category.id;
+                option.innerHTML = category.category;
+                option.dataset.avgpages = category.avg_pages;
+                select.appendChild(option);
+            })
+        }
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+async function SetTags()
+{
+    try {
+        const response = await fetch("../backend/includes/tags.getall.php");
+        if (response.ok)
+        {
+            const result = await response.json();
+            const select = document.getElementById("tags-list");
+            result.data.map(tag =>{
+                // console.log(category);
+                const option = document.createElement("option");
+                option.value = tag.tag;
+                select.appendChild(option);
+            })
+        }
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+function CountLetters(event)
+{
+    const text = event.target.value;
+    document.getElementById("curr-letters").textContent = text.length;
+}
+
+function SetPages(event)
+{
+    const value = event.target.value;
+    const inputpages = document.getElementById("book-pages");
+    if (value == -1)
+    {
+        inputpages.value = "";
+    }
+    else{
+        const selected = event.target.options[value];
+        const pages = selected.dataset.avgpages;
+        inputpages.value = Math.round(pages);
+    }
+}
 
 function UpdateBookCoverColor(event)
 {

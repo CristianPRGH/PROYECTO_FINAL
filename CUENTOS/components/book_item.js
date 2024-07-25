@@ -8,7 +8,7 @@ export function BookListItem(book)
     const pages = book.properties.pages;
     const tags = book.properties.tags;
 
-    return `<article class="grid grid-cols-[20%_1fr_10%] gap-1 py-1 border-b-2 border-b-orange-400">
+    return `<article class="grid grid-cols-[20%_1fr_10%] gap-1 py-1 border-t-2 border-t-orange-400">
                 <img class="h-full" src="images/books_covers/${cover}">
                 <div class="flex flex-col justify-evenly overflow-x-hidden">
                     <p class="text-ellipsis overflow-hidden whitespace-nowrap font-bold">${title}</p>
