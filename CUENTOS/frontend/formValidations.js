@@ -1,13 +1,15 @@
 import * as tweens from "../components/tweenControls.js";
 const validations = {
     v_required: ValidateEmpty,
+    v_name:ValidateName,
     v_emailexists: ValidateEmailExists,
     v_emailformat: ValidateEmail,
     v_usernameexists: ValidateUsernameExists,
     v_username: ValidateUsername,
     v_pwdformat: ValidatePassword,
     v_repeatpwd: ValidatePasswordRepeat,
-    v_imgsize: ValidateImageSize
+    v_imgsize: ValidateImageSize,
+    v_nonegative: ValidateNotNegativeNumber
 };
 let inputvalidations = [];
 let tweenErrorIcon, tweenValidIcon;
@@ -58,6 +60,7 @@ export async function ValidateInputs(inputs)
 
 export async function ValidateOnServer(inputs)
 {
+    //TODO Cambiar archivo de validaciones en el fetch
     let formValid = false;
     try {
         const response = await fetch("../backend/includes/signup-validations.php", {
@@ -521,4 +524,9 @@ function ValidateImageSize(input)
     }
 
     return true;
+}
+
+function ValidateNotNegativeNumber(input)
+{
+    
 }

@@ -1,5 +1,6 @@
 import * as tweens from "../components/tweenControls.js";
 import {ValidateInputs, ValidateOnServer} from "./formValidations.js";
+import {InputJson, SetInputsToFormData} from "../components/inputsManager.js";
 
 let tweenLogin, tweenRegister, tweenErrorIcon, tweenValidIcon;
 const validationErrors = {
@@ -144,10 +145,10 @@ async function ValidateRegister()
     let result = false;
 
     const inputs = [
-        GenerateInputJson("input-username"),
-        GenerateInputJson("input-email"),
-        GenerateInputJson("input-password"),
-        GenerateInputJson("input-userimg")
+        InputJson("input-username"),
+        InputJson("input-email"),
+        InputJson("input-password"),
+        InputJson("input-userimg")
     ];
 
     const isvalid = await ValidateInputs(inputs);    // Valida en cliente
@@ -206,35 +207,6 @@ function ResetRegisterForm()
     });
 
     document.getElementById("input-profilepic").src = "../images/users_avatars/user-default.png";
-}
-
-function GenerateInputJson(id, inputclasses = "")
-{
-    const input = document.getElementById(id);
-    const classes = inputclasses == "" ? Array.from(input.classList).join(' ') : inputclasses;
-
-    
-    return {
-        "id":input.id,
-        "classes":classes,
-        "value": input.type != "file" ? input.value : input.files[0]
-    }
-}
-
-function SetInputsToFormData(inputs, files)
-{
-    const imgfile = document.getElementById(files);
-    const formdata = new FormData();
-    formdata.append("imgfile", imgfile.files[0]);
-
-    let jsonInputs = [];
-
-    inputs.forEach(input => {
-        if (input.type != "file") jsonInputs.push(input);
-    });
-    
-    formdata.append("inputs", JSON.stringify(jsonInputs));
-    return formdata;
 }
 
 // function SetValidMsg(id, msg)

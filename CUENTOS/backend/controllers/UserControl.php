@@ -2,10 +2,13 @@
 
 class UserControl extends User{
     
-    use TValidations;
+    // use TValidations;
+    use SaveImages;
 
     private $formValid = array();
     private $id, $username, $email, $password, $image;
+    private $imagesFolder = "../../images/users_avatars/";
+    private $imagesPrefix = $this->username;
 
     public function __construct($username = null, $email = null, $password = null, $image = null, $id = null)
     {
@@ -36,10 +39,10 @@ class UserControl extends User{
 
     // PUBLIC METHODS ----------------------------------------------------------------------
 
-    public function ValidateUserInputs($inputs)
-    {
-        return $this->ValidaInputs($inputs);
-    }
+    // public function ValidateUserInputs($inputs)
+    // {
+    //     return $this->ValidaInputs($inputs);
+    // }
 
     public function ValidateLogin()
     {
@@ -48,31 +51,13 @@ class UserControl extends User{
 
     public function InsertNewUser()
     {
-        $res = $this->SaveImage();
+        $res = $this->SaveImage($this->imagesFolder, $this->image, $this->imagesPrefix);
         if ($res[0])
             return parent::InsertUser([$this->username, $this->email, $this->password, $res[1]]);
     }
 
-    public function CheckUsernameEmail()
-    {
-        $result = parent::CheckUsernameEmailExists($this->username, $this->email);
-        if ($result["error"] == 0)
-        {
-            $result["msg"] = $this->username != null ? "El nombre de usuario ya existe" : "El email ya existe";
-        }
 
-        return $result;
-    }
-
-    public function GetUserInfo()
-    {
-        return parent::SelectUserInfo($this->id);
-    }
-
-
-    // PRIVATE METHODS ----------------------------------------------------------------------
-
-    private function ValidateUsernameExists()
+    public function ValidateUsernameExists()
     {
         if (strlen($this->username) > 0)
         {
@@ -84,7 +69,7 @@ class UserControl extends User{
         return [true, "valid"];
     }
 
-    private function ValidateEmailExists()
+    public function ValidateEmailExists()
     {
         if (strlen($this->email) > 0)
         {
@@ -94,6 +79,26 @@ class UserControl extends User{
         }
 
         return [true, "valid"];
+    }
+
+    public function GetUserInfo()
+    {
+        return parent::SelectUserInfo($this->id);
+    }
+
+
+    // PRIVATE METHODS ----------------------------------------------------------------------
+
+
+    private function CheckUsernameEmail()
+    {
+        $result = parent::CheckUsernameEmailExists($this->username, $this->email);
+        if ($result["error"] == 0)
+        {
+            $result["msg"] = $this->username != null ? "El nombre de usuario ya existe" : "El email ya existe";
+        }
+
+        return $result;
     }
 
     private function SaveImage()

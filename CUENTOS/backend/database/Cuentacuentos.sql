@@ -45,6 +45,35 @@ INSERT INTO `book_categories` VALUES (1,'Novela corta',80,200),(2,'Novela',200,4
 UNLOCK TABLES;
 
 --
+-- Table structure for table `book_pages`
+--
+
+DROP TABLE IF EXISTS `book_pages`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `book_pages` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `pg_bookid` int(11) NOT NULL,
+  `pg_authorid` int(11) NOT NULL,
+  `pg_content` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`pg_content`)),
+  PRIMARY KEY (`id`,`pg_bookid`,`pg_authorid`),
+  KEY `fk_authorid_idx` (`pg_authorid`),
+  KEY `fk_bookid_idx` (`pg_bookid`),
+  CONSTRAINT `fk_authorid` FOREIGN KEY (`pg_authorid`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_bookid` FOREIGN KEY (`pg_bookid`) REFERENCES `books` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `book_pages`
+--
+
+LOCK TABLES `book_pages` WRITE;
+/*!40000 ALTER TABLE `book_pages` DISABLE KEYS */;
+/*!40000 ALTER TABLE `book_pages` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `book_tags`
 --
 
@@ -78,18 +107,20 @@ DROP TABLE IF EXISTS `books`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `books` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `title` varchar(45) NOT NULL,
-  `sinopsis` longtext DEFAULT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
-  `no_pages` smallint(6) NOT NULL,
-  `tags` mediumtext DEFAULT NULL,
-  `author` int(11) NOT NULL,
-  `category` int(11) DEFAULT NULL,
+  `bk_title` varchar(45) NOT NULL,
+  `bk_sinopsis` longtext DEFAULT NULL,
+  `bk_pages` smallint(6) NOT NULL,
+  `bk_categoryid` int(11) DEFAULT NULL,
+  `bk_tags` mediumtext DEFAULT NULL,
+  `bk_cover` longtext DEFAULT NULL,
+  `bk_authorid` int(11) NOT NULL,
+  `bk_created_at` datetime NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`),
-  KEY `fk_books_users1_idx` (`author`),
-  KEY `fk_categories_idx` (`category`),
-  CONSTRAINT `fk_books_users1` FOREIGN KEY (`author`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_categories` FOREIGN KEY (`category`) REFERENCES `book_categories` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  UNIQUE KEY `cover_img_UNIQUE` (`bk_cover`) USING HASH,
+  KEY `fk_books_users1_idx` (`bk_authorid`),
+  KEY `fk_categories_idx` (`bk_categoryid`),
+  CONSTRAINT `fk_books_users1` FOREIGN KEY (`bk_authorid`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_categories` FOREIGN KEY (`bk_categoryid`) REFERENCES `book_categories` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -126,33 +157,6 @@ CREATE TABLE `comments` (
 LOCK TABLES `comments` WRITE;
 /*!40000 ALTER TABLE `comments` DISABLE KEYS */;
 /*!40000 ALTER TABLE `comments` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `pages`
---
-
-DROP TABLE IF EXISTS `pages`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `pages` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `bookid` int(11) NOT NULL,
-  `content` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`content`)),
-  `author` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `fk_pages_books_idx` (`bookid`),
-  CONSTRAINT `fk_pages_books` FOREIGN KEY (`bookid`) REFERENCES `books` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `pages`
---
-
-LOCK TABLES `pages` WRITE;
-/*!40000 ALTER TABLE `pages` DISABLE KEYS */;
-/*!40000 ALTER TABLE `pages` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -220,4 +224,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-07-25 13:28:05
+-- Dump completed on 2024-07-26 13:58:18
