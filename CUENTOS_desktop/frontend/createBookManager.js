@@ -151,7 +151,6 @@ async function CreateBookDialog()
             })
         }
     }
-
 }
 
 function WriteBookDialog()
@@ -160,8 +159,8 @@ function WriteBookDialog()
     writeBookDialog.showModal();
 
     document.getElementById("write-yes").addEventListener('click',()=>{
-        writeBookDialog.close()
-        window.location = "../view/write_pages.html";
+        writeBookDialog.close();
+        window.location = "write_pages.php?";
     })
     document.getElementById("write-no").addEventListener('click', ()=>{
         window.location = '../index.php';
@@ -194,6 +193,7 @@ async function InsertBook()
         if (response.ok)
         {
             const result = await response.json();
+            console.log(result);
             return result.error;
         }
     } catch (error) {

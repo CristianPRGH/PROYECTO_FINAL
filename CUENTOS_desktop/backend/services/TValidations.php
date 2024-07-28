@@ -1,14 +1,13 @@
 <?php
 
 // VALIDACIONES
-class ValidationsControl {
+trait TValidations {
 
     private $validations = array(
         "v_required"=>"ValidateEmpty",
-        "v_name"=>"ValidateName",
-        // "v_emailexists"=>"ValidateEmailExists",
+        "v_emailexists"=>"ValidateEmailExists",
         "v_emailformat"=>"ValidateEmail",
-        // "v_usernameexists"=>"ValidateUsernameExists",
+        "v_usernameexists"=>"ValidateUsernameExists",
         "v_username"=>"ValidateUsername",
         "v_pwdformat"=>"ValidatePassword",
         "v_imgsize"=>"ValidateImageSize"
