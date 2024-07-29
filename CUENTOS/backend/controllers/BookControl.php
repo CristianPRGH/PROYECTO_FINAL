@@ -47,4 +47,8 @@ class BookControl extends Book{
         return parent::InsertBook([$this->title, $this->sinopsis,$this->pages, $this->category,$this->tags, $this->cover, $this->author]);
     }
 
+    public function GetBookPages()
+    {
+        return parent::SelectBookPages($this->id);
+    }
 }

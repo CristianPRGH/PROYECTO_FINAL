@@ -1,10 +1,11 @@
 <?php
 
 class Page extends Basemodel{
-    private $table = "pages";
+    private $table = "book_pages";
 
-    public function __construct()
+    protected function InsertPage($bookid, $pageid, $userid, $pageContent)
     {
-        parent::SetTable($this->table);
+        $query = "INSERT INTO $this->table (id, pg_bookid, pg_authorid, pg_content) VALUES (?,?,?,?)";
+        return parent::InsUpdDel($query, [$bookid, $pageid, $userid, $pageContent]);
     }
 }

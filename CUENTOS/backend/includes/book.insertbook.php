@@ -6,14 +6,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 {
     $title      = $_POST["title"];
     $sinopsis   = $_POST["sinopsis"];
-    $category   = $_POST["category"];
+    $category   = $_POST["category"] != -1 ? $_POST["category"] : null;
     $pages      = $_POST["pages"];
     $tags       = $_POST["tags"];
     $author     = $_SESSION["userid"];
-    $cover      = null;
-    
-    if (isset($_FILES["cover"]))
-        $cover = $_FILES["cover"];
+    $cover      = isset($_FILES["cover"]) ? $_FILES["cover"] : null;
 
     $book = new BookControl($title,$sinopsis,$category,$pages,$tags,$cover,$author);
     $result = $book->InsertNewBook();

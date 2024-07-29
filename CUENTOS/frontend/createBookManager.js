@@ -28,16 +28,17 @@ async function SetCategories()
         const response = await fetch("../backend/includes/categories.getall.php");
         if (response.ok)
         {
-            const result = await response.json();
-            const select = document.getElementById("book-categories");
-            result.data.map(category =>{
-                // console.log(category);
-                const option = document.createElement("option");
-                option.value = category.id;
-                option.innerHTML = category.category;
-                option.dataset.avgpages = category.avg_pages;
-                select.appendChild(option);
-            })
+          //selected disabled
+          const result = await response.json();
+          const select = document.getElementById("book-categories");
+
+          result.data.map((category) => {
+            const option = document.createElement("option");
+            option.value = category.id;
+            option.innerHTML = category.category;
+            option.dataset.avgpages = category.avg_pages;
+            select.appendChild(option);
+          });
         }
     } catch (error) {
         console.error(error);
@@ -144,24 +145,23 @@ async function CreateBookDialog()
                 result = await InsertBook();
 
                 createBookDialog.close();
-                WriteBookDialog();
+                WriteBookDialog(result.lastid);
             })
             document.getElementById("create-no").addEventListener('click', ()=>{
                 window.location = '../index.php';
             })
         }
     }
-
 }
 
-function WriteBookDialog()
+function WriteBookDialog(lastid)
 {
     const writeBookDialog = document.getElementById("confirm-write-book");
     writeBookDialog.showModal();
 
     document.getElementById("write-yes").addEventListener('click',()=>{
-        writeBookDialog.close()
-        window.location = "../view/write_pages.html";
+        writeBookDialog.close();
+        window.location = `write_pages.php?bookid=${lastid}`;
     })
     document.getElementById("write-no").addEventListener('click', ()=>{
         window.location = '../index.php';
@@ -193,8 +193,7 @@ async function InsertBook()
         })
         if (response.ok)
         {
-            const result = await response.json();
-            return result.error;
+            return await response.json();
         }
     } catch (error) {
         console.log(error);

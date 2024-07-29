@@ -1,7 +1,7 @@
 <?php
 
 class Database extends Dbconfig{
-    
+
     protected function connect()
     {
         $params = parent::GetConnectionParams();

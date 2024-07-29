@@ -32,16 +32,28 @@ class Basemodel extends Database{
 
     protected function InsUpdDel($query, $params)
     {
-        $stmt = $this->connect()->prepare($query);  // *
+        $conn = $this->connect();
+        $stmt = $conn->prepare($query);             // *
         $error = !$stmt->execute($params) ? 1 : 0;  // **
-        return $this->GetResult($error);            // *****
+
+        $last_id = $this->GetLastId($conn, $query);
+
+        return $this->GetResult($error,null,$last_id); // *****
     }
 
-    protected function GetResult($error, $data = null)
+    protected function GetResult($error, $data = null, $lastid = null)
     {
         return array(
             "error"=>$error,
-            "data"=>$data
+            "data"=>$data,
+            "lastid"=>$lastid
         );
+    }
+
+    private function GetLastId($conn, $query)
+    {
+        $split = explode(" ", $query);
+        $first = array_shift($split);
+        return strtolower($first) == "insert" ? $conn->lastInsertId() : null;
     }
 }
