@@ -5,15 +5,26 @@ let quill = null;
 let bookid;
 
 document.addEventListener("DOMContentLoaded", async ()=>{
-    document.getElementById("prev").addEventListener('click', PageControl);
-    document.getElementById("next").addEventListener('click', PageControl);
-    document.getElementById("confirm").addEventListener('click', ConfirmPages);
+  // Make the DIV element draggable:
+  Draggable.create("#menu", {
+    bounds: document.getElementById("main"),
+    onDragStart: function(){
+      gsap.to('#'+this.target.id, {opacity:0.3}).play();
+    },
+    onDragEnd: function(){
+      gsap.to('#'+this.target.id, {opacity:1}).play();
+    }
+  });
 
-    bookid = document.getElementById("bookid").textContent;
-    await GetBookPages();
-    InitializeQuill();
-    LoadPage();
-    SetPages();
+  document.getElementById("prev").addEventListener("click", PageControl);
+  document.getElementById("next").addEventListener("click", PageControl);
+  document.getElementById("confirm").addEventListener("click", ConfirmPages);
+
+  bookid = document.getElementById("bookid").textContent;
+  await GetBookPages();
+  InitializeQuill();
+  LoadPage();
+  SetPages();
 })
 
 
@@ -27,7 +38,7 @@ function InitializeQuill() {
       syntax: true,
       toolbar: "#toolbar-container",
     },
-    placeholder: "Empieza a escribir...",
+    placeholder: "Cada palabra es un paso hacia una gran historia...",
     theme: "snow",
   });
 }
@@ -50,6 +61,7 @@ function LoadPage(pageNumber)
 
 function PageControl(event)
 {
+  // TODO Buscar la manera de restringir el cambio de página si la anterior no tiene contenido a parte del /n
     SavePage(currentPage);
     quill.focus();
 
@@ -135,6 +147,7 @@ async function InsertPages()
         if (response.ok)
         {
             const result = await response.json();
+            console.table(result);
         }
     } catch (error) {
         console.log(error);

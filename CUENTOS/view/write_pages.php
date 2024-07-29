@@ -18,6 +18,8 @@ $bookid = $_GET["bookid"];
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
     <link rel="stylesheet" href="../styles/output.css" />
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/Draggable.min.js"></script>
     <script src="../frontend/bookPageManager.js"></script>
 
     <!-- QUILL -->
@@ -29,10 +31,10 @@ $bookid = $_GET["bookid"];
 
 </head>
 
-<body class="bg-orange-100 h-screen flex flex-col">
+<body class="h-screen flex flex-col">
     <p id="bookid" class="hidden"><?= $bookid; ?></p>
 
-    <main class="flex justify-between items-center w-full h-full lg:w-1/2 duration-200 mx-auto">
+    <main id="main" class="w-full h-full lg:w-1/2 duration-200 mx-auto">
         <section class="h-full w-full flex flex-col bg-white">
             <div id="toolbar-container">
                 <span class="ql-formats">
@@ -56,18 +58,18 @@ $bookid = $_GET["bookid"];
                     <button class="ql-clean"></button>
                 </span>
             </div>
-            <div id="editor" class="overflow-y-auto"></div>
+            <div id="editor" class="overflow-y-auto rounded-b-md shadow-md"></div>
         </section>
     </main>
 
-    <section id="menu" class="absolute flex flex-col bottom-3 left-1/2 -translate-x-1/2 z-1000 shadow-md shadow-black/40 min-w-96 bg-white/90 backdrop-blur-md rounded-xl">
-        <div class="flex align-bottom justify-between items-center text-xs px-2 bg-slate-200 rounded-t-md">
+    <section id="menu" class="absolute bottom-0 left-1/2 -translate-x-1/2 h-fit flex flex-col  shadow-md shadow-black/40 min-w-96 bg-white/90 backdrop-blur-md rounded-xl opacity-100">
+        <div id="menuheader" class="flex align-bottom justify-between items-center text-xs px-2 bg-slate-200 rounded-t-md cursor-move">
             <p id="prev-page"></p>
-            <p id="current-page" class="text-base"></p>
+            <p id="current-page" class="text-base text-black"></p>
             <p id="next-page"></p>
         </div>
 
-        <section class="grid grid-cols-4 divide-x py-3">
+        <section class="grid grid-cols-4 divide-x py-3 z-1000">
             <div class="flex items-center justify-center">
                 <i id="to-home" class="material-symbols-rounded cursor-pointer duration-100 hover:scale-125">home</i>
             </div>
@@ -82,6 +84,7 @@ $bookid = $_GET["bookid"];
             </div>
         </section>
     </section>
+
 
     <dialog id="confirm-pages" class="p-6 m-auto shadow-lg rounded-md z-20 backdrop:bg-orange-100/30 backdrop:backdrop-blur-md">
         <p class="text-center p-3">Confirma las páginas escritas?</p>
