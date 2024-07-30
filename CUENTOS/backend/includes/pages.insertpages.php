@@ -12,7 +12,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     foreach ($pages as $index=>$page)
     {
         $newpage = new PageControl($bookid, $index, json_encode($page) ,$userid);
-        array_push($results, $newpage->InsertNewPage());
+        $result = $newpage->InsertNewPage();
+        array_push($results, $result);
     }
 
     header("Content-Type: application/json");

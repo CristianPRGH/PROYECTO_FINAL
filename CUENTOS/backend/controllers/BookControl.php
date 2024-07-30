@@ -51,4 +51,9 @@ class BookControl extends Book{
     {
         return parent::SelectBookPages($this->id);
     }
+
+    public function GetBooksList()
+    {
+        return parent::SelectBooks();
+    }
 }

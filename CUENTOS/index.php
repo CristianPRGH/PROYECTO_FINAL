@@ -2,6 +2,7 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,25 +11,67 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
     <link rel="stylesheet" href="./styles/output.css" />
 
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
     <script src="frontend/main.js" type="module"></script>
     <!-- <script src="frontend/booksManager.js" type="module"></script> -->
 </head>
+
 <body class="bg-[#F7F3E9] relative h-screen flex flex-col">
-
-
-    <main id="index-main" class="index-main flex-row p-4 h-[90%]">
+    <main id="index-main" class="flex flex-col p-4 h-full">
         <article class="relative w-full">
             <input type="text" id="input-search" class="w-full p-1 pl-10 rounded-md outline-none border-2 border-b-4 border-orange-500 placeholder:italic placeholder:text-sm" placeholder="Título, autor">
             <i class="material-symbols-rounded form-icon top-1">search</i>
         </article>
 
-        <section class="flex flex-col pb-2 mt-2 h-full overflow-y-auto overflow-x-hidden scroll">
+        <!-- <section class="flex flex-col pb-2 mt-2 h-full overflow-y-auto overflow-x-hidden scroll">
             <section id="books-list"></section>
-        </section>
+        </section> -->
+
+        <article class="w-full mt-2 p-2">
+            <p class="text-lg my-2">Últimos añadidos</p>
+            <div class="swiper multiple-slide-carousel swiper-container flex flex-col">
+                <div id="books-items" class="swiper-wrapper rounded-xl"></div>
+                <div class="flex justify-evenly items-center m-auto w-full mt-4">
+                    <button class="carousel-button-prev w-12 h-12">
+                        <i class="material-symbols-rounded text-4xl text-[#333333]">arrow_circle_left</i>
+                    </button>
+                    <button class="carousel-button-next w-12 h-12">
+                        <i class="material-symbols-rounded text-4xl text-[#333333]">arrow_circle_right</i>
+                    </button>
+                </div>
+            </div>
+        </article>
+
+        <!-- <section id="books-carousel" class="relative w-full bg-slate-500" data-carousel="static">
+                <div id="books-items" class="relative h-56 overflow-hidden rounded-lg md:h-96"></div>
+
+                <button type="button" class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
+                    <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                        <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4" />
+                        </svg>
+                        <span class="sr-only">Previous</span>
+                    </span>
+                </button>
+                <button type="button" class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
+                    <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                        <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4" />
+                        </svg>
+                        <span class="sr-only">Next</span>
+                    </span>
+                </button>
+            </section> -->
 
         <section id="book-details" class="w-full h-full flex flex-col fixed bg-[#F7F3E9] top-0 -right-[100%] p-8 opacity-0 z-10 overflow-y-auto"></section>
-    </main> 
+    </main>
 
     <aside id="menu-bookfilters" class="flex flex-col justify-between bg-[#A8E6CF] fixed bottom-0 w-full h-full p-8 z-10 -left-full opacity-0">
         <i id="closeBookFilters" class="material-symbols-rounded text-[#333333] self-end cursor-pointer">close</i>
@@ -43,7 +86,7 @@
                 <input type="text" class="w-full p-1 pl-10 rounded-md rounded-b-none outline-none border-b-2 border-b-orange-500 placeholder:italic placeholder:text-sm" placeholder="Tags (separados por espacios)">
                 <i class="material-symbols-rounded form-icon top-1">sell</i>
             </div>
-            <select id="" class="rounded-t-none rounded-b-md w-full h-5/6 outline-none"  multiple>
+            <select id="" class="rounded-t-none rounded-b-md w-full h-5/6 outline-none" multiple>
                 <option class="form-select-option" value="1">Fantasía</option>
                 <option class="form-select-option" value="2">Acción</option>
                 <option class="form-select-option" value="3">Aventura</option>
@@ -75,19 +118,19 @@
             <img id="logged-userimg" src="./images/users_avatars/user-default.png" class="w-40 h-40 justify-center rounded-full border-4 border-orange-100">
             <div class="flex flex-col text-[#333333] w-full">
                 <p id="logged-username" class="text-center">User</p>
-                <p class="user-books">Autor de:   <span class="font-bold text-orange-500">#</span> libros</p>
+                <p class="user-books">Autor de: <span class="font-bold text-orange-500">#</span> libros</p>
                 <p class="user-books">Coautor de: <span class="font-bold text-orange-500">#</span> libros</p>
             </div>
         </section>
 
         <section class="h-full flex flex-col justify-end overflow-y-auto">
-        <?php if (isset($_SESSION["userid"])){ ?>
-            <button id="new-book"   class="group p-2 my-1 bg-white cursor-pointer rounded-md flex justify-between items-center hover:bg-gradient-to-r hover:from-white hover:from-80% hover:to-green-700 hover:to-80%">Crear libro  <i class="material-symbols-rounded group-hover:text-white">book_2</i></button>
-            <button id="library"    class="group p-2 my-1 bg-white cursor-pointer rounded-md flex justify-between items-center hover:bg-gradient-to-r hover:from-white hover:from-80% hover:to-green-700 hover:to-80%">Tus Libros   <i class="material-symbols-rounded group-hover:text-white">book_4</i></button>
-            <button id="logout"     class="group p-2 my-1 bg-white cursor-pointer rounded-md flex justify-between items-center hover:bg-gradient-to-r hover:from-white hover:from-80% hover:to-green-700 hover:to-80%">Logout       <i class="material-symbols-rounded group-hover:text-white">logout</i></button>
-        <?php }else{ ?>
-            <button id="to-login"   class="group p-2 my-1 bg-white cursor-pointer rounded-md flex justify-between items-center hover:bg-gradient-to-r hover:from-white hover:from-80% hover:to-green-700 hover:to-80%">Login        <i class="material-symbols-rounded group-hover:text-white">login</i></button>
-        <?php } ?>
+            <?php if (isset($_SESSION["userid"])) { ?>
+                <button id="new-book" class="group p-2 my-1 bg-white cursor-pointer rounded-md flex justify-between items-center hover:bg-gradient-to-r hover:from-white hover:from-80% hover:to-green-700 hover:to-80%">Crear libro <i class="material-symbols-rounded group-hover:text-white">book_2</i></button>
+                <button id="library" class="group p-2 my-1 bg-white cursor-pointer rounded-md flex justify-between items-center hover:bg-gradient-to-r hover:from-white hover:from-80% hover:to-green-700 hover:to-80%">Tus Libros <i class="material-symbols-rounded group-hover:text-white">book_4</i></button>
+                <button id="logout" class="group p-2 my-1 bg-white cursor-pointer rounded-md flex justify-between items-center hover:bg-gradient-to-r hover:from-white hover:from-80% hover:to-green-700 hover:to-80%">Logout <i class="material-symbols-rounded group-hover:text-white">logout</i></button>
+            <?php } else { ?>
+                <button id="to-login" class="group p-2 my-1 bg-white cursor-pointer rounded-md flex justify-between items-center hover:bg-gradient-to-r hover:from-white hover:from-80% hover:to-green-700 hover:to-80%">Login <i class="material-symbols-rounded group-hover:text-white">login</i></button>
+            <?php } ?>
         </section>
     </aside>
 
@@ -103,4 +146,5 @@
         </div>
     </footer>
 </body>
+
 </html>

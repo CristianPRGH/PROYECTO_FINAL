@@ -17,11 +17,40 @@ async function SetupMainBooksList()
 {
     await book.SearchAllBooks();
     const books = book.GetBooks();
-    const booksList = document.getElementById("books-list");
+    // const booksList = document.getElementById("books-list");
+    const booksList = document.getElementById("books-items");
 
-    booksList.innerHTML = books.map(eachbook =>
-        BookListItem(eachbook)
+        booksList.innerHTML = books.data.map(book =>
+        BookListItem(book)
     ).join('');
+    
+       var swiper = new Swiper(".multiple-slide-carousel", {
+         loop: true,
+         slidesPerView: 3,
+         spaceBetween: 10,
+         navigation: {
+           nextEl: ".multiple-slide-carousel .carousel-button-next",
+           prevEl: ".multiple-slide-carousel .carousel-button-prev",
+         },
+         breakpoints: {
+           1920: {
+             slidesPerView: 7,
+             spaceBetween: 30,
+           },
+           1028: {
+             slidesPerView: 5,
+             spaceBetween: 30,
+           },
+           990: {
+             slidesPerView: 4,
+             spaceBetween: 0,
+           },
+         },
+       });
+      
+      
+
+
 
     SetupToggleBookDetail();
 }

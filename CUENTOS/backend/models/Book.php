@@ -14,4 +14,12 @@ class Book extends Basemodel{
         $query = "SELECT bk_pages as pages FROM $this->table WHERE id = ?";
         return parent::SelectOne($query, [$id]);
     }
+
+    protected function SelectBooks()
+    {
+        $query = 
+        "SELECT books.id, books.bk_title, books.bk_tags, books.bk_cover, users.username FROM $this->table AS books
+        JOIN users ON users.id = books.bk_authorid";
+        return parent::SelectAll($query);
+    }
 }

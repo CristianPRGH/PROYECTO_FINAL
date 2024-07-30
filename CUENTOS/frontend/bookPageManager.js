@@ -46,9 +46,10 @@ function InitializeQuill() {
 function SavePage(pageNumber)
 {
     const content = GetQuillContent();
+    const pageIsEmpty = CheckIsEmpty(content);
     pagesContent[pageNumber] = content;
 
-    return content;
+    return pageIsEmpty;
 }
 
 function LoadPage(pageNumber)
@@ -61,17 +62,14 @@ function LoadPage(pageNumber)
 
 function PageControl(event)
 {
-  // TODO Buscar la manera de restringir el cambio de página si la anterior no tiene contenido a parte del /n
-    SavePage(currentPage);
+    const pageIsEmpty = SavePage(currentPage);
     quill.focus();
 
     const direction = event.target.id;
-    if (direction === "next" && currentPage < numPages)
-    {
-        currentPage++;
-    } else if (direction === "prev" && currentPage > 1)
-    {
-        currentPage--;
+    if (direction === "next" && currentPage < numPages && !pageIsEmpty) {
+      currentPage++;
+    } else if (direction === "prev" && currentPage > 1) {
+      currentPage--;
     }
 
     LoadPage(currentPage);
@@ -99,7 +97,7 @@ function ConfirmPages()
     document.getElementById("write-yes").addEventListener('click', async ()=>{
         await InsertPages();
 
-        // window.location = "../index.html";
+        window.location = "../index.php";
     })
 
     document.getElementById("write-no").addEventListener('click', ()=>{
@@ -110,6 +108,13 @@ function ConfirmPages()
 function GetQuillContent()
 {
     return quill.getContents();
+}
+
+// Check del contenido de la página; Retorna TRUE si hay contenido y FALSE si está vacío (solo hay un "\n" por defecto)
+function CheckIsEmpty(content)
+{
+  const pageContent = content["ops"][0]["insert"];
+  return pageContent == "\n";
 }
 
 

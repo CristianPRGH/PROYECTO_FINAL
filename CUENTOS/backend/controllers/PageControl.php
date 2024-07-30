@@ -23,6 +23,6 @@ class PageControl extends Page{
 
     public function InsertNewPage()
     {
-        return parent::InsertPage($this->bookid,$this->pageid,$this->userid,$this->pageContent);
+        return parent::InsertPage($this->pageid,$this->bookid,$this->userid,$this->pageContent);
     }
 }

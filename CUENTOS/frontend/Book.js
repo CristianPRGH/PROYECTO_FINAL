@@ -17,7 +17,7 @@ export class Book{
     async SearchAllBooks()
     {
         try {
-            const res = await fetch("books.json");
+            const res = await fetch("backend/includes/book.getbookslist.php") //("books.json");
             if (res.ok)
             {
                 this.booksList = await res.json();
