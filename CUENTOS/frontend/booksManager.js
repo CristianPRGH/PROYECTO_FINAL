@@ -33,18 +33,18 @@ async function SetupMainBooksList()
            prevEl: ".multiple-slide-carousel .carousel-button-prev",
          },
          breakpoints: {
-           1920: {
-             slidesPerView: 7,
+           1280: {
+             slidesPerView: 6,
              spaceBetween: 30,
            },
-           1028: {
+           1024: {
              slidesPerView: 5,
              spaceBetween: 30,
            },
-           990: {
+           450: {
              slidesPerView: 4,
-             spaceBetween: 0,
-           },
+             spaceBetween: 10,
+           }
          },
        });
       

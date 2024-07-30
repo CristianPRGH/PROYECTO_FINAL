@@ -26,7 +26,7 @@ if (!isset($_SESSION["userid"]))
 
         <section class="flex flex-col w-full h-full p-4"> 
             <div class="relative w-full z-10">
-                <input type="text" id="book-title" placeholder="título" class="v_required w-full border-0 placeholder:text-sm placeholder:italic rounded-md pl-4 shadow-md" data-valid="valid-title">
+                <input type="text" id="book-title" placeholder="título" maxlength="80" class="v_required w-full border-0 placeholder:text-sm placeholder:italic rounded-md pl-4 shadow-md" data-valid="valid-title">
                 <div id="valid-title" class="validate-input" data-errormsg="error-title">
                     <i class="material-symbols-rounded form-error-icon">error</i>
                     <p id="error-title" class="form-error-message bg-white my-1 rounded-t-lg"></p>
@@ -64,7 +64,7 @@ if (!isset($_SESSION["userid"]))
 
     <section class="absolute grid grid-cols-5 divide-x bottom-3 left-1/2 -translate-x-1/2 z-1000 rounded-xl bg-white/90 backdrop-blur-md py-3 min-w-96 shadow-md shadow-black/40">
         <div class="flex items-center justify-center">
-            <i id="to-home" class="material-symbols-rounded cursor-pointer duration-100 hover:scale-125">home</i>
+            <i id="home" class="material-symbols-rounded cursor-pointer duration-100 hover:scale-125">home</i>
         </div>
         <div class="flex items-center justify-center">
             <label for="select-cover-img" class="material-symbols-rounded cursor-pointer duration-100 hover:scale-125">add_photo_alternate</label>

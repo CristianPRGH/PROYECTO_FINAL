@@ -24,8 +24,8 @@
 </head>
 
 <body class="bg-[#F7F3E9] relative h-screen flex flex-col">
-    <main id="index-main" class="flex flex-col p-4 h-full">
-        <article class="relative w-full">
+    <main id="index-main" class="flex flex-col p-4 h-full md:w-3/4 md:self-center xl:w-2/3 duration-200">
+        <article class="relative w-full md:self-center">
             <input type="text" id="input-search" class="w-full p-1 pl-10 rounded-md outline-none border-2 border-b-4 border-orange-500 placeholder:italic placeholder:text-sm" placeholder="Título, autor">
             <i class="material-symbols-rounded form-icon top-1">search</i>
         </article>
@@ -34,10 +34,10 @@
             <section id="books-list"></section>
         </section> -->
 
-        <article class="w-full mt-2 p-2">
-            <p class="text-lg my-2">Últimos añadidos</p>
+        <article class="w-full mt-2">
+            <p class="text-lg border-b-2 border-b-[#333333] my-2">Últimos añadidos</p>
             <div class="swiper multiple-slide-carousel swiper-container flex flex-col">
-                <div id="books-items" class="swiper-wrapper rounded-xl"></div>
+                <div id="books-items" class="swiper-wrapper"></div>
                 <div class="flex justify-evenly items-center m-auto w-full mt-4">
                     <button class="carousel-button-prev w-12 h-12">
                         <i class="material-symbols-rounded text-4xl text-[#333333]">arrow_circle_left</i>
@@ -46,7 +46,7 @@
                         <i class="material-symbols-rounded text-4xl text-[#333333]">arrow_circle_right</i>
                     </button>
                 </div>
-            </div>
+            </div> 
         </article>
 
         <!-- <section id="books-carousel" class="relative w-full bg-slate-500" data-carousel="static">

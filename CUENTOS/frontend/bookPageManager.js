@@ -5,6 +5,7 @@ let quill = null;
 let bookid;
 
 document.addEventListener("DOMContentLoaded", async ()=>{
+  
   // Make the DIV element draggable:
   Draggable.create("#menu", {
     bounds: document.getElementById("main"),
@@ -16,6 +17,8 @@ document.addEventListener("DOMContentLoaded", async ()=>{
     }
   });
 
+
+  document.getElementById("home").addEventListener("click", ()=>{window.location = "../index.php"});
   document.getElementById("prev").addEventListener("click", PageControl);
   document.getElementById("next").addEventListener("click", PageControl);
   document.getElementById("confirm").addEventListener("click", ConfirmPages);

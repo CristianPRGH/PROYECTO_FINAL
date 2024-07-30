@@ -16,6 +16,8 @@ function InitializeEvents()
         SetPagesValue(event.target.value);
     });
 
+    document.getElementById("home").addEventListener("click", () => {window.location = "../index.php";});
+    document.getElementById("book-cover-color").addEventListener('input', UpdateBookCoverColor);
     document.getElementById("book-cover-color").addEventListener('input', UpdateBookCoverColor);
     document.getElementById('select-cover-img').addEventListener('change', SetCoverImg);
     document.getElementById("remove-cover-img").addEventListener('click', RemoveCoverImg);

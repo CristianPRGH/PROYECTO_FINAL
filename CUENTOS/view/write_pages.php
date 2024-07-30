@@ -71,7 +71,7 @@ $bookid = $_GET["bookid"];
 
         <section class="grid grid-cols-4 divide-x py-3 z-1000">
             <div class="flex items-center justify-center">
-                <i id="to-home" class="material-symbols-rounded cursor-pointer duration-100 hover:scale-125">home</i>
+                <i id="home" class="material-symbols-rounded cursor-pointer duration-100 hover:scale-125">home</i>
             </div>
             <div class="flex items-center justify-center">
                 <button id="prev" class="rounded-md cursor-pointer material-symbols-rounded duration-100 hover:scale-125">chevron_left</button>

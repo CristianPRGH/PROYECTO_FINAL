@@ -3,7 +3,8 @@ export function BookListItem(book)
   console.table(book);
   const id = book.id;
   const cover = book.bk_cover;
-  const title = book.bk_title.length > 20 ? `${book.bk_title.substring(0,20)}...` : book.bk_title;
+//   const title = book.bk_title.length > 20 ? `${book.bk_title.substring(0,20)}...` : book.bk_title;
+  const title = book.bk_title;
 
   const authorname = book.username;
   // const coauthors = book.properties.coauthors.length;
@@ -12,12 +13,12 @@ export function BookListItem(book)
 
   
     return `
-    <div class="swiper-slide rounded-2xl w-fit">
-        <div class="w-full h-full flex flex-col justify-center items-center overflow-hidden hover:scale-110 duration-200">
-            <img src="images/books_covers/${cover}" class="w-[150px] h-[250px]" alt="...">
-            <p>${title}</p>
-        </div>
-    </div>`;
+            <div class="swiper-slide w-fit">
+                <div class="w-full flex flex-col justify-center items-center overflow-hidden">
+                    <img src="images/books_covers/${cover}" class="rounded-md w-[85px] h-[132px] sm:w-[128px] sm:h-[200px]" alt="${title} cover">
+                    <p class="mt-1 w-full truncate text-xs text-center">${title}</p>
+                </div>
+            </div>`;
      
 
 //   return `<article class="grid grid-cols-3 gap-3 py-1 border-t-2 border-t-orange-400">
