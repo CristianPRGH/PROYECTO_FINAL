@@ -1,9 +1,7 @@
 import * as tweens from "../components/tweenControls.js";
-import { InitializeBooksList } from "./booksManager.js";
 
-document.addEventListener('DOMContentLoaded', async () => {
+document.addEventListener('DOMContentLoaded', () => {
     InitializeEvents();
-    InitializeBooksList();
     SetupToggleMenus();
 });
 

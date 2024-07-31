@@ -1,6 +1,6 @@
 CREATE DATABASE  IF NOT EXISTS `cuentacuentos` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci */;
 USE `cuentacuentos`;
--- MySQL dump 10.13  Distrib 8.0.36, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.38, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: cuentacuentos
 -- ------------------------------------------------------
@@ -61,7 +61,7 @@ CREATE TABLE `book_pages` (
   KEY `fk_bookid_idx` (`pg_bookid`),
   CONSTRAINT `fk_authorid` FOREIGN KEY (`pg_authorid`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_bookid` FOREIGN KEY (`pg_bookid`) REFERENCES `books` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -107,7 +107,7 @@ DROP TABLE IF EXISTS `books`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `books` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `bk_title` varchar(45) NOT NULL,
+  `bk_title` varchar(80) NOT NULL,
   `bk_sinopsis` longtext DEFAULT NULL,
   `bk_pages` smallint(6) NOT NULL,
   `bk_categoryid` int(11) DEFAULT NULL,
@@ -121,7 +121,7 @@ CREATE TABLE `books` (
   KEY `fk_categories_idx` (`bk_categoryid`),
   CONSTRAINT `fk_books_users1` FOREIGN KEY (`bk_authorid`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_categories` FOREIGN KEY (`bk_categoryid`) REFERENCES `book_categories` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -130,6 +130,7 @@ CREATE TABLE `books` (
 
 LOCK TABLES `books` WRITE;
 /*!40000 ALTER TABLE `books` DISABLE KEYS */;
+INSERT INTO `books` VALUES (5,'720x1080_1aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum nec leo eget nunc dapibus dignissim nec sit amet odio. Morbi erat nibh, sagittis vel bibendum in, vulputate vitae odio. In semper dolor ac enim aliquet, et elementum risus vehicula. Suspendisse lacus dolor, varius in mauris dictum, dapibus elementum mauris. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nam sodales metus id magna eleifend auctor. Suspendisse quis lacinia nisi. Sed hendrerit purus eu nunc facilisis, at condimentum felis condimentum. Nulla sodales neque nec fermentum elementum. Nam tempor eu mi non rutrum. Vestibulum vestibulum et odio vel ullamcorper. Aenean hendrerit in ligula a venenatis. Suspendisse id nibh dapibus, viverra ex eu, ullamcorper enim. ',10,NULL,'','8bb201460ac2da3b7ed146b0f1816c3e91f7e2f303a6c223e21d6875720f45db.jpeg',11,'2024-07-30 16:46:04'),(6,'836x1254_1','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum nec leo eget nunc dapibus dignissim nec sit amet odio. Morbi erat nibh, sagittis vel bibendum in, vulputate vitae odio. In semper dolor ac enim aliquet, et elementum risus vehicula. Suspendisse lacus dolor, varius in mauris dictum, dapibus elementum mauris. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nam sodales metus id magna eleifend auctor. Suspendisse quis lacinia nisi. Sed hendrerit purus eu nunc facilisis, at condimentum felis condimentum. Nulla sodales neque nec fermentum elementum. Nam tempor eu mi non rutrum. Vestibulum vestibulum et odio vel ullamcorper. Aenean hendrerit in ligula a venenatis. Suspendisse id nibh dapibus, viverra ex eu, ullamcorper enim. ',10,NULL,'','b8eb07fd6dcb000af0642e4d9ab2f6c0c6e807364f3e40d7d5c7a894c31156e5.jpeg',11,'2024-07-30 16:46:33'),(7,'876x1168_1','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum nec leo eget nunc dapibus dignissim nec sit amet odio. Morbi erat nibh, sagittis vel bibendum in, vulputate vitae odio. In semper dolor ac enim aliquet, et elementum risus vehicula. Suspendisse lacus dolor, varius in mauris dictum, dapibus elementum mauris. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nam sodales metus id magna eleifend auctor. Suspendisse quis lacinia nisi. Sed hendrerit purus eu nunc facilisis, at condimentum felis condimentum. Nulla sodales neque nec fermentum elementum. Nam tempor eu mi non rutrum. Vestibulum vestibulum et odio vel ullamcorper. Aenean hendrerit in ligula a venenatis. Suspendisse id nibh dapibus, viverra ex eu, ullamcorper enim. ',10,NULL,'','7cbb80eb9e61d7a7906c2e0b82f0d33296666009f40ab983a5def76c5fb2e494.jpeg',11,'2024-07-30 16:46:51'),(8,'512x800_1','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum nec leo eget nunc dapibus dignissim nec sit amet odio. Morbi erat nibh, sagittis vel bibendum in, vulputate vitae odio. In semper dolor ac enim aliquet, et elementum risus vehicula. Suspendisse lacus dolor, varius in mauris dictum, dapibus elementum mauris. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nam sodales metus id magna eleifend auctor. Suspendisse quis lacinia nisi. Sed hendrerit purus eu nunc facilisis, at condimentum felis condimentum. Nulla sodales neque nec fermentum elementum. Nam tempor eu mi non rutrum. Vestibulum vestibulum et odio vel ullamcorper. Aenean hendrerit in ligula a venenatis. Suspendisse id nibh dapibus, viverra ex eu, ullamcorper enim. ',10,NULL,'','a7c85fedc82eabc710810f04b98367e0cb5f78c80414af9ed0a886fd8d391c6c.jpg',11,'2024-07-30 17:01:47'),(9,'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaba','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum nec leo eget nunc dapibus dignissim nec sit amet odio. Morbi erat nibh, sagittis vel bibendum in, vulputate vitae odio. In semper dolor ac enim aliquet, et elementum risus vehicula. Suspendisse lacus dolor, varius in mauris dictum, dapibus elementum mauris. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nam sodales metus id magna eleifend auctor. Suspendisse quis lacinia nisi. Sed hendrerit purus eu nunc facilisis, at condimentum felis condimentum. Nulla sodales neque nec fermentum elementum. Nam tempor eu mi non rutrum. Vestibulum vestibulum et odio vel ullamcorper. Aenean hendrerit in ligula a venenatis. Suspendisse id nibh dapibus, viverra ex eu, ullamcorper enim. ',10,NULL,'','4cc5172e15985ab8388a3fe7c1fccaee7e605e107cefb47d370ebd5913f04645.jpeg',11,'2024-07-30 20:32:18');
 /*!40000 ALTER TABLE `books` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -224,4 +225,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-07-26 13:58:18
+-- Dump completed on 2024-07-31 21:00:58

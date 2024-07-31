@@ -18,8 +18,18 @@ class Book extends Basemodel{
     protected function SelectBooks()
     {
         $query = 
-        "SELECT books.id, books.bk_title, books.bk_tags, books.bk_cover, users.username FROM $this->table AS books
+        "SELECT books.id, books.bk_title, books.bk_tags, books.bk_cover, users.username, users.image as userimg FROM $this->table AS books
         JOIN users ON users.id = books.bk_authorid";
         return parent::SelectAll($query);
     }
+
+    protected function SelectBookById($bookid)
+    {
+        $query =
+            "SELECT books.*, users.username, users.image as userimg FROM $this->table AS books
+            JOIN users ON users.id = books.bk_authorid
+            WHERE books.id = ?";
+        return parent::SelectAll($query, [$bookid]);
+    }
+
 }

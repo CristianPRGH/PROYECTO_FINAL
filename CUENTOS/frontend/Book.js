@@ -17,20 +17,40 @@ export class Book{
     async SearchAllBooks()
     {
         try {
-            const res = await fetch("backend/includes/book.getbookslist.php") //("books.json");
-            if (res.ok)
-            {
-                this.booksList = await res.json();
-            }else {
-                console.error('Error fetching books:', res.statusText);
+            const response = await fetch("backend/includes/book.getbookslist.php"); //("books.json");
+            if (response.ok) {
+              this.booksList = await response.json();
+            } else {
+              console.error("Error fetching books:", response.statusText);
             }
         } catch (error) {
             console.error('Fetch error:', error);
         }
     }
 
+
+    async SearchBookById(id)
+    {
+        const formdata = new FormData();
+        formdata.append("bookid", id);
+        try {
+          const response = await fetch("../backend/includes/book.getbookbyid.php",{
+            method:"post",
+            body:formdata
+          });
+
+          if (response.ok) {
+            return await response.json();
+          } else {
+            console.error("Error fetching books:", response.statusText);
+          }
+        } catch (error) {
+          console.error("Fetch error:", error);
+        }
+    }
+
     GetBooks()
     {
-        return this.booksList;
+        return this.booksList.data;
     }
 }
