@@ -14,7 +14,7 @@ export function BookListItem(book)
   
     return `
             <div class="swiper-slide w-fit">
-                <div class="w-full flex flex-col justify-center items-center overflow-hidden">
+                <div class="w-full flex flex-col justify-center items-center overflow-hidden cursor-pointer hover:shadow-lg">
                     <img src="images/books_covers/${cover}" class="rounded-md w-[85px] h-[132px] sm:w-[128px] sm:h-[200px]" alt="${title} cover">
                     <p class="mt-1 w-full truncate text-xs text-center">${title}</p>
                 </div>
