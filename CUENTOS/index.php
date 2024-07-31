@@ -20,6 +20,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
     <script src="frontend/main.js" type="module"></script>
+    <script src="frontend/booksManager.js" type="module"></script>
     <!-- <script src="frontend/booksManager.js" type="module"></script> -->
 </head>
 
@@ -46,31 +47,8 @@
                         <i class="material-symbols-rounded text-4xl text-[#333333]">arrow_circle_right</i>
                     </button>
                 </div>
-            </div> 
+            </div>
         </article>
-
-        <!-- <section id="books-carousel" class="relative w-full bg-slate-500" data-carousel="static">
-                <div id="books-items" class="relative h-56 overflow-hidden rounded-lg md:h-96"></div>
-
-                <button type="button" class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
-                    <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-                        <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4" />
-                        </svg>
-                        <span class="sr-only">Previous</span>
-                    </span>
-                </button>
-                <button type="button" class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
-                    <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-                        <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4" />
-                        </svg>
-                        <span class="sr-only">Next</span>
-                    </span>
-                </button>
-            </section> -->
-
-        <section id="book-details" class="w-full h-full flex flex-col fixed bg-[#F7F3E9] top-0 -right-[100%] p-8 opacity-0 z-10 overflow-y-auto"></section>
     </main>
 
     <aside id="menu-bookfilters" class="flex flex-col justify-between bg-[#A8E6CF] fixed bottom-0 w-full h-full p-8 z-10 -left-full opacity-0">
@@ -145,6 +123,28 @@
             <i id="openAccountMenu" class="material-symbols-rounded cursor-pointer text-[#333333] text-3xl duration-100 hover:scale-125">account_circle</i>
         </div>
     </footer>
+
+    <dialog id="book-dialog" class="scale-0 m-auto w-3/4 h-fit p-4 rounded-md bg-white/20 backdrop:bg-[#333]/30 backdrop:backdrop-blur-md md:w-2/4 xl:w-1/4 duration-200">
+        <span id="close-bookDialog" class="material-symbols-rounded cursor-pointer">close</span>
+        <p id="det-bookId" class="hidden"></p>
+        <section class="h-full grid grid-cols-2 gap-0 grid-rows-1">
+            <div class="flex justify-center items-center">
+                <img id="det-bookCover" src="images/books_covers/cover.jpg" alt="" class="h-[200px] w-[128px] rounded-md">
+            </div>
+            <div class="h-full w-full flex flex-col justify-start">
+                <p id="det-bookTitle" class="font-bold truncate">Titulo prueba</p>
+                <div class="flex gap-1 items-center">
+                    <img id="det-bookAuthorImg" src="images/users_avatars/user-default.png" alt="" class="h-[32px] w-[32px]">
+                    <p id="det-bookAuthor">Titulo prueba</p>
+                </div>
+                <div class="grow"></div>
+                <button id="det-bookMoreDetails" data-bookid="-1" class="w-full flex justify-self-end justify-between bg-[#333] text-white outline-none p-1 rounded-md hover:scale-105 duration-200">
+                    Más detalles
+                    <i class="material-symbols-rounded">info</i>
+                </button>
+            </div>
+        </section>
+    </dialog>
 </body>
 
 </html>
