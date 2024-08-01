@@ -21,23 +21,20 @@ $bookid = $_GET["bookid"];
     <title>Document</title>
 </head>
 
-<body class="bg-[#F7F3E9]">
+<body>
     <section id="book-detail" class="mx-auto w-full h-full flex flex-col p-8 pb-16 overflow-y-auto sm:w-2/3  duration-200"></section>
 
     <section id="menu" class="fixed bottom-4 left-1/2 -translate-x-1/2 h-fit flex flex-col  shadow-md shadow-black/40 min-w-96 bg-white/90 backdrop-blur-md rounded-xl opacity-100">
         <section class="grid grid-cols-3 divide-x py-3 z-1000">
             <div class="flex items-center justify-center">
-                <i id="home" class="material-symbols-rounded cursor-pointer duration-100 hover:scale-125">home</i>
+                <button id="home" class="material-symbols-rounded cursor-pointer duration-100 hover:scale-125">home</button>
             </div>
             <div class="flex items-center justify-center">
-                <button id="next" class="cursor-pointer material-symbols-rounded duration-100 hover:scale-125">menu_book</button>
+                <button id="read" class="cursor-pointer material-symbols-rounded duration-100 hover:scale-125">menu_book</button>
             </div>
             <div class="flex items-center justify-center">
-                <button id="next" class="cursor-pointer material-symbols-rounded duration-100 hover:scale-125">history_edu</button>
+                <button id="modify" class="cursor-pointer material-symbols-rounded duration-100 hover:scale-125">history_edu</button>
             </div>
-            <!-- <div class="flex items-center justify-center">
-                <button id="confirm" class="cursor-pointer material-symbols-rounded duration-100 hover:scale-125">check_circle</button>
-            </div> -->
         </section>
     </section>
 </body>

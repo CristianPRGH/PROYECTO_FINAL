@@ -31,5 +31,4 @@ class Book extends Basemodel{
             WHERE books.id = ?";
         return parent::SelectAll($query, [$bookid]);
     }
-
 }

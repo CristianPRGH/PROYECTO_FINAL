@@ -8,6 +8,11 @@
     padding: 0;
     box-sizing: border-box;
   }
+
+  body{
+    @apply bg-[#F7F3E9];
+  }
+
   .form-icon {
     @apply absolute top-4 left-2 text-green-900 text-xl;
   }

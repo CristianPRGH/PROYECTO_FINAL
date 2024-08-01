@@ -156,6 +156,7 @@ async function CreateBookDialog()
     }
 }
 
+
 function WriteBookDialog(lastid)
 {
     const writeBookDialog = document.getElementById("confirm-write-book");
@@ -163,7 +164,7 @@ function WriteBookDialog(lastid)
 
     document.getElementById("write-yes").addEventListener('click',()=>{
         writeBookDialog.close();
-        window.location = `write_pages.php?bookid=${lastid}`;
+        window.location = `pages_manager.php?bookid=${lastid}&mode=ins`;
     })
     document.getElementById("write-no").addEventListener('click', ()=>{
         window.location = '../index.php';

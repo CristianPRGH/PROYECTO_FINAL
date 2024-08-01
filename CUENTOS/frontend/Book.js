@@ -2,15 +2,15 @@ export class Book{
 
     booksList = null;
 
-    constructor(coverimg = "", covercolor = "", author = "", pages = "", tags = "", sinopsis = "")
-    {
-        this.coverimg = coverimg;
-        this.covercolor = covercolor;
-        this.author = author;
-        this.pages = pages;
-        this.tags = tags;
-        this.sinopsis = sinopsis;
-    }
+    // constructor(coverimg = "", covercolor = "", author = "", pages = "", tags = "", sinopsis = "")
+    // {
+    //     this.coverimg = coverimg;
+    //     this.covercolor = covercolor;
+    //     this.author = author;
+    //     this.pages = pages;
+    //     this.tags = tags;
+    //     this.sinopsis = sinopsis;
+    // }
 
     // FUNCIONES
     // OBTIENE LA LISTA DE LIBROS
@@ -47,6 +47,27 @@ export class Book{
         } catch (error) {
           console.error("Fetch error:", error);
         }
+    }
+
+    async SearchBookContent(id)
+    {
+      const formdata = new FormData();
+      formdata.append("bookid", id);
+      try {
+        const response = await fetch("../backend/includes/book.getbookcontent.php",{
+            method: "post",
+            body: formdata,
+          }
+        );
+
+        if (response.ok) {
+          return await response.json();
+        } else {
+          console.error("Error fetching books:", response.statusText);
+        }
+      } catch (error) {
+        console.error("Fetch error:", error);
+      }
     }
 
     GetBooks()

@@ -3,7 +3,7 @@
 class PageControl extends Page{
     private $bookid, $pageid, $userid, $pageContent;
 
-    public function __construct($bookid, $pageid, $pageContent, $userid)
+    public function __construct($bookid = null, $pageid = null, $pageContent = null, $userid = null)
     {
         $this->bookid = $bookid;
         $this->pageid = $pageid;
@@ -24,5 +24,10 @@ class PageControl extends Page{
     public function InsertNewPage()
     {
         return parent::InsertPage($this->pageid,$this->bookid,$this->userid,$this->pageContent);
+    }
+
+    public function GetBookContent()
+    {
+        return parent::SelectBookContent($this->bookid);
     }
 }

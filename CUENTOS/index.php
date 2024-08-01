@@ -64,7 +64,7 @@
                 <input type="text" class="w-full p-1 pl-10 rounded-md rounded-b-none outline-none border-b-2 border-b-orange-500 placeholder:italic placeholder:text-sm" placeholder="Tags (separados por espacios)">
                 <i class="material-symbols-rounded form-icon top-1">sell</i>
             </div>
-            <select id="" class="rounded-t-none rounded-b-md w-full h-5/6 outline-none" multiple>
+            <select id="" class=" w-full h-5/6 outline-none rounded-md" multiple>
                 <option class="form-select-option" value="1">Fantasía</option>
                 <option class="form-select-option" value="2">Acción</option>
                 <option class="form-select-option" value="3">Aventura</option>
