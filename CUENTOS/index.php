@@ -28,7 +28,7 @@
     <main id="index-main" class="flex flex-col p-4 h-full md:w-3/4 md:self-center xl:w-2/3 duration-200">
         <article class="relative w-full md:self-center">
             <input type="text" id="input-search" class="w-full p-1 pl-10 rounded-md outline-none border-2 border-b-4 border-orange-500 placeholder:italic placeholder:text-sm" placeholder="Título, autor">
-            <i class="material-symbols-rounded form-icon top-1">search</i>
+            <i class="material-symbols-rounded form-icon">search</i>
         </article>
 
         <!-- <section class="flex flex-col pb-2 mt-2 h-full overflow-y-auto overflow-x-hidden scroll">
