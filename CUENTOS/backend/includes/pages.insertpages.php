@@ -9,10 +9,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     $userid = $_SESSION["userid"];
     $results = array();
     
-    foreach ($pages as $index=>$page)
+    foreach ($pages as $index => $page)
     {
+        print_r([$index, $page]);
         $newpage = new PageControl($bookid, $index, json_encode($page) ,$userid);
-        $result = $newpage->InsertNewPage();
+        $result  = $newpage->InsertNewPage();
         array_push($results, $result);
     }
 

@@ -72,18 +72,16 @@ function InitializeQuill(options) {
 }
 
 // GUARDA EL CONTENIDO DE LA PÁGINA
-function SavePage(userid, pageNumber, content = null)
+function SavePage(userid, pageNumber, content)
 {
-	console.log(`Guarda contenido de la pagina ${pageNumber}`);
+	// console.log(`Guarda contenido de la pagina ${pageNumber}`);
 	// GUARDA EL CONTENIDO Y EL USUARIO
-	// const newContent = {content:content, userid:userid};
 	pagesContent[pageNumber] = { content: content, userid: userid };
 }
 
 // CARGA EL CONTENIDO EN EL EDITOR
 function LoadPage(pageNumber)
 {
-	console.log(`Carga contenido de la pagina ${pageNumber}`);
 	const pageData = pagesContent[pageNumber];
 
 	if (pageData && pageData.content != null) {
@@ -123,8 +121,6 @@ function PageControl(event)
 		currentPage--;
 	}
 
-	
-	
 	LoadPage(currentPage);
 	SetPages();
 }
@@ -136,7 +132,15 @@ function SetPages() {
 }
 
 function ConfirmPages() {
-  SavePage(userid,currentPage);
+  const content = GetQuillContent(); 		// OBTIENE EL CONTENIDO DE LA PÁGINA ACTUAL
+  const pageIsEmpty = CheckIsEmpty(content); 	// VERIFICA SI ESTÁ VACÍA O NO
+
+  if (!pageIsEmpty) {
+    if (mode == "ins" || mode == "upd") {
+      SavePage(userid, currentPage, content);
+      quill.focus();
+    }
+  }
 
   const modal = document.getElementById("confirm-pages");
   modal.showModal();
@@ -187,7 +191,19 @@ async function InsertPages() {
 	// TODO Revisar por que no está guardando las páginas
   try {
     const formdata = new FormData();
-    Array.from(pagesContent).map(page => formdata.append("content", JSON.stringify(page.content)));
+    console.log(pagesContent);
+
+    for (const index in pagesContent)
+    {
+      const content = pagesContent[index].content;
+      formdata.append("content[]", JSON.stringify(content))
+    }
+
+    // pagesContent.map((page) => {
+    //   console.log("HOLA");
+    //   console.log(page);
+    //   formdata.append("content[]", JSON.stringify(page.content))
+    // });
     formdata.append("bookid", bookid);
 
     const response = await fetch("../backend/includes/pages.insertpages.php", {
