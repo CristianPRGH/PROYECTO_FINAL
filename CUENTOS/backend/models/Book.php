@@ -6,7 +6,7 @@ class Book extends Basemodel{
     protected function InsertBook($values)
     {
         $query = "INSERT INTO $this->table (bk_title, bk_sinopsis, bk_pages, bk_categoryid, bk_tags, bk_cover, bk_authorid) VALUES (?,?,?,?,?,?,?)";
-        return parent::InsUpdDel($query, $values);
+        return parent::InsertRows($query, $values);
     }
 
     protected function SelectBookPages($id)
@@ -29,6 +29,6 @@ class Book extends Basemodel{
             "SELECT books.*, users.username, users.image as userimg FROM $this->table AS books
             JOIN users ON users.id = books.bk_authorid
             WHERE books.id = ?";
-        return parent::SelectAll($query, [$bookid]);
+        return parent::SelectOne($query, [$bookid]);
     }
 }

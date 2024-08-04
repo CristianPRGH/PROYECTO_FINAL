@@ -13,7 +13,7 @@ class User extends Basemodel{
     {
         $query = "INSERT INTO $this->table (username, email, password, image) VALUES (?,?,?,?)";
         $values[2] = password_hash($values[2], PASSWORD_DEFAULT);
-        return parent::InsUpdDel($query, $values);
+        return parent::InsertRows($query, $values);
     }
 
     protected function CheckLogin($username, $password)

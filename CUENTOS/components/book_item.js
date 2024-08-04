@@ -11,14 +11,18 @@ export function BookListItem(book)
   // const pages = book.bk_pages;
   const tags = book.bk_tags;
 
-  
-    return `
-            <div class="swiper-slide w-fit">
-                <div id="book-${id}" class="open-bookDialog w-full flex flex-col justify-center items-center p-2 overflow-hidden duration-200 hover:shadow-lg cursor-pointer">
-                    <img src="images/books_covers/${cover}" class="rounded-md w-[85px] h-[132px] sm:w-[128px] sm:h-[200px]" alt="${title} cover">
-                    <p class="mt-1 w-full truncate text-xs text-center">${title}</p>
-                </div>
-            </div>`;
+  // TODO arreglar largo del titulo: SUBSTRING?
+    // return `
+    //         <div class="swiper-slide w-fit">
+    //             <div id="book-${id}" class="open-bookDialog w-full flex flex-col justify-center items-center p-2 overflow-hidden duration-200 hover:shadow-lg cursor-pointer">
+    //                 <img src="images/books_covers/${cover}" class="rounded-md w-[85px] h-[132px] sm:w-[128px] sm:h-[200px]" alt="${title} cover">
+    //                 <p class="mt-1 w-full truncate text-xs text-center">${title}</p>
+    //             </div>
+    //         </div>`;
+    return `<swiper-slide id="book-${id}" class="open-bookDialog bg-transparent  w-40 h-full flex flex-col items-center duration-200 hover:shadow-lg">
+                <img src="images/books_covers/${cover}" class="rounded-md w-[85px] h-[132px] sm:w-[128px] sm:h-[200px]" alt="${title} cover">
+                <p class="mt-1 truncate text-xs text-center">${title}</p>
+            </swiper-slide>`;
 }
 
 // export function BookDetail(cover, title, authorimg, authorname, pages, tags, coauthors, sinopsis)

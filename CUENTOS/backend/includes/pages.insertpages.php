@@ -7,16 +7,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     $pagesData  = $_POST["pages"];
     $results    = array();
 
-    
     foreach ($pagesData as $page)
     {
-        // echo $page;
-        // $page = $pagesData[$index];
-
         $page = json_decode($page, true);
-
-
-        // print_r($page);
         $newpage = new PageControl($page["bookid"], $page["pageid"], json_encode($page["content"]) , $page["userid"]);
         $result  = $newpage->InsertNewPage();
         array_push($results, $result);

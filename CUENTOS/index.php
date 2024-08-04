@@ -11,11 +11,14 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,300,0,0" />
     <link rel="stylesheet" href="./styles/output.css" />
 
-    <link href="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.js"></script>
+    <!-- <link href="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.js"></script> -->
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script> -->
+
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"></script>
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
@@ -35,9 +38,25 @@
             <section id="books-list"></section>
         </section> -->
 
-        <article class="w-full mt-2">
+        <!-- <article class="w-full mt-2">
             <p class="text-lg border-b-2 border-b-[#333333] my-2">Últimos añadidos</p>
-            <div class="swiper multiple-slide-carousel swiper-container flex flex-col">
+            <div class="flex items-center py-2">
+                <button class="carousel-button-prev w-12 h-12">
+                    <i class="material-symbols-rounded text-4xl text-[#333333]">arrow_circle_left</i>
+                </button>
+
+                <div class="swiper multiple-slide-carousel swiper-container flex">
+                    <div id="books-items" class="swiper-wrapper"></div>
+                </div>
+
+                <button class="carousel-button-next w-12 h-12">
+                    <i class="material-symbols-rounded text-4xl text-[#333333]">arrow_circle_right</i>
+                </button>
+            </div> -->
+
+
+
+        <!-- <div class="swiper multiple-slide-carousel swiper-container flex flex-col">
                 <div id="books-items" class="swiper-wrapper"></div>
                 <div class="flex justify-evenly items-center m-auto w-full mt-4">
                     <button class="carousel-button-prev w-12 h-12">
@@ -47,8 +66,42 @@
                         <i class="material-symbols-rounded text-4xl text-[#333333]">arrow_circle_right</i>
                     </button>
                 </div>
-            </div>
+            </div> -->
         </article>
+
+
+
+
+        <swiper-container id="books-items" class="mySwiper w-full py-14" pagination="true" effect="coverflow" grab-cursor="true" centered-slides="true" slides-per-view="auto" coverflow-effect-rotate="50" coverflow-effect-stretch="0" coverflow-effect-depth="100" coverflow-effect-modifier="1" coverflow-effect-slide-shadows="false">
+            <!-- <swiper-slide class="bg-center bg-cover w-40 h-40">
+                <img src=" https://swiperjs.com/demos/images/nature-1.jpg" />
+            </swiper-slide>
+            <swiper-slide class="bg-center bg-cover w-40 h-40">
+                <img src="https://swiperjs.com/demos/images/nature-2.jpg" class="block w-full" />
+            </swiper-slide>
+            <swiper-slide class="bg-center bg-cover w-40 h-40">
+                <img src="https://swiperjs.com/demos/images/nature-3.jpg" class="block w-full" />
+            </swiper-slide>
+            <swiper-slide class="bg-center bg-cover w-40 h-40">
+                <img src="https://swiperjs.com/demos/images/nature-4.jpg" class="block w-full" />
+            </swiper-slide>
+            <swiper-slide class="bg-center bg-cover w-40 h-40">
+                <img src="https://swiperjs.com/demos/images/nature-5.jpg" class="block w-full" />
+            </swiper-slide>
+            <swiper-slide class="bg-center bg-cover w-40 h-40">
+                <img src="https://swiperjs.com/demos/images/nature-6.jpg" class="block w-full" />
+            </swiper-slide>
+            <swiper-slide class="bg-center bg-cover w-40 h-40">
+                <img src="https://swiperjs.com/demos/images/nature-7.jpg" class="block w-full" />
+            </swiper-slide>
+            <swiper-slide class="bg-center bg-cover w-40 h-40">
+                <img src="https://swiperjs.com/demos/images/nature-8.jpg" class="block w-full" />
+            </swiper-slide>
+            <swiper-slide class="bg-center bg-cover w-40 h-40">
+                <img src="https://swiperjs.com/demos/images/nature-9.jpg" class="block w-full" />
+            </swiper-slide> -->
+        </swiper-container>
+
     </main>
 
     <aside id="menu-bookfilters" class="flex flex-col justify-between bg-[#A8E6CF] fixed bottom-0 w-full h-full p-8 z-10 -left-full opacity-0">
@@ -112,7 +165,7 @@
         </section>
     </aside>
 
-    <footer id="index-footer" class="absolute grid grid-cols-3 justify-center bottom-3 z-1000 rounded-xl bg-white/90 backdrop-blur-md py-3 w-[90%] shadow-md shadow-black/40 left-5 divide-x">
+    <footer id="index-footer" class="fixed grid grid-cols-3 justify-center bottom-4 z-1000 rounded-xl bg-white/90 backdrop-blur-md py-3 w-[90%] shadow-md shadow-black/40 left-1/2 -translate-x-1/2 divide-x">
         <div class="flex items-center justify-center">
             <i id="openBookFilters" class="material-symbols-rounded cursor-pointer text-[#333333] text-3xl duration-100 hover:scale-125 ">menu</i>
         </div>

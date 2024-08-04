@@ -17,7 +17,9 @@ class Basemodel extends Database{
         if ($error == 0) 
             $error = $stmt->rowCount() > 0 ? 0 : 2;  // ***
         $data = $stmt->fetchAll(PDO::FETCH_ASSOC);   // ****
-        return $this->GetResult($error, $data);      // *****
+        $result = $this->GetResult($error, $data);      // *****
+        $result["selectedRows"] = $stmt->rowCount();
+        return $result;
     }
 
     protected function SelectOne($query, $params)
@@ -27,34 +29,69 @@ class Basemodel extends Database{
         if ($error == 0)
             $error = $stmt->rowCount() > 0 ? 0 : 2;  // ***
         $data = $stmt->fetch(PDO::FETCH_ASSOC);      // ****
-        return $this->GetResult($error, $data);      // *****
+        $result = $this->GetResult($error, $data);      // *****
+        // $result["selectedRows"] = $stmt->rowCount();
+        return $result;
     }
 
-    protected function InsUpdDel($query, $params)
+    // protected function InsUpdDel($query, $params)
+    // {
+    //     // print_r($params);
+    //     $conn  = $this->connect();
+    //     $stmt  = $conn->prepare($query);             // *
+    //     $error = !$stmt->execute($params) ? 1 : 0;   // **
+
+    //     $last_id = $this->GetLastId($conn, $query);
+
+    //     return $this->GetResult($error,null,$last_id); // *****
+    // }
+
+    protected function InsertRows($query, $params)
     {
         // print_r($params);
         $conn  = $this->connect();
         $stmt  = $conn->prepare($query);             // *
         $error = !$stmt->execute($params) ? 1 : 0;   // **
 
-        $last_id = $this->GetLastId($conn, $query);
+        $result = $this->GetResult($error);
+        $result["lastid"] = $conn->lastInsertId();
+        return $result; // *****
+    }
 
-        return $this->GetResult($error,null,$last_id); // *****
+    protected function UpdateRows($query, $params)
+    {
+        $stmt  = $this->connect()->prepare($query);  // *
+        $error = !$stmt->execute($params) ? 1 : 0;   // **
+
+        $affectedRows = $stmt->rowCount();
+        $result = $this->GetResult($error);
+        $result["affectedRows"] = $affectedRows;
+        return $result; // *****
+    }
+
+    protected function DeleteRows($query, $params)
+    {
+        $stmt  = $this->connect()->prepare($query);  // *
+        $error = !$stmt->execute($params) ? 1 : 0;   // **
+
+        $affectedRows = $stmt->rowCount();
+        $result = $this->GetResult($error);
+        $result["affectedRows"] = $affectedRows;
+        return $result; // *****
     }
 
     protected function GetResult($error, $data = null, $lastid = null)
     {
         return array(
             "error"=>$error,
-            "data"=>$data,
-            "lastid"=>$lastid
+            "data"=>$data
         );
     }
 
-    private function GetLastId($conn, $query)
-    {
-        $split = explode(" ", $query);
-        $first = array_shift($split);
-        return strtolower($first) == "insert" ? $conn->lastInsertId() : null;
-    }
+    // private function GetLastId($conn, $query)
+    // {
+    //     $split = explode(" ", $query);
+    //     $first = array_shift($split);
+    //     return strtolower($first) == "insert" ? $conn->lastInsertId() : null;
+    // }
 }

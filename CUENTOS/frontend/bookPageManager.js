@@ -81,25 +81,26 @@ function SavePage(pageNumber, userid, content = null)
 	const index = pageNumber -1;
 	// console.log(`Guarda contenido de la pagina ${pageNumber}`);
 	// GUARDA EL CONTENIDO Y EL USUARIO
-	pagesContent[index] = {pageid:pageNumber, bookid:bookid, content:content, userid:userid };
+	if (!pagesContent[index] || pagesContent[index].userid == userid)
+	{
+		pagesContent[index] = { pageid: parseInt(pageNumber), bookid: parseInt(bookid), userid: parseInt(userid), content: content };
+	}
 }
 
 // CARGA EL CONTENIDO EN EL EDITOR
 function LoadPage(pageNumber)
 {
+	if (mode == "read") quill.enable(false); else quill.enable();
+	
 	const pages = Object.values(pagesContent);	// CONVIERTE EL OBJETO JSON EN UN ARRAY
-	const pageData =  pages.filter(data => data.pageid == pageNumber);
+	const pageData =  pages.filter(data => data.pageid == pageNumber)[0];
 
 	if (pageData && pageData.content != null) {
-		console.log(pageData.content);
 		quill.setContents(pageData.content);
 
-		if (pageData.userid == userid)
+		if (pageData.userid != userid)
 		{
-			InitializeQuill(quillOptionsModify);
-		}
-		else{
-			InitializeQuill(quillOptionsReadOnly);
+			quill.enable(false);
 		}
 
 	}else{
@@ -156,7 +157,7 @@ function ConfirmPages()
 	document.getElementById("write-yes").addEventListener("click", async () => {
 		await InsertPages();
 
-		// window.location = "../index.php";
+		window.location = `../view/book_detail.php?bookid=${bookid}`;
 	});
 
   	document.getElementById("write-no").addEventListener("click", () => {
@@ -200,8 +201,6 @@ async function GetBookPages()
 
 async function InsertPages() 
 {
-  // console.log(pagesContent);
-	// // TODO Revisar por que no está guardando las páginas
 	try {
 		const formdata = new FormData();
 		for (const index in pagesContent)
@@ -236,5 +235,6 @@ async function GetBookContent()
 		SavePage(pageid, authorid, parsedContent);
 	});
 
-	if (mode == "read") numPages = content.data.length;
+	// console.log();
+	if (mode == "read") numPages = bookPages.data.length;
 }

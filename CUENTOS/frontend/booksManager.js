@@ -33,29 +33,29 @@ async function SetupMainBooksList()
     ).join('');
     
     // CONFIGURA EL SLIDER DE LOS LIBROS
-    const swiper = new Swiper(".multiple-slide-carousel", {
-      loop: true,
-      slidesPerView: 3,
-      spaceBetween: 10,
-      navigation: {
-        nextEl: ".multiple-slide-carousel .carousel-button-next",
-        prevEl: ".multiple-slide-carousel .carousel-button-prev",
-      },
-      breakpoints: {
-        1536: {
-          slidesPerView: 6,
-          spaceBetween: 30,
-        },
-        1024: {
-          slidesPerView: 5,
-          spaceBetween: 30,
-        },
-        450: {
-          slidesPerView: 4,
-          spaceBetween: 10,
-        }
-      },
-    });
+    // const swiper = new Swiper(".multiple-slide-carousel", {
+    //   loop: true,
+    //   slidesPerView: 3,
+    //   spaceBetween: 10,
+    //   navigation: {
+    //     nextEl: ".multiple-slide-carousel .carousel-button-next",
+    //     prevEl: ".multiple-slide-carousel .carousel-button-prev",
+    //   },
+    //   breakpoints: {
+    //     1536: {
+    //       slidesPerView: 6,
+    //       spaceBetween: 30,
+    //     },
+    //     1024: {
+    //       slidesPerView: 5,
+    //       spaceBetween: 30,
+    //     },
+    //     450: {
+    //       slidesPerView: 4,
+    //       spaceBetween: 10,
+    //     }
+    //   },
+    // });
 }
 
 // SETUP DE LOS BOTONES QUE MUESTRAN EL DETALLE DE CADA LIBRO
