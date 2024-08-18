@@ -31,6 +31,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 		case "read":
 		await GetBookContent();
 		InitializeQuill(quillOptionsReadOnly);
+		await UpdateBookViews();
 		break;
 		default:
 		await GetBookPages();
@@ -237,4 +238,20 @@ async function GetBookContent()
 
 	// console.log();
 	if (mode == "read") numPages = bookPages.data.length;
+}
+
+async function UpdateBookViews()
+{
+	const formdata = new FormData();
+	formdata.append("bookid", bookid);
+console.log("bookid");
+	try {
+		await fetch("../backend/includes/book.updateviews.php",{
+			method:"post",
+			body:formdata
+		});
+		// const result = await response.json();
+	} catch (error) {
+		console.error(error);
+	}
 }

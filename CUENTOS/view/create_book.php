@@ -1,13 +1,13 @@
 <?php
 session_start();
-if (!isset($_SESSION["userid"]))
-{
+if (!isset($_SESSION["userid"])) {
     header('Location: ../index.php');
 }
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,49 +20,58 @@ if (!isset($_SESSION["userid"]))
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
     <script src="../frontend/createBookManager.js" type="module"></script>
 </head>
+
 <body class="relative h-screen flex justify-center">
 
-    <main class="w-full h-full bg-white sm:flex sm:w-full xl:w-1/2 duration-200">
+    <main class="w-full h-full bg-white sm:flex md:w-full xl:w-2/3 duration-200">
 
-        <section class="flex flex-col w-full h-full p-4"> 
-            <div class="relative w-full z-10">
-                <input type="text" id="book-title" placeholder="título" maxlength="80" class="v_required w-full border-0 placeholder:text-sm placeholder:italic rounded-md pl-4 shadow-md" data-valid="valid-title">
+        <section class="flex flex-col gap-y-2 w-full h-full p-4 z-30">
+            <div class="relative w-full ">
+                <input type="text" id="book-title" placeholder="título" maxlength="80" class="v_required w-full border-0 placeholder:text-sm placeholder:italic rounded-md pl-4 shadow-md focus:border-transparent focus:ring-0 focus:shadow-xl" data-valid="valid-title">
                 <div id="valid-title" class="validate-input" data-errormsg="error-title">
                     <i class="material-symbols-rounded form-error-icon">error</i>
-                    <p id="error-title" class="form-error-message bg-white my-1 rounded-t-lg"></p>
+                    <p id="error-title" class="form-error-message my-1 rounded-t-lg"></p>
                     <i class="material-symbols-rounded form-valid-icon">check_circle</i>
                 </div>
             </div>
 
-            <div class="flex flex-col z-10 bg-white shadow-md my-1 pt-0 rounded-md">
-                <textarea id="book-sinopsis" placeholder="Sinopsis" class="mb-4 w-full border-0 resize-none placeholder:italic placeholder:text-sm pl-4 rounded-md text-justify" rows="6" maxlength="300"></textarea>
+            <div class="flex flex-col bg-white shadow-md my-1 pt-0 rounded-md">
+                <textarea id="book-sinopsis" placeholder="Sinopsis" class="mb-4 w-full border-0 resize-none placeholder:italic placeholder:text-sm pl-4 rounded-md text-justify focus:border-transparent focus:ring-0 focus:shadow-xl" rows="6" maxlength="300"></textarea>
                 <p class="text-xs text-right mr-1"><span id="curr-letters">0</span>/300</p>
             </div>
 
-            <select id="book-categories" class="w-full shadow-md border-0 rounded-md my-2 pl-4 z-10">
+            <select id="book-categories" class="w-full shadow-md border-0 rounded-md my-2 pl-4 focus:border-transparent focus:ring-0 focus:shadow-xl">
                 <option value="-1" selected disabled>- Categoría -</option>
             </select>
 
-            <div class="z-10 bg-white shadow-md px-4 rounded-md">
+            <div class="bg-white shadow-md px-4 rounded-md">
                 <label for="book-pages" class="text-slate-400 italic text-sm">Páginas</label>
-                <input type="range" value="10" min="10" max="500" step="1" id="book-pages"  class="w-full">
+                <input type="range" value="10" min="10" max="500" step="1" id="book-pages" class="w-full">
                 <div class="w-full flex justify-between items-center">
                     <p class="text-xs">10</p>
                     <p id="curr-pages" class="text-md font-bold opacity-50">10</p>
                     <p class="text-xs">500</p>
                 </div>
             </div>
-            
-            <input type="text" list="tags-list" id="book-tags" placeholder="tags" class="w-full border-0 shadow-md my-2 placeholder:text-sm placeholder:italic rounded-md pl-4 z-10">
-            <datalist id="tags-list"></datalist>
-        </section> 
 
-        <section class="h-full w-full absolute top-0 z-0 sm:static">
+            <div class="flex flex-col items-center">
+                <div class="flex justify-center">
+                    <datalist id="tags-list"></datalist>
+                    <button id="add-tag-input" class="material-symbols-rounded cursor-pointer hover:scale-105">add_circle</button>
+                    <button id="rem-tag-input" class="material-symbols-rounded cursor-pointer hover:scale-105 hidden">remove_circle</button>
+                </div>
+                <div id="book-tags" class="flex flex-wrap gap-x-2 justify-center w-full"></div>
+                <!-- <input type="text" list="tags-list" id="book-tags" placeholder="tag" class="w-full border-0 shadow-md my-2 placeholder:text-sm placeholder:italic rounded-l-md pl-4">
+                <datalist id="tags-list"></datalist> -->
+            </div>
+        </section>
+
+        <section class="h-full w-full  top-0 z-0 ">
             <img src="" alt="" id="book-cover-img" class="w-full h-full opacity-0">
         </section>
     </main>
 
-    <section class="absolute grid grid-cols-5 divide-x bottom-3 left-1/2 -translate-x-1/2 z-1000 rounded-xl bg-white/90 backdrop-blur-md py-3 min-w-96 shadow-md shadow-black/40">
+    <section class="absolute grid grid-cols-4 divide-x py-3 bottom-4 left-1/2 -translate-x-1/2 h-fit shadow-md shadow-black/40 min-w-96 bg-white/90 backdrop-blur-md rounded-xl">
         <div class="flex items-center justify-center">
             <i id="home" class="material-symbols-rounded cursor-pointer duration-100 hover:scale-125">home</i>
         </div>
@@ -73,30 +82,27 @@ if (!isset($_SESSION["userid"]))
         <div class="flex items-center justify-center">
             <i id="remove-cover-img" class="material-symbols-rounded cursor-pointer duration-100 hover:scale-125">remove_selection</i>
         </div>
-        
-        <div class="w-full flex items-center justify-center">
-            <input type="color" id="book-cover-color" class="cursor-pointer w-5 h-5 ring-1 ring-white duration-100 hover:scale-125">
-        </div>
 
         <div class="flex items-center justify-center">
             <i id="create-book" class="material-symbols-rounded cursor-pointer duration-100 hover:scale-125">check_circle</i>
         </div>
     </section>
 
-    <dialog id="confirm-create-book" class="p-6 m-auto shadow-lg rounded-md z-20 backdrop:bg-orange-100/30 backdrop:backdrop-blur-md">
+    <dialog id="confirm-create-book" class="p-6 m-auto shadow-lg rounded-md z-50 backdrop:bg-orange-100/30 backdrop:backdrop-blur-md">
         <p class="text-center p-3">Desea crear el libro?</p>
         <article class="flex justify-evenly">
             <button id="create-yes" type="button" class="shadow-md p-1 rounded-md bg-green-600 text-orange-100 w-20">SI</button>
-            <button id="create-no"  type="button" class="shadow-md p-1 rounded-md bg-red-600 text-orange-100 w-20">NO</button>
+            <button id="create-no" type="button" class="shadow-md p-1 rounded-md bg-red-600 text-orange-100 w-20">NO</button>
         </article>
     </dialog>
 
-    <dialog id="confirm-write-book" class="p-6 m-auto shadow-lg rounded-md z-20 backdrop:bg-orange-100/30 backdrop:backdrop-blur-md">
+    <dialog id="confirm-write-book" class="p-6 m-auto shadow-lg rounded-md z-50 backdrop:bg-orange-100/30 backdrop:backdrop-blur-md">
         <p class="text-center p-3">Desea empezar a escribir el libro?</p>
         <article class="flex justify-evenly">
             <button id="write-yes" type="button" class="shadow-md p-1 rounded-md bg-green-600 text-orange-100 w-20">SI</button>
-            <button id="write-no"  type="button" class="shadow-md p-1 rounded-md bg-red-600 text-orange-100 w-20">NO</button>
+            <button id="write-no" type="button" class="shadow-md p-1 rounded-md bg-red-600 text-orange-100 w-20">NO</button>
         </article>
     </dialog>
 </body>
+
 </html>

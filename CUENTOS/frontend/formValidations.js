@@ -121,7 +121,7 @@ function ValidateEmpty(input) {
     
     const value = CleanData(input.value);
     if (value.length === 0) {
-        const msg = "Campo vacío";
+        const msg = "Este campo es obligatorio";
         SetInputValidation(input.id, msg);
         return false;
     }

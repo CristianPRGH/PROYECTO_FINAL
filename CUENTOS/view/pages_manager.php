@@ -8,8 +8,10 @@ if ((!isset($_SESSION["userid"]) && $_GET["mode"] != "read") || !isset($_GET["bo
 
 if (isset($_GET["mode"]) && isset($_GET["bookid"])) {
     $mode = $_GET["mode"];
-    $userid = $_SESSION["userid"];
     $bookid = $_GET["bookid"];
+    
+    if (isset($_SESSION["userid"]))
+        $userid = $_SESSION["userid"];
 }
 
 ?>
@@ -72,7 +74,7 @@ if (isset($_GET["mode"]) && isset($_GET["bookid"])) {
             <?php
             }
             ?>
-            <div id="editor" class="bg-[#F7F3E9] overflow-y-auto rounded-b-md shadow-md"></div>
+            <div id="editor" class="bg-white overflow-y-auto rounded-b-md shadow-md"></div>
         </section>
     </main>
 
@@ -108,13 +110,13 @@ if (isset($_GET["mode"]) && isset($_GET["bookid"])) {
             <div id="menu_read">
                 <section class="grid grid-cols-3 divide-x py-3 z-1000">
                     <div class="flex items-center justify-center">
-                        <button class="prev rounded-md cursor-pointer material-symbols-rounded duration-100 hover:scale-125" data-dir="prev">chevron_left</button>
+                        <button class="prev material-symbols-rounded cursor-pointer text-[#333333] text-3xl duration-100 hover:scale-125" data-dir="prev">chevron_left</button>
                     </div>
                     <div class="flex items-center justify-center">
-                        <button class="home material-symbols-rounded cursor-pointer duration-100 hover:scale-125">home</button>
+                        <button class="home material-symbols-rounded cursor-pointer text-[#333333] text-3xl duration-100 hover:scale-125">home</button>
                     </div>
                     <div class="flex items-center justify-center">
-                        <button class="next rounded-md cursor-pointer material-symbols-rounded duration-100 hover:scale-125" data-dir="next">chevron_right</button>
+                        <button class="next material-symbols-rounded cursor-pointer text-[#333333] text-3xl duration-100 hover:scale-125" data-dir="next">chevron_right</button>
                     </div>
                 </section>
             </div>

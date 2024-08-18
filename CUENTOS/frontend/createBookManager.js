@@ -1,11 +1,16 @@
 import * as tweens from "../components/tweenControls.js";
 import {ValidateInputs, ValidateOnServer} from "./formValidations.js";
 import {InputJson, SetInputsToFormData} from "../components/inputsManager.js";
+import {NewTagInput} from "../components/tag_input.js";
+
+const maxTagInputs = 6;
+let tagInputsArray = [];
 
 document.addEventListener("DOMContentLoaded", ()=>{
     InitializeEvents();
     SetCategories();
     SetTags();
+    AddNewTagInput();
 })
 
 function InitializeEvents()
@@ -15,10 +20,10 @@ function InitializeEvents()
     document.getElementById("book-pages").addEventListener('input', (event)=>{
         SetPagesValue(event.target.value);
     });
+    document.getElementById("add-tag-input").addEventListener('click', AddNewTagInput);
+    document.getElementById("rem-tag-input").addEventListener('click', RemoveTagInput);
 
     document.getElementById("home").addEventListener("click", () => {window.location = "../index.php";});
-    document.getElementById("book-cover-color").addEventListener('input', UpdateBookCoverColor);
-    document.getElementById("book-cover-color").addEventListener('input', UpdateBookCoverColor);
     document.getElementById('select-cover-img').addEventListener('change', SetCoverImg);
     document.getElementById("remove-cover-img").addEventListener('click', RemoveCoverImg);
     document.getElementById("create-book").addEventListener('click', CreateBookDialog);
@@ -67,6 +72,36 @@ async function SetTags()
     }
 }
 
+function AddNewTagInput()
+{
+    const tagInputsCount = GetTagsCount();
+    if (tagInputsCount > 0) document.getElementById("rem-tag-input").style.display = "block";
+    
+    if (tagInputsCount < maxTagInputs)
+    {
+        const tagsContainer = document.getElementById("book-tags");
+        const tagid = `tag_${tagInputsCount + 1}`;
+        const tagInput = NewTagInput(tagid);
+        tagsContainer.innerHTML += tagInput;
+        tagInputsArray.push(tagid);
+    }
+}
+
+function RemoveTagInput()
+{
+    const tagInputsCount = GetTagsCount();
+    if (tagInputsCount == 2) document.getElementById("rem-tag-input").style.display = "none";
+
+    const lastTagAdded = tagInputsArray.pop();
+    const tagInputById = document.getElementById(lastTagAdded);
+    document.getElementById("book-tags").removeChild(tagInputById);
+}
+
+function GetTagsCount()
+{
+    return document.getElementsByClassName("book-tag").length;
+}
+
 function CountLetters(event)
 {
     const text = event.target.value;
@@ -87,12 +122,6 @@ function SetPages(event)
         inputpages.value = pages;
         SetPagesValue(pages)
     }
-}
-
-function UpdateBookCoverColor(event)
-{
-    const cover = document.getElementById("book-cover");
-    if (cover) { cover.style.backgroundColor = event.target.value; }
 }
 
 function SetCoverImg(event)
@@ -186,8 +215,15 @@ async function InsertBook()
     formdata.append("sinopsis",document.getElementById("book-sinopsis").value);
     formdata.append("pages",document.getElementById("book-pages").value);
     formdata.append("category",document.getElementById("book-categories").value);
-    formdata.append("tags",document.getElementById("book-tags").value);
+
+    let tagsValues = [];
+    Array.from(document.getElementsByClassName("book-tag")).map(tag => {
+        tagsValues.push(tag.value);
+    })
+    const tagsString = tagsValues.join(',');
+    formdata.append("tags", tagsString);
     formdata.append("cover",document.getElementById("select-cover-img").files[0]);
+
 
     try {
         const response = await fetch("../backend/includes/book.insertbook.php",{

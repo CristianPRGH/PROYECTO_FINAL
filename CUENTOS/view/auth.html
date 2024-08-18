@@ -13,11 +13,11 @@
     <script src="../frontend/auth.js" type="module"></script>
 </head>
 
-<body class="bg-orange-100 h-screen grid">
-    <main class="flex flex-col px-12 h-full w-full justify-self-end md:w-1/2 xl:w-1/4 duration-200">
-
-        <section class="h-full overflow-y-hidden px-1">
-            <article id="login-form" class="flex flex-col justify-center align-middle h-full w-full">
+<body class="h-screen bg-[url('../images/backgrounds/bg_books.png')]  bg-no-repeat bg-cover md:bg-contain duration-200">
+    <!-- <main class="flex flex-col px-12 h-full w-full justify-self-end md:w-1/2 xl:w-1/4 duration-200"> -->
+    <section class="w-full h-full overflow-y-hidden duration-200">
+        <article id="login-form" class="flex justify-center items-center h-full w-full">
+            <div class="flex flex-col md:w-1/2 lg:w-1/3 xl:w-1/4 h-fit backdrop-blur-sm p-10 rounded-lg shadow-md">
                 <p class="w-full text-2xl text-center">Bienvenid@</p>
                 
                 <div class="relative w-full">
@@ -28,32 +28,34 @@
                     <input type="password" id="password" placeholder="password" class="form-input">
                     <i class="material-symbols-rounded form-icon">lock</i>
                 </div>
-    
-                <div class="relative w-full">
-                    <button type="button" id="submit-login" class="py-1 px-16 my-5 mx-0 rounded-3xl shadow-md shadow-green-800 text-green-950 bg-white w-full">Login</button>
+
+                <div class="w-full flex justify-center">
+                    <button type="button" id="submit-login" class="py-1 my-5 rounded-md shadow-md text-[#333] bg-[#A8E6CF] w-1/2">Login</button>
                 </div>
-    
+
                 <p class="text-center">No tienes cuenta? <a id="to-signup" href="#" class="text-green-950 underline">Registrate</a></p>
                 
                 <p id="error-login" class="text-center text-sm text-red-600 w-full invisible">asdsadasdsad</p>
-            </article>
+            </div>
+        </article>
 
 
-            <article id="register-form" class="flex flex-col justify-center align-middle h-full w-full opacity-0">
+        <article id="register-form" class="flex justify-center items-center h-full w-full opacity-0">
+            <div class="flex flex-col md:w-1/2 lg:w-1/3 xl:w-1/4 h-fit backdrop-blur-sm p-10 rounded-lg shadow-md">
                 <p class="w-full text-2xl text-center">REGISTRO</p>
                 <div class="relative w-full">
                     <input type="text" id="input-username" class="v_required v_usernameexists v_usernameformat form-input" placeholder="username" data-valid="valid-username" maxlength="20">
                     <i class="material-symbols-rounded form-icon">person</i>
-                    <div id="valid-username" class="validate-input" data-errormsg="error-username">
+                    <span id="valid-username"  data-errormsg="error-username">
                         <i class="material-symbols-rounded form-error-icon">error</i>
                         <p id="error-username" class="form-error-message"></p>
                         <i class="material-symbols-rounded form-valid-icon">check_circle</i>
-                    </div>
+                    </span>
                 </div>
                 <div class="relative w-full">
                     <input type="email" id="input-email" class="v_required v_emailexists v_emailformat form-input" placeholder="email" data-valid="valid-email">
                     <i class="material-symbols-rounded form-icon">mail</i>
-                    <div id="valid-email" class="validate-input" data-errormsg="error-email">
+                    <div id="valid-email"  data-errormsg="error-email">
                         <i class="material-symbols-rounded form-error-icon">error</i>
                         <p id="error-email" class="form-error-message invisible"></p>
                         <i class="material-symbols-rounded form-valid-icon">check_circle</i>
@@ -62,7 +64,7 @@
                 <div class="relative w-full">
                     <input type="password" id="input-password" class="v_required v_pwdformat v_repeatpwd form-input" placeholder="password" data-valid="valid-password" data-repeat="input-password-repeat">
                     <i class="material-symbols-rounded form-icon">lock</i>
-                    <div id="valid-password" class="validate-input"  data-errormsg="error-password">
+                    <div id="valid-password"   data-errormsg="error-password">
                         <i class="material-symbols-rounded form-error-icon">error</i>
                         <p id="error-password" class="form-error-message"></p>
                         <i class="material-symbols-rounded form-valid-icon">check_circle</i>
@@ -71,7 +73,7 @@
                 <div class="relative w-full">
                     <input type="password" id="input-password-repeat" class="v_required form-input" placeholder="repite password" data-valid="valid-password-repeat">
                     <i class="material-symbols-rounded form-icon">lock_reset</i>
-                    <div id="valid-password-repeat" class="validate-input" data-errormsg="error-password-repeat">
+                    <div id="valid-password-repeat"  data-errormsg="error-password-repeat">
                         <i class="material-symbols-rounded form-error-icon">error</i>
                         <p id="error-password-repeat" class="form-error-message"></p>
                         <i class="material-symbols-rounded form-valid-icon">check_circle</i>
@@ -84,18 +86,19 @@
                         <i class="material-symbols-rounded text-center">add_a_photo</i>
                     </label> 
                     <input type="file" id="input-userimg" name="imagen" accept="image/*" style="display: none;" class="v_imgsize" data-valid="valid-userimg">
-                    <div id="valid-userimg" class="validate-input" data-errormsg="error-userimg">
+                    <div id="valid-userimg"  data-errormsg="error-userimg">
                         <i class="material-symbols-rounded form-error-icon">error</i>
                         <p id="error-userimg" class="form-error-message top-36"></p>
                         <i class="material-symbols-rounded form-valid-icon">check_circle</i>
                     </div>
                 </div>
                 
-                <div class="relative w-full">
-                    <button type="button" id="submit-register" class="py-1 px-16 my-5 mx-0 rounded-3xl shadow-md shadow-green-800 text-green-950 bg-white w-full">Regístrate</button>
+                <div class="w-full flex justify-center">
+                    <button type="button" id="submit-register" class="py-1 my-5 rounded-md shadow-md text-[#333] bg-[#A8E6CF] w-1/2">Regístrate</button>
                 </div>
-            </article>
-        </section>
-    </main>
+            </div>
+        </article>
+    </section>
+    <!-- </main> -->
 </body>
 </html>

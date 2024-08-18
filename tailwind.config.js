@@ -3,7 +3,7 @@ module.exports = {
   mode: 'jit',
   content: ["./**/*.{html,js,php}"],
   // purge: [],
-  // purge: ['./**/*.{html,js}'],
+  // purge: ['./**/*.{html,js,css}'],
   theme: {
     extend: {
       visibility:{

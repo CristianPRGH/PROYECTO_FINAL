@@ -57,8 +57,28 @@ class BookControl extends Book{
         return parent::SelectBooks();
     }
 
+    public function GetMostReadBooks()
+    {
+        return parent::SelectMostReadBooks();
+    }
+
     public function GetBookById()
     {
         return parent::SelectBookById($this->id);
+    }
+
+    public function GetBooksByFilters()
+    {
+        return parent::SelectBooksByFilters($this->title, $this->tags);
+    }
+
+    public function UpdateViews()
+    {
+        parent::UpdateBookViews($this->id);
+    }
+
+    public function GetBooksByUser()
+    {
+        return parent::SelectBooksByuser($this->author);
     }
 }
