@@ -2,7 +2,7 @@
 session_start();
 require "myAutoload.php";
 
-if ($_SERVER["REQUEST_METHOD"] == "POST")
+if ($_SERVER["REQUEST_METHOD"] == "POST" && count($_POST["pages"]) > 0)
 {
     $pagesData  = $_POST["pages"];
     $results    = array();

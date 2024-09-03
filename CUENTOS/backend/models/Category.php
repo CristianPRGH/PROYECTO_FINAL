@@ -1,11 +1,12 @@
 <?php
 
 class Category extends Basemodel{
-    private $table = "book_categories";
+    private $table = "categories";
 
     protected function SelectAllCategories()
     {
-        $query = "SELECT *, (min_pages + max_pages) / 2 AS avg_pages FROM $this->table";
+        $query = "SELECT *, (Min_pages + Max_pages) / 2 AS avg_pages
+        FROM $this->table";
         return parent::SelectAll($query);
     }
 }

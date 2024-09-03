@@ -1,11 +1,12 @@
 <?php
 
 class Tag extends Basemodel{
-    private $table = "book_tags";
+    private $table = "tags";
 
     protected function SelectAllTags()
     {
-        $query = "SELECT tag FROM $this->table";
+        $query = "SELECT Name 
+        FROM $this->table";
         return parent::SelectAll($query);
     }
 }

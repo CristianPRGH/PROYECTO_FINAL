@@ -9,7 +9,7 @@ if ((!isset($_SESSION["userid"]) && $_GET["mode"] != "read") || !isset($_GET["bo
 if (isset($_GET["mode"]) && isset($_GET["bookid"])) {
     $mode = $_GET["mode"];
     $bookid = $_GET["bookid"];
-    
+
     if (isset($_SESSION["userid"]))
         $userid = $_SESSION["userid"];
 }
@@ -113,7 +113,7 @@ if (isset($_GET["mode"]) && isset($_GET["bookid"])) {
                         <button class="prev material-symbols-rounded cursor-pointer text-[#333333] text-3xl duration-100 hover:scale-125" data-dir="prev">chevron_left</button>
                     </div>
                     <div class="flex items-center justify-center">
-                        <button class="home material-symbols-rounded cursor-pointer text-[#333333] text-3xl duration-100 hover:scale-125">home</button>
+                        <button id="home" class="home material-symbols-rounded cursor-pointer text-[#333333] text-3xl duration-100 hover:scale-125">home</button>
                     </div>
                     <div class="flex items-center justify-center">
                         <button class="next material-symbols-rounded cursor-pointer text-[#333333] text-3xl duration-100 hover:scale-125" data-dir="next">chevron_right</button>
@@ -127,11 +127,45 @@ if (isset($_GET["mode"]) && isset($_GET["bookid"])) {
 
 
 
-    <dialog id="confirm-pages" class="p-6 m-auto shadow-lg rounded-md z-20 backdrop:bg-orange-100/30 backdrop:backdrop-blur-md">
+    <dialog id="confirm-pages" class="dialogWindow">
         <p class="text-center p-3">Confirma las páginas escritas?</p>
         <article class="flex justify-evenly">
             <button id="write-yes" type="button" class="shadow-md p-1 rounded-md bg-green-600 text-orange-100 w-20">SI</button>
             <button id="write-no" type="button" class="shadow-md p-1 rounded-md bg-red-600 text-orange-100 w-20">NO</button>
+        </article>
+    </dialog>
+
+    <dialog id="comment-dialog" class="dialogWindow">
+        <p id="comment-question" class="text-center p-3 ">¿ Te ha gustado lo que has leído ?</p>
+        <div class="flex flex-col gap-y-2 my-2">
+            <div class="flex justify-center">
+                <div id="ratingStarsContainer" class="flex items-center gap-x-1">
+                    <svg class="star ratingStar" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20" data-point="1">
+                        <path class="pointer-events-none" d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+                    </svg>
+                    <svg class="star ratingStar" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20" data-point="2">
+                        <path class="pointer-events-none" d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+                    </svg>
+                    <svg class="star ratingStar" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20" data-point="3">
+                        <path class="pointer-events-none" d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+                    </svg>
+                    <svg class="star ratingStar" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20" data-point="4">
+                        <path class="pointer-events-none" d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+                    </svg>
+                    <svg class="star ratingStar" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20" data-point="5">
+                        <path class="pointer-events-none" d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+                    </svg>
+                </div>
+            </div>
+
+            <div>
+                <textarea id="book-comment" rows="3" maxlength="150" placeholder="Escribe un comentario..." class="form-input w-full resize-none rounded-md text-sm placeholder:italic placeholder:text-xs"></textarea>
+            </div>
+        </div>
+
+        <article class="flex justify-evenly">
+            <button id="comment-yes" type="button" class="shadow-md p-1 rounded-md bg-green-600 text-orange-100 w-fit">CONFIRMAR</button>
+            <button id="comment-no" type="button" class="shadow-md p-1 rounded-md bg-white text-[#333] w-20">SALIR</button>
         </article>
     </dialog>
 

@@ -221,10 +221,10 @@ trait TValidations {
         if (strlen($valor) > 0) {
             $level = 0;
             $level += (strlen($valor) > 5 && strlen($valor) < 13) ? 1 : 0;
-            $level += (preg_match('/(?=(.*[!@#$%^&*(),.?":{}|<>]){2,})/', $valor)) ? 1 : 0;
-            $level += (preg_match('/(?=(.*[a-z]){2,})/', $valor)) ? 1 : 0;
-            $level += (preg_match('/(?=(.*[A-Z]){2,})/', $valor)) ? 1 : 0;
-            $level += (preg_match('/(?=(.*\d){2,})/', $valor)) ? 1 : 0;
+            $level += (preg_match('/(?=(.*[!@#$%^&*(),.?":{}|<>]){1,})/', $valor)) ? 1 : 0;
+            $level += (preg_match('/(?=(.*[a-z]){1,})/', $valor)) ? 1 : 0;
+            $level += (preg_match('/(?=(.*[A-Z]){1,})/', $valor)) ? 1 : 0;
+            $level += (preg_match('/(?=(.*\d){1,})/', $valor)) ? 1 : 0;
 
             if ($level < 5) {
                 $msg = "No cumple los requisitos";

@@ -113,7 +113,7 @@
 
     <section id="menu" class="fixed bottom-4 left-1/2 -translate-x-1/2 h-fit flex flex-col shadow-md shadow-black/40 min-w-96 bg-white/90 backdrop-blur-md rounded-xl opacity-100 z-40 ">
         <article class="relative w-full flex">
-            <input type="text" id="searchByNameValue" class="w-full p-1 pl-8 rounded-t-md border-0 focus:border-transparent focus:ring-0 focus:shadow-md focus:bg-[#A8E6CF] placeholder:italic placeholder:text-xs" placeholder="Título, autor">
+            <input type="text" id="searchByNameValue" class="w-full p-1 pl-8 rounded-t-md border-0 focus:border-transparent focus:ring-0 focus:shadow-md focus:bg-[#A8E6CF] placeholder:italic placeholder:text-xs" placeholder="Título | autor">
             <!-- <button id="searchByName" class="material-symbols-rounded rounded-tr-md px-3 bg-[#333] text-white">search</button> -->
             <i class="material-symbols-rounded form-icon">search</i>
         </article>
@@ -130,7 +130,7 @@
         </section>
     </section>
 
-    <dialog id="book-dialog" class="fixed z-50 scale-0 m-auto w-96 h-fit p-4 rounded-md bg-white/30 backdrop:bg-[#333]/30 backdrop:backdrop-blur-md shadow-lg">
+    <dialog id="book-dialog" class="dialogWindow">
         <span id="close-bookDialog" class="material-symbols-rounded cursor-pointer">close</span>
         <p id="det-bookId" class="hidden"></p>
         <section class="h-full grid grid-cols-2 gap-0 grid-rows-1">
@@ -138,16 +138,27 @@
                 <img id="det-bookCover" src="" alt="" class="h-[200px] w-[128px] rounded-md shadow-md">
             </div>
             <div class="h-full w-full flex flex-col gap-1 justify-start">
-                <p id="det-bookTitle" class="font-bold truncate">Titulo prueba</p>
-                <div class="flex gap-1 items-center">
-                    <img id="det-bookAuthorImg" src="images/users_avatars/user-default.png" alt="" class="h-[32px] w-[32px]">
+                <p id="det-bookTitle" class="font-bold truncate text-center">Titulo prueba</p>
+                <div class="flex gap-1 items-center justify-center">
+                    <img id="det-bookAuthorImg" src="images/users_avatars/user-default.png" alt="" class="h-6 w-6">
                     <p id="det-bookAuthor">Titulo prueba</p>
                 </div>
-                <div class="flex gap-1">
-                    <i class="material-symbols-rounded">visibility</i>
-                    <p id="det-bookViews" class="text-sm"></p>
+                <!-- <div class="flex items-center justify-center gap-1">
+
+                </div> -->
+                <div class="grow flex items-center justify-center gap-2">
+                    <div class="flex items-center gap-1">
+                        <i class="material-symbols-rounded">visibility</i>
+                        <p id="det-bookViews" class="font-bold text-sm"></p>
+                    </div>
+                    -
+                    <div class="flex items-center gap-1">
+                        <svg class="ratingStar text-green-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                            <path class="pointer-events-none" d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+                        </svg>
+                        <p id="det-bookRating" class="font-bold text-sm"></p>
+                    </div>
                 </div>
-                <div class="grow"></div>
                 <button id="det-bookRead" data-bookid="-1" class="w-full flex justify-self-end justify-between bg-[#333] text-white outline-none p-1 rounded-md hover:scale-105 duration-200 hover:bg-slate-700">
                     Leer
                     <i class="material-symbols-rounded">menu_book</i>

@@ -43,8 +43,8 @@ class BookControl extends Book{
             $res = $this->SaveImage($this->imagesFolder, $this->cover, $imagesPrefix);
             $this->cover = $res[1];
         }
-        // if ($res[0])
-        return parent::InsertBook([$this->title, $this->sinopsis,$this->pages, $this->category,$this->tags, $this->cover, $this->author]);
+
+        return parent::InsertBook([$this->title, $this->sinopsis, $this->pages, $this->category, $this->tags, $this->cover, $this->author]);
     }
 
     public function GetBookPages()
@@ -67,6 +67,11 @@ class BookControl extends Book{
         return parent::SelectBookById($this->id);
     }
 
+    public function GetBookCoauthors()
+    {
+        return parent::SelectBookCoauthors($this->id);
+    }
+
     public function GetBooksByFilters()
     {
         return parent::SelectBooksByFilters($this->title, $this->tags);
@@ -80,5 +85,25 @@ class BookControl extends Book{
     public function GetBooksByUser()
     {
         return parent::SelectBooksByuser($this->author);
+    }
+
+    public function DeleteBookById()
+    {
+        return parent::DeleteBook($this->id);
+    }
+
+    public function UpdateBookById()
+    {
+        if ($this->cover != null && gettype($this->cover) === "array")
+        {
+            $imagesPrefix = $this->title;
+            $res = $this->SaveImage($this->imagesFolder, $this->cover, $imagesPrefix);
+            $this->cover = $res[1];
+        }else if($this->cover === "NULL")
+        {
+            $this->cover = null;
+        }
+        
+        return parent::UpdateBook([$this->title, $this->sinopsis, $this->pages, $this->category, $this->tags, $this->cover, $this->author, $this->id]);
     }
 }

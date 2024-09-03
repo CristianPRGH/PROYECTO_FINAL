@@ -25,7 +25,7 @@ $userid = $_SESSION["userid"];
 <body>
     <p id="user-id" class="hidden"><?= $userid; ?></p>
     <main class="w-full h-full">
-        <section id="books-list" class="w-full gap-y-4 p-20 flex flex-wrap justify-start">
+        <section id="books-list" class="w-full gap-4 p-20 flex flex-wrap justify-start">
         </section>
     </main>
 

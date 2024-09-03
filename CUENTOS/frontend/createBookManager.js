@@ -2,24 +2,35 @@ import * as tweens from "../components/tweenControls.js";
 import {ValidateInputs, ValidateOnServer} from "./formValidations.js";
 import {InputJson, SetInputsToFormData} from "../components/inputsManager.js";
 import {NewTagInput} from "../components/tag_input.js";
+import { Book } from "./Book.js";
 
 const maxTagInputs = 6;
-let tagInputsArray = [];
+let tagInputsList = [];
+let bookid, mode = null;  // Parametros en la URL
+const tween_bookDialog = gsap.fromTo("#confirm-create-book", { opacity: 0, scale: 0 }, { duration: 0.1, scale: 1, opacity: 1, paused: true });
+const tween_writeDialog = gsap.fromTo("#confirm-write-book", { opacity: 0, scale: 0 }, { duration: 0.1, scale: 1, opacity: 1, paused: true });
 
 document.addEventListener("DOMContentLoaded", ()=>{
     InitializeEvents();
     SetCategories();
     SetTags();
-    AddNewTagInput();
+    GetUrlParams();
+
+    if (mode == "upd")
+    {
+        GetBookData();
+    }
 })
 
 function InitializeEvents()
 {
     document.getElementById("book-sinopsis").addEventListener('keyup', CountLetters);
     document.getElementById("book-categories").addEventListener('change', SetPages);
-    document.getElementById("book-pages").addEventListener('input', (event)=>{
-        SetPagesValue(event.target.value);
-    });
+
+    [document.getElementById("book-pages"), document.getElementById("curr-pages")].forEach(element => {
+        element.addEventListener('input', (e) => { SetPagesValue(e.target.value) });
+    })
+    
     document.getElementById("add-tag-input").addEventListener('click', AddNewTagInput);
     document.getElementById("rem-tag-input").addEventListener('click', RemoveTagInput);
 
@@ -41,9 +52,9 @@ async function SetCategories()
 
           result.data.map((category) => {
             const option = document.createElement("option");
-            option.value = category.id;
-            option.innerHTML = category.category;
-            option.dataset.avgpages = category.avg_pages;
+            option.value = category.UICategory;
+            option.innerHTML = category.Name;
+            option.dataset.avgpages = category.Avg_pages;
             select.appendChild(option);
           });
         }
@@ -72,35 +83,71 @@ async function SetTags()
     }
 }
 
-function AddNewTagInput()
+function GetUrlParams() {
+    // Obtiene los parametros en la URL
+    const urlString = window.location.search;
+    const urlParams = new URLSearchParams(urlString);
+    mode   = urlParams.get("mode");
+    bookid = urlParams.get("bookid");
+}
+
+
+//#region Tags control
+function AddNewTagInput(isInsert = true)
 {
-    const tagInputsCount = GetTagsCount();
-    if (tagInputsCount > 0) document.getElementById("rem-tag-input").style.display = "block";
-    
-    if (tagInputsCount < maxTagInputs)
+    UpdateTagsJson(); // Actualiza el Json de tags
+    const tagsCount = GetTagsCount();
+    let addNewTag = true;
+
+    if (isInsert && tagsCount > 0)
     {
-        const tagsContainer = document.getElementById("book-tags");
-        const tagid = `tag_${tagInputsCount + 1}`;
-        const tagInput = NewTagInput(tagid);
-        tagsContainer.innerHTML += tagInput;
-        tagInputsArray.push(tagid);
+        const lastValue = tagInputsList[tagsCount - 1][1];
+        if (lastValue.length === 0) addNewTag = !addNewTag;
+    }
+
+    if (addNewTag)
+    {
+        document.getElementById("rem-tag-input").style.display = "block";   // Si hay mas de dos inputs muestra el icono de "quitar input"
+        
+        // Si hay menos inputs que el máximo establecido:
+        if (tagsCount < maxTagInputs)
+        {
+            const tagsContainer = document.getElementById("book-tags"); // Recoge el contenedor de tags
+            const tagid = `tag_${tagsCount + 1}`;                       // Suma 1 a la cantidad de inputs para sacar el siguiente ID
+            const tagInput = NewTagInput(tagid);                        // Llama a la funcion externa que devuelve un nuevo tag                      
+
+            const tempDiv = document.createElement('div');              // Genera un elemento Div para contener el input
+            tempDiv.innerHTML = tagInput.trim();                        // Añade el input al elemento Div
+            tagsContainer.appendChild(tempDiv);                         // Añade el Div al contenedor
+            UpdateTagsJson();                                           // Actualiza el Json de tags
+        }
     }
 }
 
 function RemoveTagInput()
 {
-    const tagInputsCount = GetTagsCount();
-    if (tagInputsCount == 2) document.getElementById("rem-tag-input").style.display = "none";
+    const lastTagAdded = tagInputsList.pop();                       // Obtiene el último elemento de la lista de tags
+    const tagInputById = document.getElementById(lastTagAdded[0]);  // Obtiene el input mediante el ID
+    tagInputById.parentNode.remove();                               // Elimina el padre (Div) del elemento tag
 
-    const lastTagAdded = tagInputsArray.pop();
-    const tagInputById = document.getElementById(lastTagAdded);
-    document.getElementById("book-tags").removeChild(tagInputById);
+    const tagsCount = GetTagsCount();
+    if (tagsCount < 1) document.getElementById("rem-tag-input").style.display = "none";
 }
 
 function GetTagsCount()
 {
-    return document.getElementsByClassName("book-tag").length;
+    return tagInputsList.length;
 }
+
+function UpdateTagsJson()
+{
+    tagInputsList = []
+    Array.from(document.getElementsByClassName("book-tag")).map(tag => {
+        tagInputsList.push([ tag.id, tag.value]);
+    })
+}
+
+//#endregion
 
 function CountLetters(event)
 {
@@ -114,7 +161,7 @@ function SetPages(event)
     const inputpages = document.getElementById("book-pages");
     if (value == -1)
     {
-        inputpages.value = "";
+        inputpages.value = "1";
     }
     else{
         const selected = event.target.options[value];
@@ -169,17 +216,22 @@ async function CreateBookDialog()
         // Si la validacion en servidor es correcta -> Inserta libro
         if (result)
         {
-            const createBookDialog = document.getElementById("confirm-create-book");
-            createBookDialog.showModal();
+            const dialog = document.getElementById("confirm-create-book");
+            tweens.PlayAnimation(tween_bookDialog);
+            dialog.showModal();
+
 
             document.getElementById("create-yes").addEventListener('click', async ()=>{
                 result = await InsertBook();
 
-                createBookDialog.close();
-                WriteBookDialog(result.lastid);
+                dialog.close();
+                WriteBookDialog(bookid != null ? bookid : result.lastid);
             })
+
             document.getElementById("create-no").addEventListener('click', ()=>{
-                window.location = '../index.php';
+                // window.location = '../index.php';
+                tweens.ReverseAnimation(tween_bookDialog);
+                dialog.close();
             })
         }
     }
@@ -189,6 +241,7 @@ async function CreateBookDialog()
 function WriteBookDialog(lastid)
 {
     const writeBookDialog = document.getElementById("confirm-write-book");
+    tweens.PlayAnimation(tween_writeDialog);
     writeBookDialog.showModal();
 
     document.getElementById("write-yes").addEventListener('click',()=>{
@@ -200,17 +253,28 @@ function WriteBookDialog(lastid)
     })
 }
 
+const minPages = 1, maxpages = 500;
 function SetPagesValue(value)
 {
-    document.getElementById("curr-pages").textContent = value;
+    if (value >= minPages && value <= maxpages)
+    {
+        document.getElementById("curr-pages").value = value;
+        document.getElementById("book-pages").value = value;
+        document.getElementById("curr-pages").style.border = "transparent";
+    }
+    else{
+        document.getElementById("curr-pages").style.border = "solid 1px red";
+    }
 }
 
 
 
-
-async function InsertBook()
+function InsertBook()
 {
+    const book = new Book();
     const formdata = new FormData();
+    formdata.append("action", mode == "upd" ? "updateBook" : "insertNewBook");
+    formdata.append("bookid",bookid);
     formdata.append("title",document.getElementById("book-title").value);
     formdata.append("sinopsis",document.getElementById("book-sinopsis").value);
     formdata.append("pages",document.getElementById("book-pages").value);
@@ -222,21 +286,47 @@ async function InsertBook()
     })
     const tagsString = tagsValues.join(',');
     formdata.append("tags", tagsString);
-    formdata.append("cover",document.getElementById("select-cover-img").files[0]);
 
-
-    try {
-        const response = await fetch("../backend/includes/book.insertbook.php",{
-            method: "post",
-            body: formdata
-        })
-        if (response.ok)
+    const file = document.getElementById("select-cover-img").files[0];
+    if (file != undefined) 
+    {
+        formdata.append("cover", file);
+    }else{
+        const imageFile = document.getElementById("book-cover-img").getAttribute("src");
+        if (imageFile.length > 0)
         {
-            return await response.json();
+            formdata.append("cover", imageFile);
+        }else
+        {
+            formdata.append("cover", "NULL");
         }
-    } catch (error) {
-        console.log(error);
     }
 
-    return false;
+    return book.InsertBook(formdata);
+}
+
+async function GetBookData()
+{
+    const book = new Book();
+    const result = await book.SearchBookById(bookid);
+    FillInputs(result.data);
+}
+
+function FillInputs(book)
+{
+    document.getElementById("book-title").value = book.Title;
+    document.getElementById("book-sinopsis").value = book.Sinopsis;
+    document.getElementById("book-categories").value = book.UICategory;
+    document.getElementById("book-pages").value = book.Pages;
+    const tags = book.Tags.split(',');
+    for (let index = 0; index < tags.length; index++) {
+        AddNewTagInput(false);        
+    }
+    tagInputsList.map((tag, index) => {
+        document.getElementById(tag[0]).value = tags[index];
+    })
+    const imageroute = `../images/books_covers/${book.Cover}`;
+    document.getElementById("book-cover-img").src = imageroute;
+    document.getElementById("book-cover-img").style.opacity = 1;
+    SetPagesValue(book.Pages);
 }

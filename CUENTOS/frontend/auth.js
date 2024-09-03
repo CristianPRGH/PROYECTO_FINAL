@@ -24,9 +24,9 @@ function InitializeTweens()
 function InitializeEvents()
 {
     document.getElementById("to-signup").addEventListener('click', HandleSignupLink);
-    document.getElementById("submit-register").addEventListener('click', HandleSignupSubmit);
-    document.getElementById("submit-login").addEventListener('click', HandleLoginSubmit);
-    document.getElementById('input-userimg').addEventListener('change', HandleSigninUserImg);
+    document.getElementById("submit-register").addEventListener('click', () => {HandleSignupSubmit()});
+    document.getElementById("submit-login").addEventListener('click', ()=>{HandleLoginSubmit()});
+    document.getElementById('input-userimg').addEventListener('change', () => {HandleSigninUserImg()});
 
     document.getElementById("input-username").addEventListener("blur", HandleUsernameExists);
     document.getElementById("input-email").addEventListener("blur", HandleEmailExists);
@@ -45,11 +45,13 @@ function HandleSignupLink()
 async function HandleSignupSubmit()
 {
     const res = await ValidateRegister();
-    if (res)
+    if (res.error == 0)
     {
         tweens.ReverseAnimation(tweenLogin);
         tweens.ReverseAnimation(tweenRegister);
         ResetRegisterForm();
+    }else{
+       
     }
 }
 
@@ -110,19 +112,20 @@ async function ValidateLogin()
     const username = document.getElementById("username").value;
     const password = document.getElementById("password").value;
     const formdata = new FormData();
+    formdata.append("action","checkLogin");
     formdata.append("username",username);
     formdata.append("password",password);
 
     try {
-        const response = await fetch("../backend/includes/user.checklogin.php",{
+        const response = await fetch("../backend/includes/UserHandler.php",{
             method:"post",
             body: formdata
         })
-
         if (response.ok)
         {
             const result = await response.json();
             const errormsg = document.getElementById("error-login");
+
             if (!result[0])
             {
                 errormsg.textContent = result[1];
@@ -168,10 +171,10 @@ async function ValidateRegister()
     return result;
 }
 
-
 async function InsertUser(inputs)
 {
     const formdata = new FormData();
+    formdata.append("action","insertUser");
     formdata.append("username",inputs[0].value);
     formdata.append("email",inputs[1].value);
     formdata.append("password",inputs[2].value);
@@ -180,14 +183,13 @@ async function InsertUser(inputs)
     formdata.append("image", image);
 
     try {
-        const response = await fetch("../backend/includes/user.insertuser.php",{
+        const response = await fetch("../backend/includes/UserHandler.php",{
             method: "post",
             body: formdata
         })
         if (response.ok)
         {
-            const result = await response.json();
-            return result.error;
+            return await response.json();
         }
     } catch (error) {
         console.log(error);
@@ -195,7 +197,6 @@ async function InsertUser(inputs)
 
     return false;
 }
-
 
 function ResetRegisterForm()
 {
@@ -209,11 +210,3 @@ function ResetRegisterForm()
 
     document.getElementById("input-profilepic").src = "../images/users_avatars/user-default.png";
 }
-
-// function SetValidMsg(id, msg)
-// {
-//     inputValidations[id] = msg;
-//     return {
-//         "inputs":inputValidations
-//     }
-// }

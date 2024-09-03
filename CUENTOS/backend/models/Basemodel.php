@@ -48,6 +48,7 @@ class Basemodel extends Database{
 
     protected function InsertRows($query, $params)
     {
+        // echo $query;
         // print_r($params);
         $conn  = $this->connect();
         $stmt  = $conn->prepare($query);             // *

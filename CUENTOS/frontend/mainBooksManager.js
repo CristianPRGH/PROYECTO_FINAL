@@ -88,17 +88,22 @@ async function SetupMainBooksList()
 {
   // BUSCA, OBTIENE Y CARGA LOS LIBROS
   const newbooks = await bookClass.SearchAllBooks();
-  newbooks.data.map(book => {
-      const bookelement = BookListItem(book);
-      swiper[0].appendSlide(bookelement);
-  });
+  if (newbooks != null)
+  {
+    newbooks.data.map(book => {
+        const bookelement = BookListItem(book);
+        swiper[0].appendSlide(bookelement);
+    });
+  }
 
   // BUSCA, OBTIENE Y CARGA LOS LIBROS
   const mostreadbooks = await bookClass.SearchMostReadBooks();
-  mostreadbooks.data.map(book => {
-      const bookelement = BookListItem(book);
-      swiper[1].appendSlide(bookelement);
-  });
+  if (mostreadbooks != null) {
+    mostreadbooks.data.map(book => {
+        const bookelement = BookListItem(book);
+        swiper[1].appendSlide(bookelement);
+    });
+  }
 }
 
 // SETUP DE LOS BOTONES QUE MUESTRAN EL DETALLE DE CADA LIBRO
@@ -137,19 +142,23 @@ async function ToggleBookDetail(toggle = null, tween)
 async function SetBookDetail(toggle)
 {
     // BUSCAR LA INFORMACION DEL LIBRO EN LA LISTA DE LIBROS OBTENIDA DEL SERVIDOR MEDIANTE EL ID DEL LIBRO
-    const bookid = toggle.id.split('-').pop();
+    const bookid = toggle.id;
+    console.log(bookid)
     const book   = await bookClass.SearchBookById(bookid);
-    const bookdata = book.data;
-
-    const cover = bookdata.bk_cover != null ? bookdata.bk_cover : "bk_CoverNotAvailable.png";
-
-    document.getElementById("det-bookCover").src          = `images/books_covers/${cover}`;
-    document.getElementById("det-bookTitle").textContent  = bookdata.bk_title;
-    document.getElementById("det-bookAuthor").textContent = bookdata.username;
-    document.getElementById("det-bookAuthorImg").src      = `images/users_avatars/${bookdata.userimg}`;
-    document.getElementById("det-bookViews").textContent  = bookdata.bk_views;
-    document.getElementById("det-bookMoreDetails").dataset.bookid = bookdata.id;
-    document.getElementById("det-bookRead").dataset.bookid = bookdata.id;
+    if (book != null)
+    {
+      const bookdata = book.data;
+      const cover = bookdata.Cover != null ? bookdata.Cover : "bk_CoverNotAvailable.png";
+  
+      document.getElementById("det-bookCover").src          = `images/books_covers/${cover}`;
+      document.getElementById("det-bookTitle").textContent  = bookdata.Title;
+      document.getElementById("det-bookAuthor").textContent = bookdata.Username;
+      document.getElementById("det-bookAuthorImg").src      = `images/users_avatars/${bookdata.userimg}`;
+      document.getElementById("det-bookViews").textContent  = bookdata.Views;
+      document.getElementById("det-bookMoreDetails").dataset.bookid = bookdata.UIBook;
+      document.getElementById("det-bookRead").dataset.bookid = bookdata.UIBook;
+      document.getElementById("det-bookRating").textContent = Math.round(bookdata.Rating * 100) / 100;
+    }
 }
 
 let booksFilteredPanelActive = false;

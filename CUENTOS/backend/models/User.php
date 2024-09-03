@@ -5,20 +5,26 @@ class User extends Basemodel{
 
     protected function CheckUsernameEmailExists($username, $email)
     {
-        $query = "SELECT username FROM $this->table WHERE username = ? OR email = ?";
+        $query = "SELECT username 
+        FROM $this->table 
+        WHERE username = ? OR email = ?";
         return parent::SelectOne($query, [$username, $email]);
     }
 
     protected function InsertUser($values)
     {
-        $query = "INSERT INTO $this->table (username, email, password, image) VALUES (?,?,?,?)";
+        $query = "INSERT INTO $this->table 
+        (UIUser,username, email, password, image) 
+        VALUES (UUID(),?,?,?,?)";
         $values[2] = password_hash($values[2], PASSWORD_DEFAULT);
         return parent::InsertRows($query, $values);
     }
 
     protected function CheckLogin($username, $password)
     {
-        $query = "SELECT id, password FROM $this->table WHERE username = ?";
+        $query = "SELECT UIUser, password 
+        FROM $this->table 
+        WHERE username = ?";
         $result = parent::SelectOne($query, [$username]);
 
         if ($result["error"] == 0)
@@ -31,7 +37,7 @@ class User extends Basemodel{
             }
             else{
                 session_start();
-                $_SESSION["userid"]   = $result["data"]["id"];
+                $_SESSION["userid"]   = $result["data"]["UIUser"];
                 $_SESSION["username"] = $username;
                 return [true, ""];
             }
@@ -43,7 +49,9 @@ class User extends Basemodel{
 
     protected function SelectUserInfo($id)
     {
-        $query = "SELECT * FROM $this->table WHERE id = ?";
+        $query = "SELECT * 
+        FROM $this->table 
+        WHERE UIUser = ?";
         return parent::SelectOne($query, [$id]);
     }
 }

@@ -156,10 +156,11 @@ async function ValidateUsernameExists(input)
     if (value.length > 0)
     {
         const formdata = new FormData();
+        formdata.append('action', 'checkUsername');
         formdata.append('value', value);
 
         try {
-            const response = await fetch('../backend/includes/user.checkusername.php', {
+            const response = await fetch('../backend/includes/UserHandler.php', {
                 method: "post",
                 body: formdata
             });
@@ -270,10 +271,11 @@ async function ValidateEmailExists(input)
     if (value.length > 0)
     {
         const formdata = new FormData();
+        formdata.append('action', 'checkEmail');
         formdata.append('value', value);
 
         try {
-            const response = await fetch('../backend/includes/user.checkemail.php', {
+            const response = await fetch('../backend/includes/UserHandler.php', {
                 method: "post",
                 body: formdata
             });
@@ -424,10 +426,10 @@ function ValidatePassword(input)
     {
         let level = 0;
         level += (value.length > 5 && value.length < 13) ? 1 : 0;           // Longitud entre 6 y 12 caracteres
-        level += /(?=(.*[!@#$%^&*(),.?":{}|<>]){2,})/.test(value) ? 1 : 0;  // Contiene al menos 2 caracteres especiales
-        level += /(?=(.*[a-z]){2,})/.test(value) ? 1 : 0;                   // Contiene al menos 2 letras minúsculas
-        level += /(?=(.*[A-Z]){2,})/.test(value) ? 1 : 0;                   // Contiene al menos 2 letras mayúsculas
-        level += /(?=(.*\d){2,})/.test(value) ? 1 : 0;                      // Contiene al menos 2 números
+        level += /(?=(.*[!@#$%^&*(),.?":{}|<>]){1,})/.test(value) ? 1 : 0;  // Contiene al menos 1 caracteres especiales
+        level += /(?=(.*[a-z]){1,})/.test(value) ? 1 : 0;                   // Contiene al menos 1 letras minúsculas
+        level += /(?=(.*[A-Z]){1,})/.test(value) ? 1 : 0;                   // Contiene al menos 1 letras mayúsculas
+        level += /(?=(.*\d){1,})/.test(value) ? 1 : 0;                      // Contiene al menos 1 números
 
         // switch (level) {
         //     case 1:
@@ -450,7 +452,7 @@ function ValidatePassword(input)
         
         if (level < 5)
         {
-            msg = "De 6 a 12 caracteres / 2 símbolos / 2 Mayúsculas / 2 Minúsculas / 2 Números";
+            msg = "De 6 a 12 caracteres / 1 símbolos / 1 Mayúsculas / 1 Minúsculas / 1 Números";
             SetInputValidation(input.id, msg);
             return false;
         }

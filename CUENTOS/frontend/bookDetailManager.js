@@ -13,8 +13,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
 async function GetBookDetail(bookClass) 
 {
-    const book = await bookClass.SearchBookById(bookid);
-    const bookdata = BookDetail(book.data);
+  // console.log(bookid)
+    const book      = await bookClass.SearchBookById(bookid);
+    const coauthors = await bookClass.SearchBookCoauthors(bookid);
+    const comments  = await bookClass.SearchBookComments(bookid);
+    // console.log(comments);
+    const bookdata  = BookDetail(book.data, coauthors.data);
 
     document.getElementById("book-detail").innerHTML = bookdata;
 }

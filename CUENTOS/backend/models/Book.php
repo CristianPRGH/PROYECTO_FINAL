@@ -3,61 +3,90 @@
 class Book extends Basemodel{
     private $table = "books";
 
+    
     protected function InsertBook($values)
     {
-        $query = "INSERT INTO $this->table (bk_title, bk_sinopsis, bk_pages, bk_categoryid, bk_tags, bk_cover, bk_authorid) VALUES (?,?,?,?,?,?,?)";
+        $query = "INSERT INTO $this->table 
+        (UIBook, Title, Sinopsis, Pages, UICategory, Tags, Cover, UIUser) 
+        VALUES (UUID(),?,?,?,?,?,?,?)";
         return parent::InsertRows($query, $values);
     }
 
-    protected function SelectBookPages($id)
+    protected function UpdateBook($values)
     {
-        $query = "SELECT bk_pages as pages FROM $this->table WHERE id = ?";
-        return parent::SelectOne($query, [$id]);
+        $query = "UPDATE $this->table 
+        SET Title = ?, Sinopsis = ?, Pages = ?, UICategory = ?, Tags = ?, Cover = ?
+        WHERE UIUser = ? AND UIBook = ?";
+        return parent::UpdateRows($query, $values);
+    }
+
+    protected function SelectBookPages($values)
+    {
+        $query = "SELECT Pages
+        FROM $this->table 
+        WHERE UIBook = ?";
+        return parent::SelectOne($query, [$values]);
     }
 
     protected function SelectBooks()
     {
         $query = 
-        "SELECT bk.id, bk.bk_title, bk.bk_cover, bk.bk_views, users.username, users.image as userimg FROM $this->table AS bk
-        JOIN users ON users.id = bk.bk_authorid
-        ORDER BY bk.bk_created_at DESC";
+        "SELECT B.UIBook, B.Title, B.Cover, B.Views, U.Username, U.Image as userimg 
+        FROM $this->table B
+        JOIN users U ON U.UIUser = B.UIUser
+        ORDER BY B.Created_at DESC";
         return parent::SelectAll($query);
     }
 
     protected function SelectMostReadBooks()
     {
         $query = 
-        "SELECT bk.id, bk.bk_title, bk.bk_cover, bk.bk_views, users.username, users.image as userimg FROM $this->table AS bk
-        JOIN users ON users.id = bk.bk_authorid
-        WHERE bk.bk_views > 0
-        ORDER BY bk.bk_views DESC
+        "SELECT B.UIBook, B.Title, B.Cover, B.Views, U.Username, U.Image as userimg 
+        FROM $this->table B
+        JOIN users U ON U.UIUser = B.UIUser
+        WHERE B.Views > 0
+        ORDER BY B.Views DESC
         LIMIT 10";
         return parent::SelectAll($query);
     }
 
-    protected function SelectBookById($bookid)
+    protected function SelectBookById($values)
     {
-        $query =
-            "SELECT books.*, users.username, users.image as userimg FROM $this->table AS books
-            JOIN users ON users.id = books.bk_authorid
-            WHERE books.id = ?";
-        return parent::SelectOne($query, [$bookid]);
+        $query = "SELECT B.*, U.username, U.image as userimg, AVG(BC.Rating) AS Rating
+        FROM books B
+        JOIN users U ON U.UIUser = B.UIUser
+        LEFT JOIN (SELECT *
+		    FROM comments) AS BC
+		ON BC.UIBook = B.UIBook
+        WHERE B.UIBook = ?";
+
+        return parent::SelectOne($query, [$values]);
+    }
+
+    protected function SelectBookCoauthors($values)
+    {
+        $query =  "SELECT DISTINCT U.Username, U.Image
+                    FROM books B
+                    JOIN pages P ON B.UIBook = P.UIBook
+                    JOIN users U ON B.UIUser = P.UIUser
+                    WHERE B.UIBook = ? AND P.UIUser <> B.UIUser";
+        return parent::SelectAll($query, [$values]);
     }
 
     protected function SelectBooksByFilters($title, $tags)
     {
         $params = [];
         $query =
-        "SELECT bk.*
-        FROM $this->table AS bk
-        JOIN users AS us ON us.id = bk.bk_authorid
+        "SELECT B.*
+        FROM $this->table B
+        JOIN users U ON U.UIUser = B.UIUser
         WHERE 1=1";
         // -- WHERE (? IS NOT NULL AND (bk_title LIKE ? OR us.username LIKE ?))";
 
         if (!empty(trim($title)))
         {
             $nameFilter  = '%' . trim($title) . '%';
-            $query .= " AND (bk_title LIKE ? OR us.username LIKE ?)";
+            $query .= " AND (Title LIKE ? OR U.Username LIKE ?)";
             $params = [$nameFilter, $nameFilter];
         }
 
@@ -71,7 +100,7 @@ class Book extends Basemodel{
             {
                 // Sanitizar el valor del tag si es necesario
                 if (!empty(trim($tag))) {
-                    $tagFilters[] = "FIND_IN_SET(?, bk.bk_tags) > 0";
+                    $tagFilters[] = "FIND_IN_SET(?, B.Tags) > 0";
                 }
             }
 
@@ -91,15 +120,27 @@ class Book extends Basemodel{
         return parent::SelectAll($query, $params);
     }
 
-    protected function UpdateBookViews($id)
+    protected function SelectBooksByuser($values)
     {
-        $query = "UPDATE $this->table SET bk_views = bk_views + 1 WHERE id = ?";
-        parent::UpdateRows($query, [$id]);
+        $query = "SELECT * 
+        FROM $this->table 
+        WHERE UIUser = ?";
+        return parent::SelectAll($query, [$values]);
     }
 
-    protected function SelectBooksByuser($userid)
+    protected function UpdateBookViews($values)
     {
-        $query = "SELECT * FROM $this->table WHERE bk_authorid = ?";
-        return parent::SelectAll($query, [$userid]);
+        $query = "UPDATE $this->table 
+        SET Views = Views + 1 
+        WHERE UIBook = ?";
+        parent::UpdateRows($query, [$values]);
+    }
+
+    protected function DeleteBook($values)
+    {
+        $query = "DELETE 
+                FROM $this->table 
+                WHERE UIBook = ?";
+        return parent::DeleteRows($query, [$values]);
     }
 }

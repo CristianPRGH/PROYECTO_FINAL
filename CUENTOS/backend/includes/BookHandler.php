@@ -22,6 +22,9 @@ class BookHandler
                 case "getBookById":
                     $this->getBookById();
                     break;
+                case "getBookCoauthors":
+                    $this->getBookCoauthors();
+                    break;
                 case "getBookContent":
                     $this->getBookContent();
                     break;
@@ -37,14 +40,20 @@ class BookHandler
                 case "getMostReadBooks":
                     $this->getMostReadBooks();
                     break;
+                case "getBooksByUser":
+                    $this->getBooksByUser();
+                    break;
                 case "insertNewBook":
                     $this->insertNewBook();
                     break;
                 case "updateViews":
                     $this->updateViews();
                     break;
-                case "getBooksByUser":
-                    $this->getBooksByUser();
+                case "updateBook":
+                    $this->updateBook();
+                    break;
+                case "deleteBookById":
+                    $this->deleteBookById();
                     break;
                 default:
                     echo json_encode(["error" => "Invalid action"]);
@@ -60,6 +69,18 @@ class BookHandler
         if ($bookid) {
             $this->book->SetId($bookid);
             $result = $this->book->GetBookById();
+            $this->sendResponse($result);
+        } else {
+            $this->sendResponse(["error" => "Book ID not provided"]);
+        }
+    }
+
+    private function getBookCoauthors()
+    {
+        $bookid = $_POST["bookid"] ?? null;
+        if ($bookid) {
+            $this->book->SetId($bookid);
+            $result = $this->book->GetBookCoauthors();
             $this->sendResponse($result);
         } else {
             $this->sendResponse(["error" => "Book ID not provided"]);
@@ -114,17 +135,18 @@ class BookHandler
         $this->sendResponse($result);
     }
 
+    
     private function insertNewBook()
     {
         session_start();
 
-        $title = $_POST["title"] ?? null;
-        $sinopsis = $_POST["sinopsis"] ?? null;
-        $category = $_POST["category"] != -1 ? $_POST["category"] : null;
-        $pages = $_POST["pages"] ?? null;
-        $tags = $_POST["tags"] ?? null;
-        $author = $_SESSION["userid"] ?? null;
-        $cover = $_FILES["cover"] ?? null;
+        $title      = $_POST["title"] ?? null;
+        $sinopsis   = $_POST["sinopsis"] ?? null;
+        $category   = $_POST["category"] != -1 ? $_POST["category"] : null;
+        $pages      = $_POST["pages"] ?? null;
+        $tags       = $_POST["tags"] ?? null;
+        $author     = $_SESSION["userid"] ?? null;
+        $cover      = $_FILES["cover"] ?? null;
 
         $this->book = new BookControl($title, $sinopsis, $category, $pages, $tags, $cover, $author);
         $result = $this->book->InsertNewBook();
@@ -143,6 +165,25 @@ class BookHandler
         }
     }
 
+    private function updateBook()
+    {
+        session_start();
+
+        $bookid     = $_POST["bookid"] ?? null;
+        $title      = $_POST["title"] ?? null;
+        $sinopsis   = $_POST["sinopsis"] ?? null;
+        $category   = $_POST["category"] != -1 ? $_POST["category"] : null;
+        $pages      = $_POST["pages"] ?? null;
+        $tags       = $_POST["tags"] ?? null;
+        $author     = $_SESSION["userid"] ?? null;
+        $cover      = isset($_FILES["cover"]) ? $_FILES["cover"] ?? null : $_POST["cover"] ?? null;
+
+        $this->book = new BookControl($title, $sinopsis, $category, $pages, $tags, $cover, $author);
+        $this->book->SetId($bookid);
+        $result = $this->book->UpdateBookById();
+        $this->sendResponse($result);
+    }
+
     private function getBooksByUser()
     {
         $userid = $_POST["userid"] ?? null;
@@ -153,6 +194,13 @@ class BookHandler
         } else {
             $this->sendResponse(["error" => "User ID not provided"]);
         }
+    }
+
+    private function deleteBookById()
+    {
+        $bookid = $_POST["bookid"] ?? null;
+        $this->book->SetId($bookid);
+        return $this->book->deleteBookById();
     }
 
     private function sendResponse($data)
