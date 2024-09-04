@@ -67,9 +67,9 @@ class Book extends Basemodel{
     {
         $query =  "SELECT DISTINCT U.Username, U.Image
                     FROM books B
-                    JOIN pages P ON B.UIBook = P.UIBook
-                    JOIN users U ON B.UIUser = P.UIUser
-                    WHERE B.UIBook = ? AND P.UIUser <> B.UIUser";
+                    JOIN pages P ON B.UIBook = P.UIBook AND P.UIUser <> B.UIUser
+                    JOIN users U ON P.UIUser = U.UIUser
+                    WHERE B.UIBook = ?";
         return parent::SelectAll($query, [$values]);
     }
 

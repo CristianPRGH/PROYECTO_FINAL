@@ -17,7 +17,8 @@ class Comments extends Basemodel{
         $query = "SELECT U.Username, U.Image, C.Comment, C.Created_at
                 FROM $this->table AS C
                 JOIN users AS U ON C.UIUser = U.UIUser
-                WHERE UIBook = ?";
+                WHERE C.UIBook = ?
+                ORDER BY C.Created_at";
         
         return parent::SelectAll($query, [$bookid]);
     }

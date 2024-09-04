@@ -1,3 +1,5 @@
+
+
 export function BookListItem(book) {
   const id = book.UIBook;
   const cover = book.Cover != null ? book.Cover : "bk_CoverNotAvailable.png";
@@ -26,7 +28,10 @@ export function UserBookListItem(book) {
           </div>`;
 }
 
-export function BookDetail(book, coauthors) {
+export function BookDetail(book, coauthors = null, comments = null) 
+{
+  // Extender Day.js con el plugin
+  dayjs.extend(dayjs_plugin_relativeTime);
   const {
     // bk_cover: cover,
     Title: title,
@@ -35,7 +40,7 @@ export function BookDetail(book, coauthors) {
     Tags: tags,
     Rating: rating,
     userimg: authorimg,
-    Username: authorname
+    username: authorname
   } = book;
 
   const cover = book.Cover != null ? book.Cover : "bk_CoverNotAvailable.png";
@@ -47,13 +52,33 @@ export function BookDetail(book, coauthors) {
     ).join('');
   }
 
+
   const coauthorElements = coauthors.map(coauthor =>
     `<div class="flex items-center gap-x-2">
-      <img src=../images/users_avatars/${coauthor.Image} class="w-8 h-8">
+      <img src=../images/users_avatars/${coauthor.Image} class="w-7 h-7">
       <p>${coauthor.Username}</p>
       <p class="text-slate-400">|</p>
     </div>`
   ).join('');
+
+
+
+  const commentElements = comments.map(comment => {
+    const startDate = dayjs(comment.Created_at);
+    const now = dayjs();
+    
+    return `
+      <div class="flex flex-col gap-y-2 shadow-md rounded-md p-4">
+        <p>${comment.Comment}</p>
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-x-2">
+            <img src="../images/users_avatars/${comment.Image}" class="w-4 h-4">
+            <p class="text-xs">${comment.Username}</p>
+          </div>
+          <p class="text-xs">${startDate.from(now)}</p>
+        </div>
+      </div>`;
+  }).join('');
 
   // w - [128px] h - [200px]
   return `
@@ -66,22 +91,21 @@ export function BookDetail(book, coauthors) {
             <svg class="ratingStar text-green-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
                 <path class="pointer-events-none" d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
             </svg>
-            <p id="det-bookRating" class="font-bold text-sm">${Math.round(rating * 100) / 100}</p>
+            <p id="det-bookRating" class="font-bold text-sm">${Math.round(rating * 100) / 100}/5</p>
           </div>
           <div class="flex items-center">
             <img class="w-8 h-8 mr-3" src="../images/users_avatars/${authorimg}">
             <p>${authorname}</p>
           </div>
-          <p>${pages} páginas</p>
+          <p>${pages} Páginas</p>
         </div>
         <hr class="w-full border-orange-500">
         <p class="my-1 text-justify">${sinopsis}</p>
-        <hr class="w-full border-orange-500">
         <div class="flex flex-wrap justify-center gap-1">
             ${tagElements}
         </div>
-        <hr class="w-full border-orange-500">
-        ${coauthors.length ? `<p>Coautores</p><div class="flex gap-x-3">${coauthorElements}</div>` : ''}
+        ${coauthors.length ? `<div class="p-2"><p class="mb-2">Coautores</p><div class="flex gap-x-3 p-2 rounded-md shadow-md">${coauthorElements}</div></div>` : ''}
+        ${comments.length ?  `<div class="p-2"><p>Comentarios</p><div class="flex flex-col gap-y-3">${commentElements}</div></div>` : ''}
     `;
 }
 
@@ -89,11 +113,11 @@ export function BookDetail(book, coauthors) {
 
 export function BookGridItem(book) {
   const id = book.UIBook;
-  const cover = book.cover != null ? book.cover : "bk_CoverNotAvailable.png";
+  const cover = book.Cover != null ? book.Cover : "bk_CoverNotAvailable.png";
 
-  const title = book.title;
+  const title = book.Title;
 
-  return `<div id="book-${id}" class="open-bookDialog flex flex-col gap-1 duration-200 hover:shadow-lg cursor-pointer rounded-md p-2">
+  return `<div id="${id}" class="open-bookDialog flex flex-col gap-1 duration-200 hover:shadow-lg cursor-pointer rounded-md p-2">
         <img src="images/books_covers/${cover}" class="rounded-md w-[85px] h-[132px] sm:w-[128px] sm:h-[200px]" alt="${title} cover">
         <p class="break-all text-xs text-center">${title}</p>
     </div>`

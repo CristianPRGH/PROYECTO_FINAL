@@ -83,6 +83,7 @@ if (isset($_GET["mode"]) && isset($_GET["bookid"])) {
             <p id="prev-page"></p>
             <p id="current-page" class="text-base text-black"></p>
             <p id="next-page"></p>
+            <p id="pageid" class="hidden"></p>
         </div>
 
         <?php
@@ -91,7 +92,7 @@ if (isset($_GET["mode"]) && isset($_GET["bookid"])) {
             <div id="menu_update">
                 <section class="grid grid-cols-4 divide-x py-3 z-1000">
                     <div class="flex items-center justify-center">
-                        <button class="home material-symbols-rounded cursor-pointer duration-100 hover:scale-125">home</button>
+                        <button id="home" class="home material-symbols-rounded cursor-pointer duration-100 hover:scale-125">home</button>
                     </div>
                     <div class="flex items-center justify-center">
                         <button class="prev rounded-md cursor-pointer material-symbols-rounded duration-100 hover:scale-125" data-dir="prev">chevron_left</button>

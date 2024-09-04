@@ -128,14 +128,19 @@ function HomeHandler()
 
 //#region Page Control
 // GUARDA EL CONTENIDO DE LA PÁGINA
-function SavePage(pageNumber, userid, content = null)
+function SavePage(pageId, pageNumber, userid, content = null)
 {
 	const index = pageNumber -1;
-	// console.log(`Guarda contenido de la pagina ${pageNumber}`);
 	// GUARDA EL CONTENIDO Y EL USUARIO
 	if (!pagesContent[index] || pagesContent[index].userid == userid)
 	{
-		pagesContent[index] = { pageid: parseInt(pageNumber), bookid: parseInt(bookid), userid: parseInt(userid), content: content };
+		pagesContent[index] = { 
+			pageid: pageId,
+			pageNumber: parseInt(pageNumber),
+			bookid: bookid,
+			userid: userid,
+			content: content 
+		};
 	}
 }
 
@@ -145,10 +150,12 @@ function LoadPage(pageNumber)
 	if (mode == "read") quill.enable(false); else quill.enable();
 	
 	const pages = Object.values(pagesContent);	// CONVIERTE EL OBJETO JSON EN UN ARRAY
-	const pageData =  pages.filter(data => data.pageid == pageNumber)[0];
+	const pageData =  pages.filter(data => data.pageNumber == pageNumber)[0];
 
-	if (pageData && pageData.content != null) {
+	if (pageData && pageData.content != null)
+	{
 		quill.setContents(pageData.content);
+		document.getElementById("pageid").textContent = pageData.pageid;
 
 		if (pageData.userid != userid)
 		{
@@ -157,6 +164,7 @@ function LoadPage(pageNumber)
 
 	}else{
 		quill.setContents();
+		document.getElementById("pageid").textContent = "";
 	}
 }
 
@@ -165,10 +173,12 @@ function PageControl(event)
 	const content     = GetQuillContent(); 		// OBTIENE EL CONTENIDO DE LA PÁGINA ACTUAL
 	const pageIsEmpty = CheckIsEmpty(content); 	// VERIFICA SI ESTÁ VACÍA O NO
 
-	if (!pageIsEmpty)
+	if (!pageIsEmpty)	// SI LA PÁGINA NO ESTÁ VACÍA...
 	{
-		if (mode == "ins" || mode == "upd") {
-			SavePage(currentPage, userid, content);
+		if (mode == "ins" || mode == "upd") //...Y ESTAS EN MODO INSERT O UPDATE:
+		{
+			const currentpageid = document.getElementById("pageid").textContent;	// RECUPERA EL ID DE LA PÁGINA ACTUAL
+			SavePage(currentpageid, currentPage, userid, content);					// GUARDA LOS DATOS DE LA PÁGINA EN EL ARRAY
 			quill.focus();
 		}
 	}
@@ -200,7 +210,8 @@ function ConfirmPages()
 
 	if (!pageIsEmpty) {
     	if (mode == "ins" || mode == "upd") {
-			SavePage(currentPage, userid, content);
+			const currentpageid = document.getElementById("pageid").textContent;
+			SavePage(currentpageid, currentPage, userid, content);
 			quill.focus();
     	}
   	}
@@ -214,7 +225,7 @@ function ConfirmPages()
 		document.getElementById("write-yes").addEventListener("click", async () => {
 			await InsertPages();
 
-			window.location = `../view/book_detail.php?bookid=${bookid}`;
+			// window.location = `../view/book_detail.php?bookid=${bookid}`;
 		});
 
 		document.getElementById("write-no").addEventListener("click", () => {
@@ -354,8 +365,9 @@ async function GetBookContent()
 			if (bookAuthorId == null) bookAuthorId = page.UIUser;
 			const pageid = page.UIPage;
 			const authorid = page.UIUser;
+			const pageNumber = page.PageNumber;
 			const parsedContent = JSON.parse(page.Content);
-			SavePage(pageid, authorid, parsedContent);
+			SavePage(pageid, pageNumber , authorid, parsedContent);
 		});
 	
 		// console.log();

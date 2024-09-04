@@ -154,7 +154,7 @@ export class Book {
       });
       if (response.ok) {
         const result = await response.json();
-        return result.data.pages;
+        return result.data.Pages;
       }
     } catch (error) {
       console.log(error);

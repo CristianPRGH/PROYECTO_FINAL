@@ -1,5 +1,9 @@
 {
   "dependencies": {
+    "dayjs": "^1.11.13",
     "flowbite": "^2.5.1"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.10"
   }
 }

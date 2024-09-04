@@ -113,7 +113,7 @@
 
     <section id="menu" class="fixed bottom-4 left-1/2 -translate-x-1/2 h-fit flex flex-col shadow-md shadow-black/40 min-w-96 bg-white/90 backdrop-blur-md rounded-xl opacity-100 z-40 ">
         <article class="relative w-full flex">
-            <input type="text" id="searchByNameValue" class="w-full p-1 pl-8 rounded-t-md border-0 focus:border-transparent focus:ring-0 focus:shadow-md focus:bg-[#A8E6CF] placeholder:italic placeholder:text-xs" placeholder="Título | autor">
+            <input type="text" id="searchByNameValue" class="w-full p-1 pl-8 rounded-t-md xl:rounded-md border-0 focus:border-transparent focus:ring-0 focus:shadow-md focus:bg-[#A8E6CF] placeholder:italic placeholder:text-xs" placeholder="Título | autor">
             <!-- <button id="searchByName" class="material-symbols-rounded rounded-tr-md px-3 bg-[#333] text-white">search</button> -->
             <i class="material-symbols-rounded form-icon">search</i>
         </article>
@@ -138,8 +138,8 @@
                 <img id="det-bookCover" src="" alt="" class="h-[200px] w-[128px] rounded-md shadow-md">
             </div>
             <div class="h-full w-full flex flex-col gap-1 justify-start">
-                <p id="det-bookTitle" class="font-bold truncate text-center">Titulo prueba</p>
-                <div class="flex gap-1 items-center justify-center">
+                <p id="det-bookTitle" class="font-bold truncate">Titulo prueba</p>
+                <div class="flex gap-1 items-center">
                     <img id="det-bookAuthorImg" src="images/users_avatars/user-default.png" alt="" class="h-6 w-6">
                     <p id="det-bookAuthor">Titulo prueba</p>
                 </div>

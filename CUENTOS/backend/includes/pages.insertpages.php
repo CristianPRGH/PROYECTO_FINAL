@@ -10,7 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && count($_POST["pages"]) > 0)
     foreach ($pagesData as $page)
     {
         $page = json_decode($page, true);
-        $newpage = new PageControl($page["bookid"], $page["pageid"], json_encode($page["content"]) , $page["userid"]);
+        $newpage = new PageControl($page["pageid"],$page["bookid"], $page["pageNumber"], json_encode($page["content"]) , $page["userid"]);
         $result  = $newpage->InsertNewPage();
         array_push($results, $result);
     }

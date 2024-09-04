@@ -4,12 +4,21 @@ import { BookDetail } from "../components/book_item.js";
 let bookid;
 
 document.addEventListener("DOMContentLoaded", () => {
-  bookid = window.location.href.split("=").pop();
+  GetUrlParams();
+
+  // bookid = window.location.href.split("=").pop();
   const bookClass = new Book();
   GetBookDetail(bookClass);
 
   InitializeEvents();
 });
+
+function GetUrlParams() {
+  // Obtiene los parametros en la URL
+  const urlString = window.location.search;
+  const urlParams = new URLSearchParams(urlString);
+  bookid = urlParams.get("bookid");
+}
 
 async function GetBookDetail(bookClass) 
 {
@@ -18,7 +27,7 @@ async function GetBookDetail(bookClass)
     const coauthors = await bookClass.SearchBookCoauthors(bookid);
     const comments  = await bookClass.SearchBookComments(bookid);
     // console.log(comments);
-    const bookdata  = BookDetail(book.data, coauthors.data);
+    const bookdata  = BookDetail(book.data, coauthors.data, comments.data);
 
     document.getElementById("book-detail").innerHTML = bookdata;
 }

@@ -149,10 +149,12 @@ async function SetBookDetail(toggle)
     {
       const bookdata = book.data;
       const cover = bookdata.Cover != null ? bookdata.Cover : "bk_CoverNotAvailable.png";
+
+      console.log(bookdata)
   
       document.getElementById("det-bookCover").src          = `images/books_covers/${cover}`;
       document.getElementById("det-bookTitle").textContent  = bookdata.Title;
-      document.getElementById("det-bookAuthor").textContent = bookdata.Username;
+      document.getElementById("det-bookAuthor").textContent = bookdata.username;
       document.getElementById("det-bookAuthorImg").src      = `images/users_avatars/${bookdata.userimg}`;
       document.getElementById("det-bookViews").textContent  = bookdata.Views;
       document.getElementById("det-bookMoreDetails").dataset.bookid = bookdata.UIBook;
