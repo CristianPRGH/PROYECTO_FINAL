@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // CARGA LA LISTA DE LIBROS EN EL CAROUSEL
   SetupSwiper();
+  await SetTags();
   await SetupMainBooksList();
 
   // CONFIGURA LOS ELEMENTOS PARA ABRIR EL DIALOG DEL DETALLE DEL LIBRO
@@ -143,14 +144,11 @@ async function SetBookDetail(toggle)
 {
     // BUSCAR LA INFORMACION DEL LIBRO EN LA LISTA DE LIBROS OBTENIDA DEL SERVIDOR MEDIANTE EL ID DEL LIBRO
     const bookid = toggle.id;
-    console.log(bookid)
     const book   = await bookClass.SearchBookById(bookid);
     if (book != null)
     {
       const bookdata = book.data;
       const cover = bookdata.Cover != null ? bookdata.Cover : "bk_CoverNotAvailable.png";
-
-      console.log(bookdata)
   
       document.getElementById("det-bookCover").src          = `images/books_covers/${cover}`;
       document.getElementById("det-bookTitle").textContent  = bookdata.Title;
@@ -193,6 +191,26 @@ async function SearchBooksByFilters()
     ).join('')
   
     SetupOpenBookDialog();
+  }
+}
+
+async function SetTags() {
+  try {
+    const response = await fetch("backend/includes/tags.getall.php");
+    if (response.ok) {
+      const result = await response.json();
+      const select = document.getElementById("filter-tags-select");
+      result.data.map(tag => {
+        // console.log(category);
+        const option = document.createElement("option");
+        option.setAttribute("class", "form-select-option");
+        option.value = tag.Name;
+        option.text = tag.Name;
+        select.appendChild(option);
+      })
+    }
+  } catch (error) {
+    console.error(error);
   }
 }
 

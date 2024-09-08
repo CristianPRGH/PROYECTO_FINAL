@@ -5,7 +5,7 @@ class Category extends Basemodel{
 
     protected function SelectAllCategories()
     {
-        $query = "SELECT *, (Min_pages + Max_pages) / 2 AS avg_pages
+        $query = "SELECT *, (Min_pages + Max_pages) / 2 AS Avg_pages
         FROM $this->table";
         return parent::SelectAll($query);
     }

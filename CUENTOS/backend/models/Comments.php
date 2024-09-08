@@ -18,7 +18,7 @@ class Comments extends Basemodel{
                 FROM $this->table AS C
                 JOIN users AS U ON C.UIUser = U.UIUser
                 WHERE C.UIBook = ?
-                ORDER BY C.Created_at";
+                ORDER BY C.Created_at DESC";
         
         return parent::SelectAll($query, [$bookid]);
     }

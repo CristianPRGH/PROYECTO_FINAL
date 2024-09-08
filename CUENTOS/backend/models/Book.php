@@ -20,12 +20,12 @@ class Book extends Basemodel{
         return parent::UpdateRows($query, $values);
     }
 
-    protected function SelectBookPages($values)
+    protected function SelectBookPages($id)
     {
-        $query = "SELECT Pages
+        $query = "SELECT UIBook, Pages
         FROM $this->table 
-        WHERE UIBook = ?";
-        return parent::SelectOne($query, [$values]);
+        WHERE Id = ? OR UIBook = ?";
+        return parent::SelectOne($query, [$id,$id]);
     }
 
     protected function SelectBooks()

@@ -6,7 +6,7 @@ export function BookListItem(book) {
   const title = book.Title.length > 20 ? `${book.Title.substring(0, 20)}...` : book.Title;
 
   return `<div id="${id}" class="swiper-slide open-bookDialog bg-transparent w-fit h-full flex flex-col gap-1 px-1 justify-center items-center duration-200 hover:shadow-lg cursor-pointer">
-                <img src="/MySites/PROYECTO_FINAL/CUENTOS/images/books_covers/${cover}" class="rounded-md w-[85px] h-[132px] sm:w-[128px] sm:h-[200px]" alt="${title} cover">
+                <img src="images/books_covers/${cover}" class="rounded-md w-[85px] h-[132px] sm:w-[128px] sm:h-[200px]" alt="${title} cover">
                 <p class="break-all text-xs text-center">${title}</p>
             </div>`;
 }
@@ -14,16 +14,28 @@ export function BookListItem(book) {
 export function UserBookListItem(book) {
   const id = book.UIBook;
   const cover = book.Cover != null ? book.Cover : "bk_CoverNotAvailable.png";
-  const title = book.Title.length > 20 ? `${book.title.substring(0, 20)}...` : book.Title;
+  const title = book.Title.length > 20 ? `${book.Title.substring(0, 20)}...` : book.Title;
 
   return `<div id="book-${id}" class="relative group/item bg-transparent w-fit h-full flex flex-col gap-1 justify-center items-center rounded-md duration-200 hover:shadow-lg hover:scale-110 hover:bg-orange-500/10">
-              <img src="/MySites/PROYECTO_FINAL/CUENTOS/images/books_covers/${cover}" class="rounded-md w-[85px] h-[132px] sm:w-[128px] sm:h-[200px] group-hover/item:blur-sm" alt="${title} cover">
+              <img src="../images/books_covers/${cover}" class="rounded-md w-[85px] h-[132px] sm:w-[128px] sm:h-[200px] group-hover/item:blur-sm" alt="${title} cover">
               <p class="break-all text-xs text-center">${title}</p>
-              <div class="absolute w-full grid grid-cols-2 justify-center items-center invisible group-hover/item:visible">
-                <button type="button" class="readbook  bg-[#333]/60 text-white py-2 material-symbols-rounded hover:bg-green-400/10 rounded-lg" data-id="${id}">menu_book</button>
-                <button type="button" class="editbook  bg-[#333]/60 text-white py-2 material-symbols-rounded hover:bg-green-400/10 rounded-lg" data-id="${id}">contract_edit</button>
-                <button type="button" class="editpages bg-[#333]/60 text-white py-2 material-symbols-rounded hover:bg-green-400/10 rounded-lg" data-id="${id}">checkbook</button>
-                <button type="button" class="deletebook bg-[#333]/60 text-white py-2 material-symbols-rounded hover:text-red-500 hover:bg-green-400/10 rounded-lg" data-id="${id}">delete_forever</button>
+              <div class="absolute w-full flex flex-col gap-2 justify-center items-center invisible group-hover/item:visible">
+                <button type="button" class="group readbook w-full bg-[#333]/60 text-white py-1 hover:bg-green-400/10 rounded-lg" data-id="${id}">
+                  <span class="material-symbols-rounded inline group-hover:hidden">menu_book</span>
+                  <span class="hidden text-xs font-bold tracking-wider  group-hover:inline">Leer</span>
+                </button>
+                <button type="button" class="group editbook w-full bg-[#333]/60 text-white py-1 hover:bg-green-400/10 rounded-lg" data-id="${id}">
+                  <span class="material-symbols-rounded inline group-hover:hidden">contract_edit</span>
+                  <span class="hidden text-xs font-bold tracking-wider  group-hover:inline">Mod. libro</span>
+                </button>
+                <button type="button" class="group editpages w-full bg-[#333]/60 text-white py-1 hover:bg-green-400/10 rounded-lg" data-id="${id}">
+                  <span class="material-symbols-rounded inline group-hover:hidden">checkbook</span>
+                  <span class="hidden text-xs font-bold tracking-wider group-hover:inline">Mod. páginas</span>
+                </button>
+                <button type="button" class="group deletebook w-full bg-[#333]/60 text-white py-1 hover:bg-red-500/10 rounded-lg hover:text-red-500" data-id="${id}">
+                  <span class="material-symbols-rounded inline group-hover:hidden">delete_forever</span>
+                  <span class="hidden text-xs font-bold tracking-wider group-hover:inline">Eliminar</span>
+                </button>
               </div>
           </div>`;
 }

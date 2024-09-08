@@ -70,11 +70,13 @@ async function GetLoggedUserInfo()
         if (response.ok)
         {
             const result = await response.json();
-            const username = result.data.Username;
-            const userimg = result.data.Image;
+            const data = result.data;
 
-            document.getElementById("logged-username").textContent = username;
-            document.getElementById("logged-userimg").src = `images/users_avatars/${userimg}`;
+            document.getElementById("logged-username").textContent = data.Username;
+            document.getElementById("logged-userimg").src = `images/users_avatars/${data.Image}`;
+            document.getElementById("author-of-books").textContent = data.AuthorOfBooks;
+            document.getElementById("coauthor-of-books").textContent = data.CoauthorOfBooks;
+
         }
     } catch (error) {
         console.error(error);

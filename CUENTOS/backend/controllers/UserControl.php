@@ -1,12 +1,11 @@
 <?php
 
 class UserControl extends User{
-    
-    // use TValidations;
+
     use SaveImages;
 
     private $formValid = array();
-    private $id, $username, $email, $password, $image;
+    private $id, $username, $email, $password, $image, $token;
     private $imagesFolder = "../../images/users_avatars/";
 
     public function __construct($username = null, $email = null, $password = null, $image = null, $id = null)
@@ -26,12 +25,14 @@ class UserControl extends User{
     public function SetEmail($email){ $this->email = $email; }
     public function SetPassword($password){ $this->password = $password; }
     public function SetImage($image){ $this->image = $image; }
+    public function SetToken($token){ $this->token = $token; }
 
     public function GetId(){ return $this->id; }
     public function GetUsername(){ return $this->username; }
     public function GetEmail(){ return $this->email; }
     public function GetPassword(){ return $this->password; }
     public function GetImage(){ return $this->image; }
+    public function GetToken(){ return $this->token; }
 
 
 
@@ -45,7 +46,27 @@ class UserControl extends User{
 
     public function ValidateLogin()
     {
-        return parent::CheckLogin($this->username, $this->password);
+        $result = parent::CheckLogin($this->username, $this->password);
+
+        if ($result["error"] == 0) {
+            $hashedpwd = $result["data"]["password"];
+
+            if (!password_verify($this->password, $hashedpwd)) {
+                $result["error"] = 1;
+                $result["msg"] = "Usuario o contraseña no válidos";
+                return $result;
+            } else {
+                session_start();
+                $_SESSION["userid"]   = $result["data"]["UIUser"];
+                $_SESSION["username"] = $this->username;
+                $result["error"] = 0;
+                return $result;
+            }
+        } else {
+            $result["error"] = 1;
+            $result["msg"] = "Usuario o contraseña no válidos";
+            return $result;
+        }
     }
 
     public function InsertNewUser()
@@ -55,7 +76,6 @@ class UserControl extends User{
         if ($res[0])
             return parent::InsertUser([$this->username, $this->email, $this->password, $res[1]]);
     }
-
 
     public function ValidateUsernameExists()
     {
@@ -72,6 +92,48 @@ class UserControl extends User{
         return parent::SelectUserInfo($this->id);
     }
 
+    public function GetUserEmail()
+    {
+        $resultUserData = parent::SelectUserEmail($this->username, $this->email);
+        if ($resultUserData["error"] == 2)
+        {
+            $resultUserData["msg"] = "Usuario o email no encontrado";
+            return $resultUserData;
+        }
+        else
+        {
+            return $this->SendResetPasswordEmail($resultUserData);
+        }
+    }
+
+    private function SendResetPasswordEmail($resultUserData)
+    {
+        $this->SetUsername($resultUserData["data"]["Username"]);
+        $this->SetEmail($resultUserData["data"]["Email"]);
+        $this->SetId($resultUserData["data"]["UIUser"]);
+
+        $resultTokenGenerated = parent::GenerateUserToken($this->id);
+
+        if ($resultTokenGenerated["affectedRows"] > 0) {
+            $resultUserToken = parent::SelectUserToken($this->id);
+
+            if ($resultUserToken["error"] == 0) 
+            {
+                $this->SetToken($resultUserToken["data"]["Token"]);
+                $subject = 'Recuperación de contraseña';
+                $emailBody = '<a href="http://localhost/MySites/PROYECTO_FINAL/CUENTOS/view/passwordRecover.php?token=' . $this->token . '">Pulse aquí para cambiar la contraseña</a>';
+
+                $sender = new EmailSender();
+                return $sender->sendEmailHandler($this->email, $this->username, $emailBody, $subject);
+            }
+        }
+    }
+
+    public function ResetPassword()
+    {
+        return parent::UpdateUserPassword($this->token, $this->password);
+    }
+
 
     // PRIVATE METHODS ----------------------------------------------------------------------
 
@@ -86,42 +148,4 @@ class UserControl extends User{
 
         return $result;
     }
-
-    // private function SaveImage()
-    // {
-    //     $userImagesFolder = "../../images/users_avatars/";
-
-    //     // Verifica si el directorio existe, si no, créalo
-    //     if (!is_dir($userImagesFolder)) {
-    //         if (!mkdir($userImagesFolder, 0777, true)) {
-    //             return [false, ""]; // Falló al crear el directorio
-    //         }
-    //     }
-
-    //     $imgname = $this->image["name"];
-    //     $tmpname = $this->image["tmp_name"];
-    //     $namesplit = explode('.', $imgname);
-    //     $imgext    = array_pop($namesplit);
-
-    //     $imagenewname = $this->username."image";
-    //     $imagenewname = hash('sha256', $imagenewname).'.'.$imgext;
-
-    //     $fullpath = $userImagesFolder.$imagenewname;
-
-    //     // Verifica si el archivo temporal existe
-    //     if (!file_exists($tmpname)) {
-    //         error_log("Temp file does not exist: $tmpname");
-    //         return [false, ""];
-    //     }
-
-    //     if (move_uploaded_file($tmpname, $fullpath)) {
-            
-    //         print_r($imagenewname);
-    //         return [true, $imagenewname];
-    //     } else {
-    //         error_log("Failed to move uploaded file");
-    //     }
-
-    //     return [false, ""];
-    // }
 }

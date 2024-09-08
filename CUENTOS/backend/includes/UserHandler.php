@@ -32,6 +32,12 @@ class UserHandler
                 case "insertUser":
                     $this->insertUser();
                     break;
+                case "getUserEmail":
+                    $this->getUserEmail();
+                    break;
+                case "resetPassword":
+                    $this->resetPassword();
+                    break;
                 case "logout":
                     $this->logout();
                     break;
@@ -96,6 +102,28 @@ class UserHandler
 
         $this->userControl = new UserControl($username, $email, $password, $image);
         $result = $this->userControl->InsertNewUser();
+
+        $this->sendResponse($result);
+    }
+
+    private function getUserEmail()
+    {
+        $value = $_POST["value"];
+        $this->userControl->SetEmail($value);
+        $this->userControl->SetUsername($value);
+        $result = $this->userControl->GetUserEmail();
+
+        $this->sendResponse($result);
+    }
+
+    private function resetPassword()
+    {
+        $password = $_POST["password"];
+        $token = $_POST["token"];
+
+        $this->userControl->SetPassword($password);
+        $this->userControl->SetToken($token);
+        $result = $this->userControl->ResetPassword();
 
         $this->sendResponse($result);
     }

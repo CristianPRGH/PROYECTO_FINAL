@@ -24,17 +24,19 @@ $userid = $_SESSION["userid"];
 
 <body>
     <p id="user-id" class="hidden"><?= $userid; ?></p>
-    <main class="w-full h-full">
-        <section id="books-list" class="w-full gap-4 p-20 flex flex-wrap justify-start">
+    <main class="w-full h-full pt-6">
+        <h1 class="text-3xl text-center font-bold">TU BIBLIOTECA</h1>
+        <hr class="border-2 border-orange-500">
+        <section id="books-list" class="w-full gap-4 p-20 flex flex-wrap justify-center">
         </section>
     </main>
 
     <dialog id="delete-book" class="fixed z-50 scale-0 m-auto w-96 h-fit p-4 rounded-md bg-white/30 backdrop:bg-[#333]/30 backdrop:backdrop-blur-md shadow-lg">
         <p id="det-bookId" class="hidden"></p>
-        <div class="flex justify-between items-center bg-[#333]/10 rounded-md">
-            <button id="confirm-delete" type="button" class="bg-green-300 p-2 w-16 rounded-md hover:shadow-md">Si</button>
-            <p class="text-center text-lg">Desea eliminar el libro?</p>
-            <button id="cancel-delete" type="button" class="bg-red-300 p-2 w-16 rounded-md hover:shadow-md">No</button>
+        <p class="text-center text-lg">Desea eliminar el libro?</p>
+        <div class="flex justify-center items-center gap-x-3">
+            <button id="confirm-delete" type="button" class="confirm-delete bg-green-300 p-2 w-16 rounded-md hover:shadow-md">Si</button>
+            <button id="cancel-delete" type="button" class="cancel-delete bg-red-300 p-2 w-16 rounded-md hover:shadow-md">No</button>
         </div>
     </dialog>
 </body>

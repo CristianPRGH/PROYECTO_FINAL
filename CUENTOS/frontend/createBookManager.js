@@ -63,25 +63,6 @@ async function SetCategories()
     }
 }
 
-async function SetTags()
-{
-    try {
-        const response = await fetch("../backend/includes/tags.getall.php");
-        if (response.ok)
-        {
-            const result = await response.json();
-            const select = document.getElementById("tags-list");
-            result.data.map(tag =>{
-                // console.log(category);
-                const option = document.createElement("option");
-                option.value = tag.tag;
-                select.appendChild(option);
-            })
-        }
-    } catch (error) {
-        console.error(error);
-    }
-}
 
 function GetUrlParams() {
     // Obtiene los parametros en la URL
@@ -93,6 +74,25 @@ function GetUrlParams() {
 
 
 //#region Tags control
+
+async function SetTags() {
+    try {
+        const response = await fetch("../backend/includes/tags.getall.php");
+        if (response.ok) {
+            const result = await response.json();
+            const select = document.getElementById("tags-list");
+            result.data.map(tag => {
+                // console.log(category);
+                const option = document.createElement("option");
+                option.value = tag.Name;
+                select.appendChild(option);
+            })
+        }
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 function AddNewTagInput(isInsert = true)
 {
     UpdateTagsJson(); // Actualiza el Json de tags
@@ -164,7 +164,7 @@ function SetPages(event)
         inputpages.value = "1";
     }
     else{
-        const selected = event.target.options[value];
+        const selected = event.target.options[event.target.selectedIndex];
         const pages = Math.round(selected.dataset.avgpages);
         inputpages.value = pages;
         SetPagesValue(pages)

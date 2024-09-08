@@ -37,21 +37,25 @@ function InitializeEvents()
     Array.from(readbttns).map(bttn => {
         bttn.addEventListener('click', ReadBook);
     })
+
+    const confirmDeleteBttns = document.getElementsByClassName("confirm-delete");
+    Array.from(confirmDeleteBttns).map(bttn => {
+        bttn.addEventListener('click', DeleteBook);
+    })
+
+    const cancelDeleteBttns = document.getElementsByClassName("cancel-delete");
+    Array.from(cancelDeleteBttns).map(bttn => {
+        bttn.addEventListener('click', ()=>{
+            document.getElementById("confirm-delete").dataset.id = "";
+            ToggleBookDetail(tween_bookDialog)
+        });
+    })
 }
 
 function OpenDeleteModal(event)
 {
     ToggleBookDetail(tween_bookDialog);
-
-    const id = event.target.dataset.id;
-    // document.getElementById("det-bookId").textContent = id;
-
-    document.getElementById("confirm-delete").addEventListener('click', ()=>{
-        DeleteBook(id);
-    });
-    document.getElementById("cancel-delete").addEventListener('click', ()=>{
-        ToggleBookDetail(tween_bookDialog);
-    });
+    document.getElementById("confirm-delete").dataset.id = event.target.dataset.id
 }
 
 // ACTIVA/DESACTIVA LA PANTALLA DEL DETALLE DEL LIBRO
@@ -83,8 +87,8 @@ function EditPages(e)
     window.location.href = `pages_manager.php?bookid=${bookid}&mode=upd`;
 }
 
-function DeleteBook(id)
+function DeleteBook(event)
 {
-    bookclass.DeleteBook(id);
+    bookclass.DeleteBook(event.target.dataset.id);
     ToggleBookDetail(tween_bookDialog);
 }

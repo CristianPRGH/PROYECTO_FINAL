@@ -127,21 +127,40 @@ function HomeHandler()
 //#endregion
 
 //#region Page Control
+
 // GUARDA EL CONTENIDO DE LA PÁGINA
-function SavePage(pageId, pageNumber, userid, content = null)
+function SavePage(page)	//pageId, pageNumber, userid, content = null)
 {
-	const index = pageNumber -1;
+	const index = page.PageNumber -1;
+
 	// GUARDA EL CONTENIDO Y EL USUARIO
 	if (!pagesContent[index] || pagesContent[index].userid == userid)
 	{
 		pagesContent[index] = { 
-			pageid: pageId,
-			pageNumber: parseInt(pageNumber),
+			pageid: page.UIPage,
+			pageNumber: parseInt(page.PageNumber),
 			bookid: bookid,
-			userid: userid,
-			content: content 
+			userid: page.UIUser,
+			content: page.Content,
+			username: page.Username,
+			userimg: page.Userimg
 		};
 	}
+}
+
+function PrepareSavePage(UIPage,UIUser,PageNumber,Content,Username,Image)
+{
+	const newpage = {
+		"UIPage": UIPage,
+		"UIUser": UIUser,
+		"PageNumber": PageNumber,
+		"Content": Content,
+		"Username": Username,
+		"Userimg": Image
+	}
+
+	SavePage(newpage);
+	return newpage;
 }
 
 // CARGA EL CONTENIDO EN EL EDITOR
@@ -178,7 +197,9 @@ function PageControl(event)
 		if (mode == "ins" || mode == "upd") //...Y ESTAS EN MODO INSERT O UPDATE:
 		{
 			const currentpageid = document.getElementById("pageid").textContent;	// RECUPERA EL ID DE LA PÁGINA ACTUAL
-			SavePage(currentpageid, currentPage, userid, content);					// GUARDA LOS DATOS DE LA PÁGINA EN EL ARRAY
+			const username = document.getElementById("username").textContent;
+			const userimg = document.getElementById("userimg").src.split("/").pop();
+			PrepareSavePage(currentpageid, userid, currentPage, content, username, userimg);					// GUARDA LOS DATOS DE LA PÁGINA EN EL ARRAY
 			quill.focus();
 		}
 	}
@@ -201,6 +222,14 @@ function SetPages()
 	document.getElementById("prev-page").textContent  = currentPage > 1 ? currentPage - 1 : "";
 	document.getElementById("current-page").innerHTML = `<strong>${currentPage}</strong>`;
 	document.getElementById("next-page").textContent  = currentPage < numPages ? currentPage + 1 : "";
+
+	pagesContent.map(page =>{
+		if (currentPage == page.pageNumber)
+		{
+			document.getElementById("username").textContent = page.username;
+			document.getElementById("userimg").src = `../images/users_avatars/${page.userimg}`;
+		}
+	})
 }
 
 function ConfirmPages()
@@ -211,7 +240,7 @@ function ConfirmPages()
 	if (!pageIsEmpty) {
     	if (mode == "ins" || mode == "upd") {
 			const currentpageid = document.getElementById("pageid").textContent;
-			SavePage(currentpageid, currentPage, userid, content);
+			PrepareSavePage(currentpageid, userid,currentPage, content, null, null);
 			quill.focus();
     	}
   	}
@@ -305,7 +334,10 @@ function ResetRatingStars() {
 async function GetBookPages() 
 {
 	const book = new Book();
-	numPages = await book.SearchBookPages(bookid);
+	const res = await book.SearchBookPages(bookid);
+
+	bookid = res.data.UIBook;
+	numPages = res.data.Pages;
 }
 
 async function InsertPages() 
@@ -314,7 +346,6 @@ async function InsertPages()
 		const formdata = new FormData();
 		for (const index in pagesContent)
 		{
-			console.log(JSON.stringify(pagesContent[index]));
 			formdata.append("pages[]", JSON.stringify(pagesContent[index]));
 		}
 
@@ -324,8 +355,20 @@ async function InsertPages()
 		});
 
 		if (response.ok) {
-		const result = await response.json();
-		console.table(result);
+			const res = await response.json();
+			const allOk = res.every(result => result.error == 0);
+
+			if (allOk)
+			{
+				window.location.href = "../index.php";
+			}
+			else{
+				let array = [];
+				res.forEach(result => {
+					array.push(result.pagenumber);
+				});
+				alert(`Hay páginas que no se han guardado. \n ${array.toString()}`);
+			}
 		}
 	} catch (error) {
 		console.log(error);
@@ -358,19 +401,22 @@ async function GetBookContent()
 {
 	const bookClass = new Book();
 	const bookPages = await bookClass.SearchBookContent(bookid);
+	let pages = [];
 	
 	if(bookPages != null)
 	{
 		bookPages.data.map((page) => {
 			if (bookAuthorId == null) bookAuthorId = page.UIUser;
-			const pageid = page.UIPage;
-			const authorid = page.UIUser;
-			const pageNumber = page.PageNumber;
-			const parsedContent = JSON.parse(page.Content);
-			SavePage(pageid, pageNumber , authorid, parsedContent);
+			const newpage = PrepareSavePage(page.UIPage,
+				page.UIUser,
+				page.PageNumber,
+				JSON.parse(page.Content),
+				page.Username,
+				page.Image)
+
+			pages.push(newpage);
 		});
-	
-		// console.log();
+
 		if (mode == "read") numPages = bookPages.data.length;
 	}
 }

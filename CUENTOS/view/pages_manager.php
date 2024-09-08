@@ -79,6 +79,11 @@ if (isset($_GET["mode"]) && isset($_GET["bookid"])) {
     </main>
 
     <section id="menu" class="absolute bottom-4 left-1/2 -translate-x-1/2 h-fit flex flex-col  shadow-md shadow-black/40 min-w-96 bg-white/90 backdrop-blur-md rounded-xl opacity-100">
+        <div class="flex items-center gap-x-2 py-1 pl-4">
+            <p class="text-xs">Usuario:</p>
+            <p id="username" class="text-xs"></p>
+            <img id="userimg" src="" alt="" class="w-4 h-4">
+        </div>
         <div id="menuheader" class="flex align-bottom justify-between items-center text-xs px-2 bg-slate-200 rounded-t-md">
             <p id="prev-page"></p>
             <p id="current-page" class="text-base text-black"></p>

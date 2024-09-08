@@ -2,7 +2,7 @@ import * as tweens from "../components/tweenControls.js";
 import {ValidateInputs, ValidateOnServer} from "./formValidations.js";
 import {InputJson, SetInputsToFormData} from "../components/inputsManager.js";
 
-let tweenLogin, tweenRegister, tweenErrorIcon, tweenValidIcon;
+let tweenLogin, tweenRegister, tweenRstPwd, tweenErrorIcon, tweenValidIcon;
 const validationErrors = {
     "formValid":false,
     "validations":{}
@@ -17,6 +17,7 @@ function InitializeTweens()
 {
     tweenLogin     = gsap.to("#login-form",    {duration: 1, yPercent: -100, opacity: 0, ease:"sine.inOut", paused:true});
     tweenRegister  = gsap.to("#register-form", {duration: 1, yPercent: -100, opacity: 1, ease:"sine.inOut", paused:true});
+    tweenRstPwd    = gsap.to("#reset-password-form", {duration: 0.8, yPercent: -200, opacity: 1, ease:"sine.inOut", paused:true});
     tweenErrorIcon = gsap.fromTo(".form-error-icon", {y:-5}, {duration: 0.5, y:0, ease:"bounce", paused:true});
     tweenValidIcon = gsap.fromTo(".form-valid-icon", {y:-5}, {duration: 0.5, y:0, ease:"bounce", paused:true});
 }
@@ -24,9 +25,11 @@ function InitializeTweens()
 function InitializeEvents()
 {
     document.getElementById("to-signup").addEventListener('click', HandleSignupLink);
+    document.getElementById("to-rstpwd").addEventListener('click', HandleResetPasswordLink);
     document.getElementById("submit-register").addEventListener('click', () => {HandleSignupSubmit()});
     document.getElementById("submit-login").addEventListener('click', ()=>{HandleLoginSubmit()});
-    document.getElementById('input-userimg').addEventListener('change', () => {HandleSigninUserImg()});
+    document.getElementById("submit-rstpasw").addEventListener('click', ()=>{HandleResetPasswordSubmit()});
+    document.getElementById('input-userimg').addEventListener('change', HandleSigninUserImg);
 
     document.getElementById("input-username").addEventListener("blur", HandleUsernameExists);
     document.getElementById("input-email").addEventListener("blur", HandleEmailExists);
@@ -34,6 +37,11 @@ function InitializeEvents()
 
 
 
+function HandleResetPasswordLink()
+{
+    tweens.PlayAnimation(tweenLogin);
+    tweens.PlayAnimation(tweenRstPwd);
+}
 
 function HandleSignupLink()
 {
@@ -58,9 +66,53 @@ async function HandleSignupSubmit()
 async function HandleLoginSubmit()
 {
     const res = await ValidateLogin();
-    if (res)
+    if (res == 0)
     {
         window.location.href = "../index.php";
+    }
+}
+
+async function HandleResetPasswordSubmit()
+{
+    const value = document.getElementById("rstpwd-value").value;
+    const errormsg = document.getElementById("error-resetpwd");
+
+    const formdata = new FormData();
+    formdata.append("action", "getUserEmail");
+    formdata.append("value", value);
+
+    if (value == "")
+    {
+        ToggleErrorText(1, "Debe introducir un email o nombre de usuario", errormsg);
+    }
+    else{
+        try {
+            const response = await fetch("../backend/includes/UserHandler.php",{
+                method:"post",
+                body:formdata
+            })
+            if (response.ok)
+            {
+                const res = await response.json();
+
+                // ToggleErrorText(res.error, res.msg, errormsg);
+                if (res.error == 0)
+                {
+                    errormsg.classList.remove("invisible", "text-red-600");
+                    errormsg.classList.add("visible", "text-green-500");
+                    errormsg.textContent = res.msg;
+
+                    //code before the pause
+                    setTimeout(function () {
+                        window.location.href = "auth.html";
+                    }, 5000);
+
+                    // window.location.href = "../view/auth.html";
+                }
+            }
+        } catch (error) {
+            console.log(error);
+        }
     }
 }
 
@@ -111,36 +163,49 @@ async function ValidateLogin()
 {
     const username = document.getElementById("username").value;
     const password = document.getElementById("password").value;
+    const errormsg = document.getElementById("error-login");
+
+
+
     const formdata = new FormData();
     formdata.append("action","checkLogin");
     formdata.append("username",username);
     formdata.append("password",password);
 
-    try {
-        const response = await fetch("../backend/includes/UserHandler.php",{
-            method:"post",
-            body: formdata
-        })
-        if (response.ok)
-        {
-            const result = await response.json();
-            const errormsg = document.getElementById("error-login");
-
-            if (!result[0])
+    if (username == "" || password == "")
+    {
+        console.log("hola")
+        ToggleErrorText(1, "Debe introducir el nombre de usuario y la contraseña.", errormsg);
+    }
+    else{
+        try {
+            const response = await fetch("../backend/includes/UserHandler.php",{
+                method:"post",
+                body: formdata
+            })
+            if (response.ok)
             {
-                errormsg.textContent = result[1];
-                errormsg.classList.remove("invisible");
-                errormsg.classList.add("visible");
+                const res = await response.json();
+                console.log(res);
+                
+                ToggleErrorText(res.error, res.msg, errormsg);
+    
+                // if (!res[0])
+                // {
+                //     errormsg.textContent = result[1];
+                //     errormsg.classList.remove("invisible");
+                //     errormsg.classList.add("visible");
+                // }
+                // else{
+                //     errormsg.classList.remove("visible");
+                //     errormsg.classList.add("invisible");
+                // }
+    
+                return res.error;
             }
-            else{
-                errormsg.classList.remove("visible");
-                errormsg.classList.add("invisible");
-            }
-
-            return result[0];
+        } catch (error) {
+            console.error(error);
         }
-    } catch (error) {
-        console.error(error);
     }
 }
 
@@ -209,4 +274,17 @@ function ResetRegisterForm()
     });
 
     document.getElementById("input-profilepic").src = "../images/users_avatars/user-default.png";
+}
+
+function ToggleErrorText(error, msg, input)
+{
+    if (error != 0) {
+        input.textContent = msg;
+        input.classList.remove("invisible");
+        input.classList.add("visible");
+    }
+    else {
+        input.classList.remove("visible");
+        input.classList.add("invisible");
+    }
 }

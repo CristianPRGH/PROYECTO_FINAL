@@ -153,8 +153,7 @@ export class Book {
         body: formdata,
       });
       if (response.ok) {
-        const result = await response.json();
-        return result.data.Pages;
+        return await response.json();
       }
     } catch (error) {
       console.log(error);

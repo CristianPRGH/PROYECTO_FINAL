@@ -20,7 +20,7 @@
 
 </head>
 
-<body class="flex">
+<body class="flex ">
     <!-- <aside id="menu-bookfilters" class="flex flex-col justify-between bg-[#A8E6CF] fixed top-0 w-full h-full p-8 z-50 -left-full opacity-0 xl:left-0 xl:w-1/4 xl:opacity-100 xl:static"> -->
     <aside id="menu-bookfilters" class="bg-[#A8E6CF] flex flex-col gap-y-4 fixed top-0 left-0 z-50 w-full h-full p-6 px-2 transition-transform -translate-x-full shadow-lg sm:w-1/2 md:w-1/2 xl:sticky xl:translate-x-0 xl:w-1/4" aria-label="Sidebar">
         <i id="closeBookFilters" data-drawer-target="menu-bookfilters" data-drawer-toggle="menu-bookfilters" class="material-symbols-rounded text-[#333333] self-end cursor-pointer xl:hidden">close</i>
@@ -30,24 +30,10 @@
                 <input type="text" id="filter-tags-input" class="w-full p-2 pl-10 rounded-md rounded-b-none text-xs placeholder:italic placeholder:text-xs border-0 focus:border-transparent focus:ring-0 focus:shadow-md" placeholder="Tags (separados por comas)">
                 <i class="material-symbols-rounded form-icon">sell</i>
             </div>
-            <select id="filter-tags-select" class=" w-full h-96 rounded-b-md border-0 text-xs focus:border-transparent focus:ring-0 focus:shadow-md" multiple>
-                <option class="form-select-option" value="1">Fantasía</option>
-                <option class="form-select-option" value="2">Acción</option>
-                <option class="form-select-option" value="3">Aventura</option>
-                <option class="form-select-option" value="4">Romance</option>
-                <option class="form-select-option" value="5">Ciencia ficción</option>
-                <option class="form-select-option" value="6">Misterio</option>
-                <option class="form-select-option" value="7">Terror</option>
-                <option class="form-select-option" value="8">Drama</option>
-                <option class="form-select-option" value="9">Histórico</option>
-                <option class="form-select-option" value="10">Comedia</option>
-                <option class="form-select-option" value="11">Thriller</option>
-                <option class="form-select-option" value="12">Biografía-Autobiografía</option>
-                <option class="form-select-option" value="13">Infantil-Juvenil</option>
-                <option class="form-select-option" value="14">Policíaca</option>
-                <option class="form-select-option" value="15">Ensayo</option>
-                <option class="form-select-option" value="16">Poesía</option>
-            </select>
+            <select id="filter-tags-select" class=" w-full h-60 border-0 text-xs focus:border-transparent focus:ring-0 focus:shadow-md" multiple></select>
+            <div class="w-full p-1 pl-4 rounded-md rounded-t-none border-0 bg-white">
+                <p class="text-xs">[Ctrl + click] para seleccionar múltiples opciones.</p>
+            </div>
         </article>
 
         <article class="w-full">
@@ -81,12 +67,18 @@
     <aside id="menu-useraccount" class="bg-[#A8E6CF] flex flex-col fixed top-0 left-0 z-50 w-full h-full p-6 px-2 transition-transform -translate-x-full shadow-lg sm:w-1/2 md:w-1/3 xl:sticky xl:translate-x-0 xl:w-1/4" aria-label="Sidebar">
         <i id="closeAccountMenu" data-drawer-target="menu-useraccount" data-drawer-toggle="menu-useraccount" class="material-symbols-rounded text-[#333333] self-start cursor-pointer xl:hidden">close</i>
 
-        <section class="flex flex-col items-center border-b-2 border-b-orange-500 py-3">
+        <section class="flex flex-col items-center py-3">
             <img id="logged-userimg" src="./images/users_avatars/user-default.png" class="w-40 h-40 justify-center rounded-full border-4 border-orange-100">
-            <div class="flex flex-col text-[#333333] w-full">
-                <p id="logged-username" class="text-center">User</p>
-                <p class="user-books">Autor de: <span class="font-bold text-orange-500">#</span> libros</p>
-                <p class="user-books">Coautor de: <span class="font-bold text-orange-500">#</span> libros</p>
+            <p id="logged-username" class="text-center font-bold">User</p>
+            <div class="flex flex-col text-[#333] w-full mt-4 py-2 border-b-2 border-b-orange-500 border-t-2 border-t-orange-500">
+                <div class="flex items-center justify-between drop-shadow-md bg-white rounded-md px-2">
+                    <p class="user-books">Autor de libros:</p>
+                    <p id="author-of-books" class="font-bold">#</p>
+                </div>
+                <div class="flex items-center justify-between drop-shadow-md bg-white rounded-md px-2">
+                    <p class="user-books">Coautor de libros:</p>
+                    <p id="coauthor-of-books" class="font-bold">#</p>
+                </div>
             </div>
         </section>
 
@@ -94,7 +86,7 @@
             <?php if (isset($_SESSION["userid"])) { ?>
                 <button id="new-book" class="group w-full bg-white p-2 text-sm rounded-md flex justify-between items-center border-b-4 border-b-white hover:border-b-4 hover:border-b-green-700">Crear libro <i class="material-symbols-rounded group-hover:text-green-700">book_2</i></button>
                 <button id="library" class="group w-full bg-white p-2 text-sm rounded-md flex justify-between items-center border-b-4 border-b-white hover:border-b-4 hover:border-b-green-700">Tus Libros <i class="material-symbols-rounded group-hover:text-green-700">book_4</i></button>
-                <button id="logout" class="group w-full bg-white p-2 text-sm rounded-md flex justify-between items-center border-b-4 border-b-white hover:border-b-4 hover:border-b-green-700">Logout <i class="material-symbols-rounded group-hover:text-green-700">logout</i></button>
+                <button id="logout" class="group w-full bg-white p-2 text-sm rounded-md flex justify-between items-center border-b-4 border-b-white hover:border-b-4 hover:border-b-red-500">Logout <i class="material-symbols-rounded group-hover:text-red-500">logout</i></button>
             <?php } else { ?>
                 <button id="to-login" class="group w-full bg-white p-2 text-sm rounded-md flex justify-between items-center border-b-4 border-b-white hover:border-b-4 hover:border-b-green-700"">Login <i class=" material-symbols-rounded group-hover:text-green-700">login</i></button>
             <?php } ?>
@@ -117,7 +109,7 @@
             <!-- <button id="searchByName" class="material-symbols-rounded rounded-tr-md px-3 bg-[#333] text-white">search</button> -->
             <i class="material-symbols-rounded form-icon">search</i>
         </article>
-        <section class="grid grid-cols-2 divide-x py-3 z-1000 xl:hidden">
+        <section class="grid grid-cols-2 divide-x py-3 z-50 xl:hidden">
             <div class="flex items-center justify-center">
                 <button id="openBookFilters" data-drawer-target="menu-bookfilters" data-drawer-toggle="menu-bookfilters" class="material-symbols-rounded cursor-pointer text-[#333333] text-3xl duration-100 hover:scale-125">menu</button>
             </div>
