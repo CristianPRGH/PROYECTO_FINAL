@@ -22,12 +22,12 @@ if (!isset($_SESSION["userid"])) {
 </head>
 
 <body class="relative h-screen flex justify-center">
-
+    <section class="body-background"></section>
     <main class="w-full h-full bg-white sm:flex md:w-full xl:w-2/3 duration-200">
 
         <section class="flex flex-col gap-y-2 w-full h-full p-4 z-30">
             <div class="relative w-full ">
-                <input type="text" id="book-title" placeholder="título" maxlength="80" class="v_required form-input" data-valid="valid-title">
+                <input type="text" id="book-title" placeholder="Título" maxlength="80" class="v_required form-input pl-4 placeholder:italic placeholder:text-sm" data-valid="valid-title">
                 <div id="valid-title" class="validate-input" data-errormsg="error-title">
                     <i class="material-symbols-rounded form-error-icon">error</i>
                     <p id="error-title" class="form-error-message my-1 rounded-t-lg"></p>
@@ -50,20 +50,19 @@ if (!isset($_SESSION["userid"])) {
                 <div class="w-full flex justify-between items-center">
                     <p class="text-xs">1</p>
                     <!-- <p id="curr-pages" class="text-md font-bold opacity-50">1</p> -->
-                    <input id="curr-pages" type="text" inputmode="numeric" pattern="[0-9]*" class="form-input text-md font-bold  text-center w-fit focus:border-transparent focus:ring-0 focus:shadow-xl" value="1">
+                    <input id="curr-pages" type="text" inputmode="numeric" pattern="[0-9]*" class="form-input text-md font-bold text-center w-fit focus:border-transparent focus:ring-0 focus:shadow-xl" value="1">
                     <p class="text-xs">500</p>
                 </div>
             </div>
 
             <div class="flex flex-col items-center">
+                <p class="mb-2 italic text-sm text-gray-400">Tags</p>
                 <div class="flex justify-center">
                     <datalist id="tags-list"></datalist>
                     <button id="add-tag-input" class="material-symbols-rounded cursor-pointer hover:scale-105">add_circle</button>
                     <button id="rem-tag-input" class="material-symbols-rounded cursor-pointer hover:scale-105 hidden">remove_circle</button>
                 </div>
                 <div id="book-tags" class="flex flex-wrap gap-x-2 justify-center w-full"></div>
-                <!-- <input type="text" list="tags-list" id="book-tags" placeholder="tag" class="w-full border-0 shadow-md my-2 placeholder:text-sm placeholder:italic rounded-l-md pl-4">
-                <datalist id="tags-list"></datalist> -->
             </div>
         </section>
 

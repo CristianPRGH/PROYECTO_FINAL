@@ -41,6 +41,7 @@ if (isset($_GET["mode"]) && isset($_GET["bookid"])) {
 </head>
 
 <body class="h-screen flex flex-col">
+    <section class="body-background"></section>
     <p id="bookid" class="hidden"><?= $bookid; ?></p>
     <p id="userid" class="hidden"><?= $userid; ?></p>
 

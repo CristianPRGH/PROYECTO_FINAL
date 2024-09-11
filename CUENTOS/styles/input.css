@@ -40,6 +40,10 @@
     @apply w-4 h-4 text-gray-500 duration-200 drop-shadow-lg;
   }
 
+  .body-background{
+    @apply absolute w-full h-full opacity-30 bg-[url('../images/backgrounds/a-books-tile-pattern.jpeg')] z-0;
+  }
+
   .valid .form-valid-icon,
   .notvalid .form-error-icon,
   .notvalid .form-error-message{ @apply visible;}

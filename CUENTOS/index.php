@@ -21,8 +21,9 @@
 </head>
 
 <body class="flex ">
+    <section class="body-background"></section>
     <!-- <aside id="menu-bookfilters" class="flex flex-col justify-between bg-[#A8E6CF] fixed top-0 w-full h-full p-8 z-50 -left-full opacity-0 xl:left-0 xl:w-1/4 xl:opacity-100 xl:static"> -->
-    <aside id="menu-bookfilters" class="bg-[#A8E6CF] flex flex-col gap-y-4 fixed top-0 left-0 z-50 w-full h-full p-6 px-2 transition-transform -translate-x-full shadow-lg sm:w-1/2 md:w-1/2 xl:sticky xl:translate-x-0 xl:w-1/4" aria-label="Sidebar">
+    <aside id="menu-bookfilters" class="bg-[#A8E6CF]/80 backdrop-blur-sm flex flex-col gap-y-4 fixed top-0 left-0 z-50 w-full h-full p-6 px-2 transition-transform -translate-x-full shadow-lg sm:w-1/2 md:w-1/2 xl:sticky xl:translate-x-0 xl:w-1/4" aria-label="Sidebar">
         <i id="closeBookFilters" data-drawer-target="menu-bookfilters" data-drawer-toggle="menu-bookfilters" class="material-symbols-rounded text-[#333333] self-end cursor-pointer xl:hidden">close</i>
 
         <article class="w-full">
@@ -42,9 +43,15 @@
         </article>
     </aside>
 
-    <section id="index-main" class="flex flex-col gap-4 p-4 w-full h-full z-0 xl:2/4">
-        <div id="swiper1" class="swiper w-full h-fit py-4 lg:w-4/5">
-            <p>Novedades</p>
+    <section id="index-main" class="flex flex-col gap-4 w-full h-full z-0 xl:2/4 overflow-y-auto">
+        <div class="flex items-center justify-center gap-x-4 bg-[#A8E6CF]/80 w-full shadow-lg z-50 px-2">
+            <p class="text-3xl text-[#333] text-center font-bold">LA FORJA</p>
+            <img class="w-28 h-28" src="images/logo/BooksForgeLogo.png" alt="">
+            <p class="text-3xl text-[#333] text-center font-bold">DE HISTORIAS</p>
+        </div>
+
+        <div id="swiper1" class="swiper w-full h-fit p-4 lg:w-4/5 bg-white bg-opacity-20 rounded-md backdrop-blur-sm shadow-md">
+            <p class="text-center border-b-4 border-b-[#333]/10">Novedades</p>
             <!-- Additional required wrapper -->
             <div class="swiper-wrapper"></div>
 
@@ -53,8 +60,8 @@
             <div class="swiper-button-next scale-50 hover:scale-75 duration-200 text-[#333333]"></div>
         </div>
 
-        <div id="swiper1" class="swiper w-full h-fit py-4 lg:w-4/5">
-            <p>Mas Leidos</p>
+        <div id="swiper1" class="swiper w-full h-fit p-4 lg:w-4/5 bg-white bg-opacity-20 rounded-md backdrop-blur-sm shadow-md">
+            <p class="text-center border-b-4 border-b-[#333]/10">Mas Leídos</p>
             <!-- Additional required wrapper -->
             <div class="swiper-wrapper"></div>
 
@@ -64,18 +71,18 @@
         </div>
     </section>
 
-    <aside id="menu-useraccount" class="bg-[#A8E6CF] flex flex-col fixed top-0 left-0 z-50 w-full h-full p-6 px-2 transition-transform -translate-x-full shadow-lg sm:w-1/2 md:w-1/3 xl:sticky xl:translate-x-0 xl:w-1/4" aria-label="Sidebar">
+    <aside id="menu-useraccount" class="bg-[#A8E6CF]/80 backdrop-blur-sm flex flex-col fixed top-0 left-0 z-50 w-full h-full p-6 px-2 transition-transform -translate-x-full shadow-lg sm:w-1/2 md:w-1/3 xl:sticky xl:translate-x-0 xl:w-1/4" aria-label="Sidebar">
         <i id="closeAccountMenu" data-drawer-target="menu-useraccount" data-drawer-toggle="menu-useraccount" class="material-symbols-rounded text-[#333333] self-start cursor-pointer xl:hidden">close</i>
 
         <section class="flex flex-col items-center py-3">
-            <img id="logged-userimg" src="./images/users_avatars/user-default.png" class="w-40 h-40 justify-center rounded-full border-4 border-orange-100">
+            <img id="logged-userimg" src="./images/users_avatars/user-default.png" class="w-40 h-40 justify-center rounded-full border-4 border-white">
             <p id="logged-username" class="text-center font-bold">User</p>
             <div class="flex flex-col text-[#333] w-full mt-4 py-2 border-b-2 border-b-orange-500 border-t-2 border-t-orange-500">
-                <div class="flex items-center justify-between drop-shadow-md bg-white rounded-md px-2">
+                <div class="flex items-center justify-between drop-shadow-md bg-white rounded-md px-2 border-2 border-[#333]/10 border-b-0">
                     <p class="user-books">Autor de libros:</p>
                     <p id="author-of-books" class="font-bold">#</p>
                 </div>
-                <div class="flex items-center justify-between drop-shadow-md bg-white rounded-md px-2">
+                <div class="flex items-center justify-between drop-shadow-md bg-white rounded-md px-2 border-2 border-[#333]/10 border-t-0">
                     <p class="user-books">Coautor de libros:</p>
                     <p id="coauthor-of-books" class="font-bold">#</p>
                 </div>

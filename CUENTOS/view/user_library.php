@@ -23,12 +23,12 @@ $userid = $_SESSION["userid"];
 </head>
 
 <body>
+    <section class="body-background"></section>
     <p id="user-id" class="hidden"><?= $userid; ?></p>
-    <main class="w-full h-full pt-6">
-        <h1 class="text-3xl text-center font-bold">TU BIBLIOTECA</h1>
+    <main class="w-full h-full">
+        <h1 class="text-3xl text-center font-bold bg-[#A8E6CF]/80 py-6">TU BIBLIOTECA</h1>
         <hr class="border-2 border-orange-500">
-        <section id="books-list" class="w-full gap-4 p-20 flex flex-wrap justify-center">
-        </section>
+        <section id="books-list" class="w-full h-full gap-4 p-20 flex flex-wrap justify-center bg-white/40"></section>
     </main>
 
     <dialog id="delete-book" class="fixed z-50 scale-0 m-auto w-96 h-fit p-4 rounded-md bg-white/30 backdrop:bg-[#333]/30 backdrop:backdrop-blur-md shadow-lg">
