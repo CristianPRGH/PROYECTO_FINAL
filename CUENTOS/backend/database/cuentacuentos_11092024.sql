@@ -1,6 +1,4 @@
-CREATE DATABASE  IF NOT EXISTS `cuentacuentos` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */;
-USE `cuentacuentos`;
--- MySQL dump 10.13  Distrib 8.0.38, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.36, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: cuentacuentos
 -- ------------------------------------------------------
@@ -42,7 +40,7 @@ CREATE TABLE `books` (
   KEY `bookuser_idx` (`UIUser`),
   CONSTRAINT `bookuser` FOREIGN KEY (`UIUser`) REFERENCES `users` (`UIUser`) ON DELETE CASCADE ON UPDATE NO ACTION,
   CONSTRAINT `category` FOREIGN KEY (`UICategory`) REFERENCES `categories` (`UICategory`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -51,7 +49,7 @@ CREATE TABLE `books` (
 
 LOCK TABLES `books` WRITE;
 /*!40000 ALTER TABLE `books` DISABLE KEYS */;
-INSERT INTO `books` VALUES (11,'e68759a4-6df3-11ef-8a50-a036bcb7cc40','d5e6400f-6875-11ef-ad79-a036bcb7cc40','La Biblioteca de los Mil Sueños','En un pequeño pueblo, Lúcas, un joven apasionado por los libros, crea una web llamada \"La Biblioteca de los Mil Sueños\", donde las personas pueden escribir y ver cómo sus historias cobran vida. Sin embargo, su proyecto desata una antigua magia que comienza a romper la barrera entre la realidad y la fantasía. Los personajes de los libros empiezan a aparecer en el mundo real, creando caos y confusión. Guiado por el misterioso Guardián de las Historias, Lúcas emprende un viaje a través de los mundos que creó, destruyendo las anclas que los unen a la realidad. Finalmente, debe tomar una decisión dolorosa para restaurar el equilibrio y cerrar la puerta que abrió.','Fantasía,Aventura,Misterio y Suspenso,Magia,Ficción,Cuentos','74be25ae-6881-11ef-ad79-a036bcb7cc40','ec3cc392bfbea09ae81ab6cbae12041c3e63ce22a6b5a7b6f0d98056b317c92c.jpeg',102,'2024-09-08 17:06:18',6),(12,'7fa65d9a-6df9-11ef-8a50-a036bcb7cc40','3ffd54af-6876-11ef-ad79-a036bcb7cc40','El Guardián del Silencio','En el lejano reino de Morval, una tierra envuelta en misterio y magia antigua, los habitantes han vivido durante siglos bajo la sombra de un bosque oscuro conocido como El Bosque del Silencio. Este bosque esconde secretos prohibidos, habitado por criaturas cuya existencia ha sido olvidada por la mayoría. Los aldeanos lo evitan, pero una maldición ancestral ha comenzado a despertar, extendiendo sus raíces desde las profundidades del bosque hacia la aldea de Erindale.\r\n\r\nCuando jóvenes desaparecen sin dejar rastro, un grupo de valientes aventureros decide adentrarse en el bosque para desentrañar el misterio. Entre ellos se encuentra Alaric, un cazador que guarda un secreto doloroso, y Elowen, una hechicera con un poder oscuro. A medida que se adentran en el corazón del bosque, se encuentran con fuerzas mucho más allá de su comprensión, enfrentándose a horrores inimaginables y a la posibilidad de que ninguno de ellos regrese con vida.','Terror,Fantasía,Aventuras oscuras,Espiritus malignos,Magia prohibida,Misterio y Suspenso','74be25d8-6881-11ef-ad79-a036bcb7cc40','0c5ceab0292c3a557d44a730986a91e26a74c544eb08f32f29f905738753d785.jpeg',170,'2024-09-08 17:46:22',5);
+INSERT INTO `books` VALUES (11,'e68759a4-6df3-11ef-8a50-a036bcb7cc40','d5e6400f-6875-11ef-ad79-a036bcb7cc40','La Biblioteca de los Mil Sueños','En un pequeño pueblo, Lúcas, un joven apasionado por los libros, crea una web llamada \"La Biblioteca de los Mil Sueños\", donde las personas pueden escribir y ver cómo sus historias cobran vida. Sin embargo, su proyecto desata una antigua magia que comienza a romper la barrera entre la realidad y la fantasía. Los personajes de los libros empiezan a aparecer en el mundo real, creando caos y confusión. Guiado por el misterioso Guardián de las Historias, Lúcas emprende un viaje a través de los mundos que creó, destruyendo las anclas que los unen a la realidad. Finalmente, debe tomar una decisión dolorosa para restaurar el equilibrio y cerrar la puerta que abrió.','Fantasía,Aventura,Misterio y Suspenso,Magia,Ficción,Cuentos','74be25ae-6881-11ef-ad79-a036bcb7cc40','ec3cc392bfbea09ae81ab6cbae12041c3e63ce22a6b5a7b6f0d98056b317c92c.jpeg',102,'2024-09-08 17:06:18',10),(12,'7fa65d9a-6df9-11ef-8a50-a036bcb7cc40','3ffd54af-6876-11ef-ad79-a036bcb7cc40','El Guardián del Silencio','En el lejano reino de Morval, una tierra envuelta en misterio y magia antigua, los habitantes han vivido durante siglos bajo la sombra de un bosque oscuro conocido como El Bosque del Silencio. Este bosque esconde secretos prohibidos, habitado por criaturas cuya existencia ha sido olvidada por la mayoría. Los aldeanos lo evitan, pero una maldición ancestral ha comenzado a despertar, extendiendo sus raíces desde las profundidades del bosque hacia la aldea de Erindale.\r\n\r\nCuando jóvenes desaparecen sin dejar rastro, un grupo de valientes aventureros decide adentrarse en el bosque para desentrañar el misterio. Entre ellos se encuentra Alaric, un cazador que guarda un secreto doloroso, y Elowen, una hechicera con un poder oscuro. A medida que se adentran en el corazón del bosque, se encuentran con fuerzas mucho más allá de su comprensión, enfrentándose a horrores inimaginables y a la posibilidad de que ninguno de ellos regrese con vida.','Terror,Fantasía,Aventuras oscuras,Espiritus malignos,Magia prohibida,Misterio y Suspenso','74be25d8-6881-11ef-ad79-a036bcb7cc40','0c5ceab0292c3a557d44a730986a91e26a74c544eb08f32f29f905738753d785.jpeg',170,'2024-09-08 17:46:22',21),(14,'c68180b5-7045-11ef-9b82-fc34974b5289','3ffd54af-6876-11ef-ad79-a036bcb7cc40','Sombras en el horizonte','Había una vez sombras en el horizonte...','Cuento,Aventura,Fábula','74be2582-6881-11ef-ad79-a036bcb7cc40','f7d51a4e0a97ec4a672d61bf29830dee11e5705ac2bbfc413647ccd815bd1e81.jpeg',42,'2024-09-11 15:57:25',0),(15,'fab0c6ae-7045-11ef-9b82-fc34974b5289','3ffd54af-6876-11ef-ad79-a036bcb7cc40','El jardín de los secretos olvidados','Erase una vez un jardín con secretos olvidados...','Autobiografía,Drama,Memorias','74be1b7a-6881-11ef-ad79-a036bcb7cc40','70acd9148aba3fd367b48359045f76e960a3182448584fda65cbad217cde0025.jpg',240,'2024-09-11 15:58:53',0),(16,'273e9577-7046-11ef-9b82-fc34974b5289','3ffd54af-6876-11ef-ad79-a036bcb7cc40','La huella del tiempo','La huella del tiempo...','Ciencia Ficción,Cuento,Misterio y Suspenso','74be25d8-6881-11ef-ad79-a036bcb7cc40','db97723b7185580c8ae3b35b1c32054deb1aa4fc8b54727cbdbc7534a7558138.jpeg',170,'2024-09-11 16:00:08',0),(17,'5ad4b2e2-7046-11ef-9b82-fc34974b5289','d5e6400f-6875-11ef-ad79-a036bcb7cc40','Ecos de un pasado remoto','Ecos de un pasado remoto...','Poesía,Narrativa','74be262f-6881-11ef-ad79-a036bcb7cc40','4837351cafdacd460cbf8dd43e9b14be20ae100c41421116ee8094e94c63dbf8.jpeg',163,'2024-09-11 16:01:34',0),(18,'9c60fc7a-7046-11ef-9b82-fc34974b5289','d5e6400f-6875-11ef-ad79-a036bcb7cc40','Entre llamas y promesas','Había una vez unas llamas y unas promesas...','Crónica,Fantasía,Llamas,Promesas,Romance','74be1b7a-6881-11ef-ad79-a036bcb7cc40','357465d69c5835591fb37e93172b44e36d08fee8421f2215bda03e207a3d717f.jpeg',350,'2024-09-11 16:03:24',0);
 /*!40000 ALTER TABLE `books` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -102,7 +100,7 @@ CREATE TABLE `comments` (
   KEY `usercomments` (`UIUser`),
   CONSTRAINT `bookcomments` FOREIGN KEY (`UIBook`) REFERENCES `books` (`UIBook`) ON DELETE CASCADE,
   CONSTRAINT `usercomments` FOREIGN KEY (`UIUser`) REFERENCES `users` (`UIUser`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -111,7 +109,7 @@ CREATE TABLE `comments` (
 
 LOCK TABLES `comments` WRITE;
 /*!40000 ALTER TABLE `comments` DISABLE KEYS */;
-INSERT INTO `comments` VALUES (5,'7fa65d9a-6df9-11ef-8a50-a036bcb7cc40','d5e6400f-6875-11ef-ad79-a036bcb7cc40','Que libro mas chulo está quedando :)',NULL,'2024-09-08 17:52:56');
+INSERT INTO `comments` VALUES (5,'7fa65d9a-6df9-11ef-8a50-a036bcb7cc40','d5e6400f-6875-11ef-ad79-a036bcb7cc40','Que libro mas chulo está quedando :)',NULL,'2024-09-08 17:52:56'),(6,'7fa65d9a-6df9-11ef-8a50-a036bcb7cc40','d5e6400f-6875-11ef-ad79-a036bcb7cc40','Fue una lectura entretenida.',4,'2024-09-11 13:41:58');
 /*!40000 ALTER TABLE `comments` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -195,7 +193,7 @@ CREATE TABLE `users` (
   UNIQUE KEY `token_UNIQUE` (`Token`),
   UNIQUE KEY `Username` (`Username`) USING HASH,
   UNIQUE KEY `Email` (`Email`) USING HASH
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -204,7 +202,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'d5e6400f-6875-11ef-ad79-a036bcb7cc40','Vampy','$2y$10$RBNPDXyZtz7bLf77q2/AMO37K6SdsJgjyX.S5f0nLk.B1H2PX1uyO','cpr.1992@gmail.com','e10163e9b623b5276b3058a59ada4485fa4e6f630bda616ed0de8d8fe487133c.png',NULL,NULL),(2,'3ffd54af-6876-11ef-ad79-a036bcb7cc40','Franky','$2y$10$H4Sr.xswtY.xkHWrb.9mt..w08630rW4mraeVxa/nB7x4BDOlDj22','franky@gmail.com','f036dd2ff1d93b3b84472106ff745f5a5a6c3c76b1c7b5c69b3a4efc005bf4e2.png',NULL,NULL),(3,'f16b5af0-6877-11ef-ad79-a036bcb7cc40','Mummy','$2y$10$/.lzjOJEf5jWELL0mSV7A.D5LvDB0.FTcOkdkvxT2PZWHFRhh4njK','mummy@gmail.com','0cb2ad0ee991a0f72b575c8cb338648fc6986675c7c0ae11a83c4bfbfdc5b8f1.png',NULL,NULL),(4,'a938b65f-6d2c-11ef-94dc-a036bcb7cc40','Anakarina','$2y$10$ngdqh0OLcv9eenRR6KZ0KeL8tqoAdfyNC7PfSUM5m0cJDdzwaN2/S','anna9545rt@gmail.com','50d56dce514d95656b8fbf92ae8fbf4016d2d6c80550d59ed66dbb79e28a2d50.png',NULL,NULL);
+INSERT INTO `users` VALUES (1,'d5e6400f-6875-11ef-ad79-a036bcb7cc40','Vampy','$2y$10$RBNPDXyZtz7bLf77q2/AMO37K6SdsJgjyX.S5f0nLk.B1H2PX1uyO','cpr.1992@gmail.com','e10163e9b623b5276b3058a59ada4485fa4e6f630bda616ed0de8d8fe487133c.png','7ae694f5-7036-11ef-93a9-fc34974b5289','2024-09-11 14:07:56'),(2,'3ffd54af-6876-11ef-ad79-a036bcb7cc40','Franky','$2y$10$H4Sr.xswtY.xkHWrb.9mt..w08630rW4mraeVxa/nB7x4BDOlDj22','franky@gmail.com','f036dd2ff1d93b3b84472106ff745f5a5a6c3c76b1c7b5c69b3a4efc005bf4e2.png',NULL,NULL),(3,'f16b5af0-6877-11ef-ad79-a036bcb7cc40','Mummy','$2y$10$/.lzjOJEf5jWELL0mSV7A.D5LvDB0.FTcOkdkvxT2PZWHFRhh4njK','mummy@gmail.com','0cb2ad0ee991a0f72b575c8cb338648fc6986675c7c0ae11a83c4bfbfdc5b8f1.png',NULL,NULL),(4,'a938b65f-6d2c-11ef-94dc-a036bcb7cc40','Anakarina','$2y$10$ngdqh0OLcv9eenRR6KZ0KeL8tqoAdfyNC7PfSUM5m0cJDdzwaN2/S','anna9545rt@gmail.com','50d56dce514d95656b8fbf92ae8fbf4016d2d6c80550d59ed66dbb79e28a2d50.png',NULL,NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -217,4 +215,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-09-11 13:11:16
+-- Dump completed on 2024-09-11 16:54:57
