@@ -11,7 +11,9 @@ document.addEventListener("DOMContentLoaded", async()=>{
 
     const container = document.getElementById("books-list");
     container.innerHTML = "";
-    container.innerHTML = booklist.data.map(book => UserBookListItem(book)).join('');
+    container.innerHTML = booklist.data.map(book => 
+        UserBookListItem(book)
+    ).join('');
 
     InitializeEvents();
 })
@@ -72,7 +74,7 @@ async function ToggleBookDetail(tween)
 function ReadBook(e)
 {
     const bookid = e.target.dataset.id;
-    window.location.href = `pages_manager.php?bookid=${bookid}&mode=read`;
+    window.location.href = `pages_manager.php?bookid=${bookid}&user=${userid}&mode=read`;
 }
 
 function EditBook(e)
@@ -84,7 +86,7 @@ function EditBook(e)
 function EditPages(e)
 {
     const bookid = e.target.dataset.id;
-    window.location.href = `pages_manager.php?bookid=${bookid}&mode=upd`;
+    window.location.href = `pages_manager.php?bookid=${bookid}&user=${userid}&mode=upd`;
 }
 
 function DeleteBook(event)

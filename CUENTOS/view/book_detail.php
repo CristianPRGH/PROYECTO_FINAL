@@ -5,6 +5,10 @@ if (!isset($_GET["bookid"])) {
 }
 
 $bookid = $_GET["bookid"];
+$userid = "";
+if (isset($_SESSION["userid"])) {
+    $userid = $_SESSION["userid"];
+}
 ?>
 
 <!DOCTYPE html>
@@ -27,7 +31,7 @@ $bookid = $_GET["bookid"];
 
 <body class="flex justify-center">
     <section class="body-background"></section>
-
+    <p id="det-userid" class="hidden"><?php echo $userid; ?></p>
     <section id="book-detail" class="w-full h-full flex flex-col gap-2 p-8 pb-20 const tagElements overflow-y-auto sm:w-2/3 lg:w-1/2 duration-200 z-10"></section>
 
     <section id="menu" class="fixed bottom-4 left-1/2 -translate-x-1/2 h-fit flex flex-col shadow-md shadow-black/40 min-w-96 bg-white/90 backdrop-blur-md rounded-xl opacity-100 z-50">

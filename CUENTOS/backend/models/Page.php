@@ -34,7 +34,7 @@ class Page extends Basemodel{
     protected function SelectBookContent($bookid)
     {
         $query =
-            "SELECT B.UIUser, P.*, U.Username, U.Image
+            "SELECT B.UIUser AS Bookuser, P.*, U.Username, U.Image
             FROM $this->table AS P
             JOIN users U ON U.UIUser = P.UIUser
             JOIN books B ON P.UIBook = B.UIBook

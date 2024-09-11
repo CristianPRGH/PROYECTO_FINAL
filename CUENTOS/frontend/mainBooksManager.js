@@ -26,7 +26,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   });
 
   document.getElementById("det-bookRead").addEventListener('click', (event)=>{
-    window.location = `view/pages_manager.php?bookid=${event.target.dataset.bookid}&mode=read`;
+    const usr = document.getElementById("det-userid").textContent;
+    window.location = `view/pages_manager.php?bookid=${event.target.dataset.bookid}&user=${usr}&mode=read`;
   });
 
   document.getElementById("searchByNameValue").addEventListener('input', SearchBooksByFilters);

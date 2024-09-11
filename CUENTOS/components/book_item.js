@@ -1,21 +1,20 @@
 export function BookListItem(book) {
   const id = book.UIBook;
   const cover = book.Cover != null ? book.Cover : "bk_CoverNotAvailable.png";
-  const title = book.Title.length > 20 ? `${book.Title.substring(0, 20)}...` : book.Title;
+  const title = book.Title; //book.Title.length > 20 ? `${book.Title.substring(0, 20)}...` : 
 
-  return `<div id="${id}" class="swiper-slide open-bookDialog bg-transparent w-fit h-full flex flex-col gap-1 px-1 justify-center items-center duration-200 hover:shadow-lg hover:bg-white/40 cursor-pointer">
+  return `<div id="${id}" class="swiper-slide open-bookDialog bg-transparent w-36 h-full flex flex-col gap-1 px-1 justify-center items-center duration-200 hover:shadow-lg hover:bg-white/40 cursor-pointer">
                 <img src="images/books_covers/${cover}" class="rounded-md w-[85px] h-[132px] sm:w-[128px] sm:h-[200px]" alt="${title} cover">
-                <p class="break-all text-xs text-center">${title}</p>
+                <p class="text-wrap text-xs text-center">${title}</p>
             </div>`;
 }
 
 export function UserBookListItem(book) {
-  console.log(book)
   const id = book.UIBook;
   const cover = book.Cover != null ? book.Cover : "bk_CoverNotAvailable.png";
   const title = book.Title; //book.Title.length > 20 ? `${book.Title.substring(0, 20)}...` : 
 
-  return `<div id="book-${id}" class="relative group/item bg-transparent max-w-fit h-fit flex flex-col gap-1 justify-center items-center p-2 rounded-md duration-200 hover:shadow-lg hover:scale-110 hover:bg-slate-100/20">
+  return `<div id="book-${id}" class="relative group/item bg-transparent w-36 h-fit flex flex-col gap-4 justify-center items-center p-2 rounded-md duration-200 hover:shadow-lg hover:scale-110 hover:bg-slate-100/20">
               <img src="../images/books_covers/${cover}" class="rounded-md w-[85px] h-[132px] sm:w-[128px] sm:h-[200px] group-hover/item:blur-sm" alt="${title} cover">
               <p class="break-words text-wrap text-xs text-center">${title}</p>
               <div class="absolute w-full flex flex-col gap-1 justify-center items-center invisible group-hover/item:visible">
@@ -36,8 +35,7 @@ export function UserBookListItem(book) {
                   <span class="hidden text-xs font-bold tracking-wider group-hover:inline pointer-events-none">Eliminar</span>
                 </button>
               </div>
-          </div>
-          <div>`;
+          </div>`;
 }
 
 export function BookDetail(book, coauthors = null, comments = null) 
@@ -127,8 +125,8 @@ export function BookGridItem(book) {
 
   const title = book.Title;
 
-  return `<div id="${id}" class="open-bookDialog flex flex-col gap-1 duration-200 hover:shadow-lg cursor-pointer rounded-md p-2">
+  return `<div id="${id}" class="open-bookDialog w-36 flex flex-col gap-1 items-center duration-200 hover:shadow-lg cursor-pointer rounded-md p-2">
         <img src="images/books_covers/${cover}" class="rounded-md w-[85px] h-[132px] sm:w-[128px] sm:h-[200px]" alt="${title} cover">
-        <p class="break-all text-xs text-center">${title}</p>
+        <p class="text-wrap text-xs text-center">${title}</p>
     </div>`
 }

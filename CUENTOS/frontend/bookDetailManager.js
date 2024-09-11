@@ -38,11 +38,13 @@ function InitializeEvents()
     window.location = "../index.php";
   });
 
+  const userid = document.getElementById("det-userid").textContent;
+
   document.getElementById("read").addEventListener("click", () => {
-    window.location = `pages_manager.php?bookid=${bookid}&mode=read`;
+    window.location = `pages_manager.php?bookid=${bookid}&user=${userid}&mode=read`;
   });
 
   document.getElementById("modify").addEventListener("click", () => {
-    window.location = `pages_manager.php?bookid=${bookid}&mode=upd`;
+    window.location = `pages_manager.php?bookid=${bookid}&user=${userid}&mode=upd`;
   });
 }

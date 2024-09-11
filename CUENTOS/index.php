@@ -1,4 +1,10 @@
-<?php session_start(); ?>
+<?php 
+session_start();
+$userid = "";
+if (isset($_SESSION["userid"])) {
+    $userid = $_SESSION["userid"];
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -50,7 +56,7 @@
             <p class="text-3xl text-[#333] text-center font-bold">DE HISTORIAS</p>
         </div>
 
-        <div id="swiper1" class="swiper w-full h-fit p-4 lg:w-4/5 bg-white bg-opacity-20 rounded-md backdrop-blur-sm shadow-md">
+        <div id="swiper1" class="swiper w-full h-80 p-4 lg:w-4/5 bg-white bg-opacity-20 rounded-md backdrop-blur-sm shadow-md">
             <p class="text-center border-b-4 border-b-[#333]/10">Novedades</p>
             <!-- Additional required wrapper -->
             <div class="swiper-wrapper"></div>
@@ -60,7 +66,7 @@
             <div class="swiper-button-next scale-50 hover:scale-75 duration-200 text-[#333333]"></div>
         </div>
 
-        <div id="swiper1" class="swiper w-full h-fit p-4 lg:w-4/5 bg-white bg-opacity-20 rounded-md backdrop-blur-sm shadow-md">
+        <div id="swiper1" class="swiper w-full h-80 p-4 lg:w-4/5 bg-white bg-opacity-20 rounded-md backdrop-blur-sm shadow-md">
             <p class="text-center border-b-4 border-b-[#333]/10">Mas Leídos</p>
             <!-- Additional required wrapper -->
             <div class="swiper-wrapper"></div>
@@ -107,7 +113,7 @@
             <p class="text-xs">Búsqueda de libros por tags: <span id="books-bytags-label"></span></p>
             <article id="filtered-books" class="flex flex-wrap gap-y-3 content-start justify-start h-full w-full p-4 "></article>
         </section>
-        <div class="hidden xl:block"></div>
+        <!-- <div class="hidden xl:block"></div> -->
     </section>
 
     <section id="menu" class="fixed bottom-4 left-1/2 -translate-x-1/2 h-fit flex flex-col shadow-md shadow-black/40 min-w-96 bg-white/90 backdrop-blur-md rounded-xl opacity-100 z-40 ">
@@ -132,6 +138,7 @@
     <dialog id="book-dialog" class="dialogWindow">
         <span id="close-bookDialog" class="material-symbols-rounded cursor-pointer">close</span>
         <p id="det-bookId" class="hidden"></p>
+        <p id="det-userid" class="hidden"><?php echo $userid; ?></p>
         <section class="h-full grid grid-cols-2 gap-0 grid-rows-1">
             <div class="flex justify-center items-center">
                 <img id="det-bookCover" src="" alt="" class="h-[200px] w-[128px] rounded-md shadow-md">

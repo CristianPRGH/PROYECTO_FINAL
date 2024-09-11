@@ -7,7 +7,7 @@ let quill = null;         // Objeto que contiene el editor Quill
 let numPages = 1;         // Numero de páginas del libro
 let currentPage = 1;      // Página actual
 let bookid, mode, userid = null;  // Parametros en la URL
-let bookAuthorId = null;
+let pageAuthorId, bookAuthorId = null;
 const quillOptionsReadOnly = {readOnly: true, modules: {toolbar: null,}, theme: "bubble",};
 const quillOptionsModify = {modules: {syntax: true, toolbar: "#toolbar-container",}, placeholder: "Empieza a forjar tu historia...", theme: "snow"};
 const tween_bookDialog = gsap.fromTo("#confirm-pages", { opacity: 0, scale: 0 }, { duration: 0.1, scale: 1, opacity: 1, paused: true });
@@ -77,7 +77,7 @@ function GetUrlParams()
 	const urlParams = new URLSearchParams(urlString);
 	mode = urlParams.get("mode");
 	bookid = urlParams.get("bookid");
-	userid = document.getElementById("userid").textContent;
+	userid = urlParams.get("user");
 }
 
 function InitializeEvents()
@@ -107,7 +107,8 @@ function InitializeQuill(options)
 
 function HomeHandler()
 {
-	if (mode === 'read' && userid != bookAuthorId)
+	// console.log([userid, bookAuthorId])
+	if (mode === 'read' && userid != bookAuthorId && userid != null)
 	{
 		const i = GetRandomInt(commentDialogQuestions.length);
 		document.getElementById("comment-question").textContent = commentDialogQuestions[i];
@@ -406,7 +407,8 @@ async function GetBookContent()
 	if(bookPages != null)
 	{
 		bookPages.data.map((page) => {
-			if (bookAuthorId == null) bookAuthorId = page.UIUser;
+			if (pageAuthorId == null) pageAuthorId = page.UIUser;
+			bookAuthorId = page.Bookuser;
 			const newpage = PrepareSavePage(page.UIPage,
 				page.UIUser,
 				page.PageNumber,
