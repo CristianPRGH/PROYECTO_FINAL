@@ -50,7 +50,7 @@ if (isset($_GET["mode"]) && isset($_GET["bookid"])) {
             <?php
             if ($mode == "ins" || $mode == "upd") {
             ?>
-                <div id="toolbar-container">
+                <div id="toolbar-container" class="z-50">
                     <span class="ql-formats">
                         <select class="ql-font"></select>
                         <select class="ql-size"></select>
