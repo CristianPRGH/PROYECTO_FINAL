@@ -174,7 +174,6 @@ async function ValidateLogin()
 
     if (username == "" || password == "")
     {
-        console.log("hola")
         ToggleErrorText(1, "Debe introducir el nombre de usuario y la contraseña.", errormsg);
     }
     else{
@@ -186,7 +185,6 @@ async function ValidateLogin()
             if (response.ok)
             {
                 const res = await response.json();
-                console.log(res);
                 
                 ToggleErrorText(res.error, res.msg, errormsg);
     
