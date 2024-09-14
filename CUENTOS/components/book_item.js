@@ -114,8 +114,22 @@ export function BookDetail(book, coauthors = null, comments = null)
         <div class="flex flex-wrap justify-center gap-1">
             ${tagElements}
         </div>
-        ${coauthors.length ? `<div class="p-2 bg-white/40"><p class="mb-2">Coautores</p><div class="flex gap-x-3 p-2 rounded-md shadow-md">${coauthorElements}</div></div>` : ''}
-        ${comments.length ?  `<div class="p-2 bg-white/40"><p>Comentarios</p><div class="flex flex-col gap-y-3">${commentElements}</div></div>` : ''}
+        ${coauthors.length ? 
+          `<div class="p-2 bg-white/40">
+            <p class="mb-2 text-center border-b-2 border-b-[#333]/10">Coautores</p>
+            <div class="flex gap-x-3 p-2 rounded-md shadow-md">
+              ${coauthorElements}
+            </div>
+          </div>` 
+          : ''}
+        ${comments.length ?  
+          `<div class="p-2 bg-white/40">
+            <p class="mb-2 text-center border-b-2 border-b-[#333]/10">Comentarios</p>
+            <div class="flex flex-col gap-y-3">
+              ${commentElements}
+            </div>
+          </div>` 
+          : ''}
     `;
 }
 

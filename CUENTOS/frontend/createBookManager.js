@@ -6,7 +6,7 @@ import { Book } from "./Book.js";
 
 const maxTagInputs = 6;
 let tagInputsList = [];
-let bookid, mode = null;  // Parametros en la URL
+let bookid, mode, userid = null;  // Parametros en la URL
 const tween_bookDialog = gsap.fromTo("#confirm-create-book", { opacity: 0, scale: 0 }, { duration: 0.1, scale: 1, opacity: 1, paused: true });
 const tween_writeDialog = gsap.fromTo("#confirm-write-book", { opacity: 0, scale: 0 }, { duration: 0.1, scale: 1, opacity: 1, paused: true });
 
@@ -70,6 +70,7 @@ function GetUrlParams() {
     const urlParams = new URLSearchParams(urlString);
     mode   = urlParams.get("mode");
     bookid = urlParams.get("bookid");
+    userid = urlParams.get("userid");
 }
 
 
@@ -246,7 +247,7 @@ function WriteBookDialog(lastid)
 
     document.getElementById("write-yes").addEventListener('click',()=>{
         writeBookDialog.close();
-        window.location = `pages_manager.php?bookid=${lastid}&mode=ins`;
+        window.location = `pages_manager.php?bookid=${lastid}&user=${userid}&mode=ins`;
     })
     document.getElementById("write-no").addEventListener('click', ()=>{
         window.location = '../index.php';

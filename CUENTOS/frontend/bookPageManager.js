@@ -200,6 +200,7 @@ function PageControl(event)
 			const currentpageid = document.getElementById("pageid").textContent;	// RECUPERA EL ID DE LA PÁGINA ACTUAL
 			const username = document.getElementById("username").textContent;
 			const userimg = document.getElementById("userimg").src.split("/").pop();
+			console.log("PageControl userid: " + userid)
 			PrepareSavePage(currentpageid, userid, currentPage, content, username, userimg);					// GUARDA LOS DATOS DE LA PÁGINA EN EL ARRAY
 			quill.focus();
 		}
@@ -241,6 +242,7 @@ function ConfirmPages()
 	if (!pageIsEmpty) {
     	if (mode == "ins" || mode == "upd") {
 			const currentpageid = document.getElementById("pageid").textContent;
+			console.log("ConfirmPages userid: " + userid)
 			PrepareSavePage(currentpageid, userid,currentPage, content, null, null);
 			quill.focus();
     	}
@@ -349,6 +351,8 @@ async function InsertPages()
 		{
 			formdata.append("pages[]", JSON.stringify(pagesContent[index]));
 		}
+
+		// console.log(formdata)
 
 		const response = await fetch("../backend/includes/pages.insertpages.php", {
 		method: "post",

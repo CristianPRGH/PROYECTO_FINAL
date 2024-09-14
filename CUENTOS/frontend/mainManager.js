@@ -34,7 +34,10 @@ function SetupToggleMenus()
 }
 
 function GoToAuthenticate() { window.location = "view/auth.html"; }
-function GoToNewBook() { window.location = "view/create_book.php"; }
+function GoToNewBook() {
+    const userid = document.getElementById("menu-useraccount").dataset.userid;
+    window.location = `view/create_book.php?userid=${userid}`; 
+}
 async function Logout()
 {
     const formdata = new FormData();
@@ -72,6 +75,7 @@ async function GetLoggedUserInfo()
             const result = await response.json();
             const data = result.data;
 
+            document.getElementById("menu-useraccount").dataset.userid = data.UIUser
             document.getElementById("logged-username").textContent = data.Username;
             document.getElementById("logged-userimg").src = `images/users_avatars/${data.Image}`;
             document.getElementById("author-of-books").textContent = data.AuthorOfBooks;
